@@ -5,7 +5,7 @@ work_out_debs () {
 
     required="base-files base-passwd bash bsdutils coreutils libacl1 libattr1 debconf debconf-i18n liblocale-gettext-perl libtext-wrapi18n-perl libtext-charwidth-perl debianutils diff dpkg dselect libblkid1 e2fsprogs e2fslibs libcomerr2 libss2 libuuid1 findutils grep gzip hostname libcap1 libc6 libdb1-compat libdb3 libncurses5 libnewt0.51 libpam-modules libpam-runtime libpam0g libperl5.8 libpopt0 login makedev mawk modutils mount ncurses-base ncurses-bin passwd perl-base procps sed slang1a-utf8 initscripts sysvinit sysv-rc tar util-linux whiptail libgcc1 gcc-3.3-base libstdc++5"
 
-    base="adduser apt apt-utils libdb4.2 at base-config aptitude libsigc++-1.2-5c102 bsdmainutils console-common console-tools libconsole console-data cpio cron dhcp-client ed exim4 exim4-base exim4-config exim4-daemon-light libgnutls10 libgcrypt7 libgpg-error0 libopencdk8 libtasn1-2 fdutils gettext-base groff-base ifupdown info klogd libssl0.9.7 liblzo1 zlib1g liblockfile1 libpcre3 libwrap0 logrotate mailx man-db libgdbm3 manpages nano net-tools netbase netkit-inetd iputils-ping nvi ppp pppconfig pppoe pppoeconf libpcap0.7 sysklogd tasksel libtextwrap1 tcpd telnet libtext-iconv-perl wget $additional"
+    base="adduser apt apt-utils libdb4.2 at base-config aptitude libsigc++-1.2-5c102 bsdmainutils console-common console-tools libconsole console-data cpio cron dhcp-client ed exim4 exim4-base exim4-config exim4-daemon-light libgcrypt11 libgnutls11 libgpg-error0 libopencdk8 libtasn1-2 fdutils gettext-base groff-base ifupdown info klogd libssl0.9.7 liblzo1 zlib1g liblockfile1 libpcre3 libwrap0 logrotate mailx man-db libgdbm3 manpages nano net-tools netbase netkit-inetd iputils-ping nvi ppp pppconfig pppoe pppoeconf libpcap0.7 sysklogd tasksel libtextwrap1 tcpd telnet libtext-iconv-perl wget $additional"
 
     without_package () {
         echo "$2" | tr ' ' '\n' | grep -v "^$1$" | tr '\n' ' '
@@ -20,33 +20,33 @@ work_out_debs () {
     case $ARCH in
         "alpha")
             required="$(subst_package "libc6" "libc6.1" "$required")"
-            base="$base setserial aboot aboot-base pciutils"
+            base="$base pciutils"
             LIBC6="libc6.1"
 	    IPFWTOOL="ipchains"
             ;;
         "arm")
-            base="$base setserial libgpmg1"
+            base="$base libgpmg1"
 	    IPFWTOOL="ipchains iptables"
             ;;
         "i386")
 	    required="$(without_package "libperl5.8" "$required")"
-            base="$base pciutils setserial psmisc"
+            base="$base pciutils psmisc"
 	    IPFWTOOL="ipchains iptables"
             ;;
         "ia64")
             required="$(subst_package "libc6" "libc6.1" "$required") libreadline4"
-            base="$base elilo efibootmgr dosfstools libparted1.6-0 parted"
+            base="$base elilo efibootmgr dosfstools libparted1.6-12 parted"
             LIBC6="libc6.1"
             ;;
         "m68k")
             required="$required libreadline4"
             required="$required libreadline4"
-            base="$base atari-bootstrap atari-fdisk amiga-fdisk eject mac-fdisk pmac-fdisk-cross setserial vmelilo"
+            base="$base atari-bootstrap atari-fdisk amiga-fdisk eject mac-fdisk pmac-fdisk-cross vmelilo"
 	    IPFWTOOL="ipchains"
             ;;
         "powerpc")
             required="$required libreadline4"
-            base="$base quik mac-fdisk amiga-fdisk psmisc powerpc-utils setserial pciutils hfsutils"
+            base="$base mac-fdisk amiga-fdisk psmisc powerpc-utils pciutils hfsutils"
 	    IPFWTOOL="ipchains iptables"
             ;;
         "sparc")
@@ -54,13 +54,13 @@ work_out_debs () {
 	    IPFWTOOL="ipchains iptables"
             ;;
         "mips")
-            base="$base dvhtool pciutils setserial"
+            base="$base dvhtool pciutils"
             ;;
         "mipsel")
-            base="$base delo pciutils setserial"
+            base="$base pciutils"
             ;;
         "hppa")
-            base="$base palo libstdc++3 gcc-3.0-base"
+            base="$base palo pciutils"
             required="$(without_package "libstdc++2.10-glibc2.2" "$required")"
             ;;
         s390|s390x)
@@ -82,7 +82,7 @@ work_out_debs () {
 	    ;;
         "amd64")
             required="$required libtext-iconv-perl zlib1g"
-            base="$base pciutils setserial psmisc"
+            base="$base pciutils psmisc"
 	    IPFWTOOL="iptables"
             ;;
         *)
@@ -164,7 +164,7 @@ second_stage_install () {
     info INSTCORE "Installing core packages..."
 
     p; progress $baseprog $bases INSTBASE "Installing base system" #2
-    ln -s mawk $TARGET/usr/bin/awk
+    ln -sf mawk $TARGET/usr/bin/awk
     x_core_install base-files base-passwd
     p; progress $baseprog $bases INSTBASE "Installing base system" #3
     x_core_install dpkg

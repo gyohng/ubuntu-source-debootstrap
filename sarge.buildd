@@ -3,9 +3,9 @@ download_style apt
 
 work_out_debs () {
 
-    required="base-files base-passwd bash bsdutils coreutils debianutils diff dpkg dselect e2fslibs e2fsprogs findutils gcc-3.3-base grep gzip hostname initscripts libacl1 libattr1 libblkid1 libc6 libcap1 libcomerr2 libdb1-compat libdb3 libgcc1 libncurses5 libpam-modules libpam-runtime libpam0g libss2 libstdc++5 libuuid1 login mawk mount ncurses-base ncurses-bin perl-base sed slang1a-utf8 sysv-rc sysvinit tar util-linux zlib1g"
+    required="base-files base-passwd bash bsdutils coreutils debianutils diff dpkg dselect e2fslibs e2fsprogs findutils gcc-3.3-base grep gzip hostname initscripts libacl1 libattr1 libblkid1 libc6 libcap1 libcomerr2 libdb1-compat libdb3 libgcc1 libncurses5 libpam-modules libpam-runtime libpam0g libss2 libstdc++5 libuuid1 login mawk mount ncurses-base ncurses-bin passwd perl-base sed slang1a-utf8 sysv-rc sysvinit tar util-linux zlib1g"
 
-    base="apt binutils cpio cpp cpp-3.3 dpkg-dev g++ g++-3.3 gcc gcc-3.3 libc6-dev libdb4.0 libgdbm3 libstdc++5-3.3-dev linux-kernel-headers make patch perl perl-modules $additional"
+    base="apt binutils cpio cpp cpp-3.3 dpkg-dev g++ g++-3.3 gcc gcc-3.3 libc6-dev libdb4.2 libgdbm3 libstdc++5-3.3-dev linux-kernel-headers make patch perl perl-modules $additional"
 
     without_package () {
         echo "$2" | tr ' ' '\n' | grep -v "^$1$" | tr '\n' ' '
@@ -124,7 +124,7 @@ second_stage_install () {
     info INSTCORE "Installing core packages..."
 
     p; progress $baseprog $bases INSTBASE "Installing base system" #2
-    ln -s mawk $TARGET/usr/bin/awk
+    ln -sf mawk $TARGET/usr/bin/awk
     x_core_install base-files base-passwd
     p; progress $baseprog $bases INSTBASE "Installing base system" #3
     x_core_install dpkg
