@@ -106,7 +106,7 @@ second_stage_install () {
     info INSTCORE "Installing core packages..."
 
     p; progress $baseprog $bases INSTCORE "Installing core packages" #2
-    ln -s mawk $TARGET/usr/bin/awk
+    ln -sf mawk $TARGET/usr/bin/awk
     x_core_install base-files base-passwd
     p; progress $baseprog $bases INSTCORE "Installing core packages" #3
     x_core_install dpkg

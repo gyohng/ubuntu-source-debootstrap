@@ -24,8 +24,11 @@ work_out_debs () {
         "i386")
             ;;
         "ia64")
-            required="$(without_package "libc6" "$required") libc6.1"
-	    base="$(without_package "libc6-dev" "$base") libc6.1-dev"
+	    required="$(without_package "libc6" "$required") libc6.1 gcc-2.96-base libreadline4"
+	    base="$(without_package "cpp-2.95" "$base") cpp-2.96"
+	    base="$(without_package "gcc-2.95" "$base") gcc-2.96"
+	    base="$(without_package "g++-2.95" "$base") g++-2.96"
+	    base="$(without_package "libc6-dev" "$base") libc6.1-dev elilo efibootmgr dosfstools libparted1.4 parted"
             LIBC6="libc6.1"
             ;;
         "m68k")
@@ -121,7 +124,7 @@ second_stage_install () {
     info INSTCORE "Installing core packages..."
 
     p; progress $baseprog $bases INSTBASE "Installing base system" #2
-    ln -s mawk $TARGET/usr/bin/awk
+    ln -sf mawk $TARGET/usr/bin/awk
     x_core_install base-files base-passwd
     p; progress $baseprog $bases INSTBASE "Installing base system" #3
     x_core_install dpkg
@@ -156,7 +159,7 @@ echo \"Warning: Fake start-stop-daemon called, doing nothing\"" > "$TARGET/sbin/
     chmod 755 "$TARGET/sbin/start-stop-daemon"
 
     setup_dselect_method apt
-    on_exit "in_target_nofail umount /dev/pts"
+    on_exit "(in_target_nofail umount /dev/pts) || true"
 
     p; progress $baseprog $bases INSTBASE "Installing base system" #19
     smallyes '' | in_target_failmsg CONF_REQ_FAIL "Failure while configuring required packages." "" dpkg --configure --pending --force-configure-any --force-depends

@@ -213,8 +213,9 @@ get () {
   fi
   
   if [ -e "$2" ]; then
-    info VALIDATING "Validating %s" "$displayname"
-    if [ "$3" = "" ] || check_md5 $2 $3 $4; then
+    if [ "$3" = "" ] || \
+       (info VALIDATING "Validating %s" "$displayname"
+        check_md5 $2 $3 $4); then
       return 0
     else
       rm -f "$2"
@@ -243,8 +244,9 @@ get () {
 
     info RETRIEVING "Retrieving %s" "$displayname"
     if ! just_get "$from" "$dest"; then continue; fi
-    info VALIDATING "Validating %s" "$displayname"
-    if [ "$md5" = "" ] || check_md5 $dest $md5 $siz; then
+    if [ "$md5" = "" ] || \
+       (info VALIDATING "Validating %s" "$displayname"
+        check_md5 $dest $md5 $siz); then
       case "$typ" in
         "gz") gunzip "$dest" ;;
         "bz2") bunzip2 "$dest" ;;
@@ -356,6 +358,52 @@ apt_dest () {
   esac
 }
 
+######################################################## signature checking
+
+read_gpg_status () {
+  badsig=
+  nopubkey=
+  validsig=
+  while read prefix keyword keyid rest; do
+    [ "$prefix" = '[GNUPG:]' ] || continue
+    case $keyword in
+      BADSIG) badsig="$keyid" ;;
+      NO_PUBKEY) nopubkey="$keyid" ;;
+      VALIDSIG) validsig="$keyid" ;;
+    esac
+  done
+  if [ "$validsig" ]; then
+    return 0
+  elif [ "$badsig" ]; then
+    error 1 BADRELSIG "Invalid Release signature (key id %s)" "$badsig"
+  elif [ "$nopubkey" ]; then
+    error 1 UNKNOWNRELSIG "Release signed by unknown key (key id %s)" \
+      "$nopubkey"
+  else
+    error 1 SIGCHECK "Error executing gpgv to check Release signature"
+  fi
+}
+
+download_valid_sig () {
+  local m1="$1"
+  local reldest="$2"
+  local relsigdest="$TARGET/$($DLDEST rel $SUITE $m1 dists/$SUITE/Release.gpg)"
+  if [ "$KEYRING" ]; then
+    progress 0 100 DOWNRELSIG "Downloading Release file signature"
+    progress_next 50
+    get "$m1/dists/$SUITE/Release.gpg" $relsigdest ||
+      error 1 NOGETRELSIG "Failed getting release signature file %s" \
+        "$m1/dists/$SUITE/Release.gpg"
+    progress 50 100 DOWNRELSIG "Downloading Release file signature"
+    info VALIDATING "Validating %s" "${relsigdest##*/}"
+    # Don't worry about the exit status from gpgv; parsing the output will
+    # take care of that.
+    (gpgv --status-fd 1 --keyring "$KEYRING" --ignore-time-conflict \
+     "$relsigdest" "$reldest" || true) | read_gpg_status
+    progress 100 100 DOWNRELSIG "Downloading Release file signature"
+  fi
+}
+
 ################################################################## download
 
 get_release_md5 () {
@@ -390,6 +438,8 @@ download_release_indices () {
     error 1 INVALIDREL "Invalid Release file, no valid components"
   fi
   progress 100 100 DOWNREL "Downloading Release file"
+
+  download_valid_sig "$m1" "$reldest"
 
   local totalpkgs=0
   for c in $COMPONENTS; do

@@ -1,3 +1,315 @@
+debootstrap (0.2.45ubuntu27) hoary; urgency=low
+
+  * [hoary] Add memtest86+ on amd64.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Fri,  1 Apr 2005 15:06:26 +0100
+
+debootstrap (0.2.45ubuntu26) hoary; urgency=low
+
+  * [hoary] Add libsasl2-modules. Add lib64gcc1, libc6-sparc64, and strace
+    on sparc.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Wed, 23 Mar 2005 10:16:51 +0000
+
+debootstrap (0.2.45ubuntu25) hoary; urgency=low
+
+  * Merge from Debian, in a slightly unconventional way since 0.2.45-0.2 is
+    a lower version number than 0.2.45ubuntu24:
+
+    debootstrap (0.2.45-0.2) unstable; urgency=low
+
+      * Non-maintainer upload.
+      * [sarge, sid] Replace libparted1.6-0 with libparted1.6-12 for ia64,
+        to keep up with the ABI changes for that package. (Closes: #295571)
+      * [sarge, sid] include pciutils on hppa as well, per request of the
+        hppa folks. (Closes: #283752)
+
+     -- Steve Langasek <vorlon@debian.org>  Fri, 25 Feb 2005 22:23:30 -0800
+
+    debootstrap (0.2.45-0.1) unstable; urgency=low
+
+      * Non-maintainer upload.
+      * [sarge, sid] Drop libgnutls10 and libgcrypt7, since they are no
+        longer needed by exim4. (Closes: #278158).
+
+     -- Steve Langasek <vorlon@debian.org>  Thu, 20 Jan 2005 21:20:22 -0800
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Tue,  1 Mar 2005 17:22:34 +0000
+
+debootstrap (0.2.45ubuntu24) hoary; urgency=low
+
+  * Use gpgv --ignore-time-conflict to avoid validation errors due to clock
+    problems.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Tue,  8 Feb 2005 08:16:51 +0000
+
+debootstrap (0.2.45ubuntu23) hoary; urgency=low
+
+  * [hoary] Add lsb-release (closes: Ubuntu #2501).
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Wed, 19 Jan 2005 18:22:41 +0000
+
+debootstrap (0.2.45ubuntu22) hoary; urgency=low
+
+  * [hoary.buildd] Add pkgstriptranslations.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Mon, 17 Jan 2005 18:39:37 +0000
+
+debootstrap (0.2.45ubuntu21) hoary; urgency=low
+
+  * Suppress untrue "Validating" messages.
+  * Add --keyring option, allowing verification of Release.gpg against a
+    given keyring.
+  * [hoary] Remove dbus-1 and libexpat1. Remove libunwind7-dev from ia64; it
+    depends on libc6.1-dev which isn't appropriate for required.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Mon, 17 Jan 2005 17:45:47 +0000
+
+debootstrap (0.2.45ubuntu20) hoary; urgency=low
+
+  * [hoary] ia64 needs libunwind7, libunwind7-dev
+  * ln -sf mawk instead of ln -s mawk
+
+ -- LaMont Jones <lamont@ubuntu.com>  Sat, 15 Jan 2005 22:05:58 -0700
+
+debootstrap (0.2.45ubuntu19) hoary; urgency=low
+
+  * [hoary] libevms-2.4 -> libevms-2.5.
+
+ -- Colin Watson <cjwatson@canonical.com>  Sun,  9 Jan 2005 19:10:08 +0000
+
+debootstrap (0.2.45ubuntu18) hoary; urgency=low
+
+  * [hoary] Add ethtool.
+
+ -- Colin Watson <cjwatson@canonical.com>  Sat,  8 Jan 2005 13:06:54 +0000
+
+debootstrap (0.2.45ubuntu17) hoary; urgency=low
+
+  * [hoary.buildd] Add python-minimal and python2.4-minimal.
+
+ -- Colin Watson <cjwatson@canonical.com>  Tue,  4 Jan 2005 23:12:10 +0000
+
+debootstrap (0.2.45ubuntu16) hoary; urgency=low
+
+  * [hoary] Remove libpcap0.7; add ubuntu-keyring.
+
+ -- Colin Watson <cjwatson@canonical.com>  Thu, 30 Dec 2004 16:48:14 +0000
+
+debootstrap (0.2.45ubuntu15) hoary; urgency=low
+
+  * [hoary] Move python-minimal and python2.4-minimal to required.
+
+ -- Colin Watson <cjwatson@canonical.com>  Thu, 23 Dec 2004 22:44:09 +0000
+
+debootstrap (0.2.45ubuntu14) hoary; urgency=low
+
+  * [hoary] Add python-minimal.
+
+ -- Colin Watson <cjwatson@canonical.com>  Tue, 21 Dec 2004 17:35:17 +0000
+
+debootstrap (0.2.45ubuntu13) hoary; urgency=low
+
+  * [hoary] Add python2.4-minimal.
+
+ -- Colin Watson <cjwatson@canonical.com>  Tue, 21 Dec 2004 10:59:55 +0000
+
+debootstrap (0.2.45ubuntu12) hoary; urgency=low
+
+  * [hoary] python2.3 -> python2.4.
+
+ -- Colin Watson <cjwatson@canonical.com>  Thu, 16 Dec 2004 12:48:32 +0100
+
+debootstrap (0.2.45ubuntu11) hoary; urgency=low
+
+  * [hoary] Add sparc support, without strace for now.
+
+ -- Colin Watson <cjwatson@canonical.com>  Wed, 15 Dec 2004 12:12:48 +0100
+
+debootstrap (0.2.45ubuntu10) hoary; urgency=low
+
+  * [hoary] Add ia64 support: libc6.1 rather than libc6, no libelfg0, no
+    ltrace.
+  * LaMont Jones:
+    - [hoary.buildd] Add passwd to required, as bash depends on it.
+    - [hoary.buildd] Add ia64 support.
+
+ -- Colin Watson <cjwatson@canonical.com>  Tue,  7 Dec 2004 18:16:43 +0100
+
+debootstrap (0.2.45ubuntu9) hoary; urgency=low
+
+  * [hoary] libparted1.6-0 -> libparted1.6-12.
+
+ -- Colin Watson <cjwatson@canonical.com>  Thu,  2 Dec 2004 10:53:19 +0000
+
+debootstrap (0.2.45ubuntu8) hoary; urgency=low
+
+  * [hoary] Add grepmap.
+
+ -- Colin Watson <cjwatson@canonical.com>  Tue, 30 Nov 2004 09:24:10 +0000
+
+debootstrap (0.2.45ubuntu7) hoary; urgency=low
+
+  * [hoary] Remove libatm1.
+
+ -- Colin Watson <cjwatson@canonical.com>  Tue, 23 Nov 2004 10:23:42 +0000
+
+debootstrap (0.2.45ubuntu6) hoary; urgency=low
+
+  * [hoary] Remove libreadline5.
+
+ -- Colin Watson <cjwatson@canonical.com>  Wed, 17 Nov 2004 13:28:03 +0000
+
+debootstrap (0.2.45ubuntu5) hoary; urgency=low
+
+  * [hoary] Remove libreadline-common.
+
+ -- Colin Watson <cjwatson@canonical.com>  Mon, 15 Nov 2004 09:51:20 +0000
+
+debootstrap (0.2.45ubuntu4) hoary; urgency=low
+
+  * [hoary] Take module-init-tools back out of required, as this didn't work
+    with the way it uses diversions.
+
+ -- Colin Watson <cjwatson@canonical.com>  Wed, 10 Nov 2004 16:21:34 +0000
+
+debootstrap (0.2.45ubuntu3) hoary; urgency=low
+
+  * [hoary] Remove modutils. Move module-init-tools to required.
+
+ -- Colin Watson <cjwatson@canonical.com>  Tue,  9 Nov 2004 23:17:58 +0000
+
+debootstrap (0.2.45ubuntu2) hoary; urgency=low
+
+  * [hoary] Add libelfg0; libevms-2.3 -> libevms-2.4; libgcrypt7 ->
+    libgcrypt11; libgnutls10 -> libgnutls11; add libreadline-common; add
+    libreadline5.
+
+ -- Colin Watson <cjwatson@canonical.com>  Tue,  2 Nov 2004 23:47:39 +0000
+
+debootstrap (0.2.45ubuntu1) hoary; urgency=low
+
+  * Merge from Debian.
+  * [hoary] New script to install Hoary Hedgehog; a copy of warty for now.
+  * [hoary.buildd] New, copy of warty.buildd.
+  * [Makefile] Install hoary and hoary.buildd.
+
+ -- Colin Watson <cjwatson@canonical.com>  Mon, 25 Oct 2004 23:00:18 +0100
+
+debootstrap (0.2.45) unstable; urgency=high
+
+  * Acknowledge NMUs. (Closes: #270135)
+  * [woody.buildd] Corrected ia64 special cases. Patch by Brett Johnson
+    <brett@hp.com>. (Closes: #271894)
+
+ -- J.H.M. Dassen (Ray) <jdassen@debian.org>  Sat, 18 Sep 2004 13:49:23 +0200
+
+debootstrap (0.2.44.2) unstable; urgency=low
+
+  * NMU again, this time using the makedev in unstable instead of the
+    experimental so devices.tar.gz isn't empty on ia64...  oops... /o\
+
+ -- Bdale Garbee <bdale@gag.com>  Tue, 14 Sep 2004 20:03:56 -0600
+
+debootstrap (0.2.44.1) unstable; urgency=low
+
+  * NMU to resolve d-i inability to install sid on ia64
+  * add pciutils to the base package list for ia64, to avoid having to regress
+    efibootmgr in unstable, closes: #270315, #268490
+
+ -- Bdale Garbee <bdale@gag.com>  Mon, 13 Sep 2004 15:11:11 -0500
+
+debootstrap (0.2.44) unstable; urgency=high
+
+  * [sarge] Removed "gcc-3.0-base" and "libstdc++3" for HPPA as they have been
+    removed from sarge as well on that arch. (Closes: #268917)
+
+ -- J.H.M. Dassen (Ray) <jdassen@debian.org>  Mon, 30 Aug 2004 08:53:30 +0200
+
+debootstrap (0.2.43) unstable; urgency=high
+
+  * [sarge] Added back libgnutls10 in order not to break d-i testing.
+    (Closes: #268578, #268663).
+
+ -- J.H.M. Dassen (Ray) <jdassen@debian.org>  Sun, 29 Aug 2004 09:08:48 +0200
+
+debootstrap (0.2.42) unstable; urgency=high
+
+  * Acknowledge NMUs. (Closes: #262137, #262165, #262178, #262375)
+  * [sarge] Switch to libgnutls11 so exim4 can switch. (Closes: #268325) 
+  * [sid] Removed "gcc-3.0-base" and "libstdc++3" for HPPA as they have been
+    removed from sid. (Closes: #268049)
+  * [Makefile] Make the regular video devices on all archs. (Closes: #265081)
+  * [Makefile,debootstrap] Switched away from deprecated chown syntax;
+    switched away from XSIisms '-a' and '-o'. (Closes: #256098)
+  * [debootstrap.8] Use '\-' rather than '-' in options. (Closes: #263955)
+    Confirmed that the "exlude" typo has already been fixed. (Closes: #254108)
+    Applied patch by Javier Fernández-Sanguino Peña <jfs@computer.org>
+    for "file" URL documentation and a more complete example. (Closes: #226662)
+
+ -- J.H.M. Dassen (Ray) <jdassen@debian.org>  Fri, 27 Aug 2004 15:40:02 +0200
+
+debootstrap (0.2.41-0.2) unstable; urgency=low
+
+  * Non-maintainer upload
+  * [sarge, sid] Add missing libgcrypt11 to base, needed by libgnutls11
+    in sid and needed in sarge for opencdk8 to be rebuilt against it
+    (closes: #262375, #262178).
+
+ -- Steve Langasek <vorlon@debian.org>  Fri, 30 Jul 2004 20:26:57 -0700
+
+debootstrap (0.2.41-0.1) unstable; urgency=low
+
+  * Non-maintainer upload with consent of JHM.
+  * Pull libfribidi0 back out of base, it's opportunistically installed
+    by d-i now for the locales that need it (closes: #262137).
+  * Re-add bootloaders on ia64, sparc, mips, hppa, and m68k to base,
+    because debian-installer isn't ready for this change (closes: #262165).
+
+ -- Steve Langasek <vorlon@debian.org>  Thu, 29 Jul 2004 14:14:33 -0700
+
+debootstrap (0.2.41) unstable; urgency=high
+
+  * High urgency upload as per tbm's request.
+  * [sarge, sid] No longer install setserial, as it causes problems on some
+    systems (e.g. #212646) and there is a consensus it is no longer needed in
+    a base environment.
+  * [sarge, sid] Removed aboot, aboot-base, elilo, efibootmgr, silo, dvhtool,
+    delo, palo, vmelilo. As per the consensus reached in the thread starting 
+    with http://lists.debian.org/debian-boot/2004/04/msg00634.html, the
+    installation of boot loaders is now debian-installer's responsibility.
+    (Closes: #247906)
+  * [sarge, sid] Added libfribidi0 to base to make debconf localisation into
+    right to left languages possible. (Closes: #253229)
+  * [sarge.buildd] Drop libdb4.0 for libdb4.2 as needed by perl.
+  * [sid] Added libgnutls11 as libgnutls10 is being phased out.
+  * [Makefile] Include /dev/ida on ia64. (Closes: #258055)
+
+ -- J.H.M. Dassen (Ray) <jdassen@debian.org>  Thu, 29 Jul 2004 20:37:37 +0200
+
+debootstrap (0.2.40) unstable; urgency=medium
+
+  * [woody.buildd] Ensure the on_exit umounting of /dev/pts doesn't mess up
+    an otherwise OK exit status. (Closes: #260699)
+  * Acknowledge NMUs. (Closes: #258350, #260253)
+
+ -- J.H.M. Dassen (Ray) <jdassen@debian.org>  Thu, 22 Jul 2004 21:53:20 +0200
+
+debootstrap (0.2.39.2) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * [sarge, sid] Drop quik from powerpc, as debian-installer handles this
+    now (closes: #260253).
+
+ -- Colin Watson <cjwatson@debian.org>  Thu, 22 Jul 2004 16:56:19 +0100
+
+debootstrap (0.2.39.1) unstable; urgency=low
+
+  * NMU
+  * add passwd to sid.buildd,sarge.buildd as bash depends on them
+
+ -- Junichi Uekawa <dancer@debian.org>  Fri,  9 Jul 2004 09:07:28 +0900
+
 debootstrap (0.2.39ubuntu22) warty; urgency=low
 
   * [warty] Remove pcmcia-cs from Base.

@@ -4,13 +4,14 @@ CFLAGS=-Wall -W -O2
 ARCH := $(shell dpkg --print-architecture)
 setarchdevs = $(if $(findstring $(ARCH),$(1)),$(2))
 
-DEVS := generic hde hdf hdg hdh sde sdf sdg sdh scd-all initrd input usb md lp rtc \
+DEVS := generic hde hdf hdg hdh sde sdf sdg sdh scd-all initrd input usb md lp rtc video \
         $(call setarchdevs,i386,isdn-io eda edb sonycd mcd mcdx cdu535 \
                                 optcd sjcd cm206cd gscd lmscd sbpcd \
                                 aztcd bpcd dac960 ida fd0 fd1 ataraid cciss) \
         $(call setarchdevs,sparc,hdc hdd busmice) \
         $(call setarchdevs,m68k,fd0 fd1 adc add ade adf hdc hdd) \
-        $(call setarchdevs,powerpc,hdc hdd fd0 fd1 isdn-io m68k-mice)
+        $(call setarchdevs,powerpc,hdc hdd fd0 fd1 isdn-io m68k-mice) \
+        $(call setarchdevs,ia64,ida fd0 fd1 ataraid cciss)
 
 all: pkgdetails devices.tar.gz debootstrap-arch
 clean:
@@ -28,10 +29,12 @@ install:
 	install -o root -g root -m 0644 sarge $(DSDIR)/scripts/
 	install -o root -g root -m 0644 sid $(DSDIR)/scripts/
 	install -o root -g root -m 0644 warty $(DSDIR)/scripts/
+	install -o root -g root -m 0644 hoary $(DSDIR)/scripts/
 	install -o root -g root -m 0644 woody.buildd $(DSDIR)/scripts/
 	install -o root -g root -m 0644 sarge.buildd $(DSDIR)/scripts/
 	install -o root -g root -m 0644 sid.buildd $(DSDIR)/scripts/
 	install -o root -g root -m 0644 warty.buildd $(DSDIR)/scripts/
+	install -o root -g root -m 0644 hoary.buildd $(DSDIR)/scripts/
 	install -o root -g root -m 0644 functions $(DSDIR)/
 	install -o root -g root -m 0755 pkgdetails $(DSDIR)/
 	install -o root -g root -m 0644 devices.tar.gz $(DSDIR)/
@@ -49,7 +52,7 @@ devices.tar.gz:
 	rm -rf dev
 
 	mkdir -p dev
-	chown 0.0 dev
+	chown 0:0 dev
 	chmod 755 dev
 
 	(cd dev && /dev/MAKEDEV $(DEVS))
