@@ -1,0 +1,176 @@
+mirror_style release
+download_style apt
+
+work_out_debs () {
+
+    required="@WARTY_REQUIRED@"
+
+    base="@WARTY_BASE@ $additional"
+
+    without_package () {
+        echo "$2" | tr ' ' '\n' | grep -v "^$1$" | tr '\n' ' '
+    }
+    subst_package () {
+        echo "$3" | tr ' ' '\n' | sed "s/^$1$/$2/" | tr '\n' ' '
+    }
+
+    LIBC6=libc6
+
+    case $ARCH in
+        "i386")
+            required="$required @WARTY_REQUIRED_I386@"
+            base="$base @WARTY_BASE_I386@"
+            ;;
+        "powerpc")
+            required="$required @WARTY_REQUIRED_POWERPC@"
+            base="$base @WARTY_BASE_POWERPC@"
+            ;;
+        "amd64")
+            base="$base @WARTY_BASE_AMD64@"
+            ;;
+        *)
+            # who knows?
+            ;;
+    esac
+
+    all_debs="$required $base"
+
+    for x in $exclude; do
+      all_debs="$(without_package "$x" "$all_debs")"
+    done
+    
+}
+
+install_debs () {
+    first_stage_install
+    second_stage_install
+}
+
+first_stage_install () {
+    extract $required
+
+    mkdir -p "$TARGET/var/lib/dpkg"
+    : >"$TARGET/var/lib/dpkg/status"
+    : >"$TARGET/var/lib/dpkg/available"
+
+    setup_etc
+    if [ ! -e "$TARGET/etc/fstab" ]; then
+        echo '# UNCONFIGURED FSTAB FOR BASE SYSTEM' > "$TARGET/etc/fstab"
+        chown 0.0 "$TARGET/etc/fstab"; chmod 644 "$TARGET/etc/fstab"
+    fi
+
+    setup_proc
+    setup_devices
+
+    in_target /sbin/ldconfig
+
+    p () {
+	baseprog="$(($baseprog + ${1:-1}))"
+    }
+
+    x_feign_install () {
+        local pkg="$1"
+        local deb="$(debfor $pkg)"
+        local ver="$(
+            ar -p "$TARGET/$deb" control.tar.gz | zcat |
+                tar -O -xf - control ./control 2>/dev/null |
+                sed -ne 's/^Version: *//Ip' | head -n 1
+        )"
+
+        mkdir -p "$TARGET/var/lib/dpkg/info"
+
+        echo \
+"Package: $pkg
+Version: $ver
+Status: install ok installed" >> "$TARGET/var/lib/dpkg/status"
+
+        touch "$TARGET/var/lib/dpkg/info/${pkg}.list"
+    }
+
+    x_feign_install dpkg
+}
+
+second_stage_install () {
+    x_core_install () {
+	smallyes '' | in_target dpkg --force-depends --install $(debfor "$@")
+    }
+
+    DEBIAN_FRONTEND=noninteractive
+    DEBCONF_NONINTERACTIVE_SEEN=true
+    export DEBIAN_FRONTEND DEBCONF_NONINTERACTIVE_SEEN
+
+    baseprog=0
+    bases=7
+
+    p; progress $baseprog $bases INSTCORE "Installing core packages" #1
+    info INSTCORE "Installing core packages..."
+
+    p; progress $baseprog $bases INSTCORE "Installing core packages" #2
+    ln -s mawk $TARGET/usr/bin/awk
+    x_core_install base-files base-passwd
+    p; progress $baseprog $bases INSTCORE "Installing core packages" #3
+    x_core_install dpkg
+
+    if [ ! -e "$TARGET/etc/localtime" ]; then
+        ln -sf /usr/share/zoneinfo/UTC "$TARGET/etc/localtime"
+    fi
+
+    p; progress $baseprog $bases INSTCORE "Installing core packages" #4
+    x_core_install $LIBC6
+
+    p; progress $baseprog $bases INSTCORE "Installing core packages" #5
+    x_core_install perl-base
+    p; progress $baseprog $bases INSTCORE "Installing core packages" #6
+    rm $TARGET/usr/bin/awk
+    x_core_install mawk
+    p; progress $baseprog $bases INSTCORE "Installing core packages" #7
+    x_core_install debconf
+
+    baseprog=0
+    bases="$(set -- $required; echo $#)"
+
+    info UNPACKREQ "Unpacking required packages..."
+
+    smallyes '' | (repeat 5 in_target_failmsg UNPACK_REQ_FAIL_FIVE "Failure while unpacking required packages.  This will be attempted up to five times." "" dpkg --status-fd 8 --force-depends --unpack $(debfor $required) 8>&1 1>&7 | dpkg_progress $baseprog $bases UNPACKREQ "Unpacking required packages" UNPACKING) 7>&1
+
+    baseprog=0
+
+    info CONFREQ "Configuring required packages..."
+
+    mv "$TARGET/sbin/start-stop-daemon" "$TARGET/sbin/start-stop-daemon.REAL"
+    echo \
+"#!/bin/sh
+echo
+echo \"Warning: Fake start-stop-daemon called, doing nothing\"" > "$TARGET/sbin/start-stop-daemon"
+    chmod 755 "$TARGET/sbin/start-stop-daemon"
+
+    setup_dselect_method apt
+    #on_exit "(in_target_nofail umount /dev/pts) || true"
+
+    smallyes '' | (in_target_failmsg CONF_REQ_FAIL "Failure while configuring required packages." "" dpkg --status-fd 8 --configure --pending --force-configure-any --force-depends 8>&1 1>&7 | dpkg_progress $baseprog $bases CONFREQ "Configuring required packages" CONFIGURING) 7>&1
+
+    baseprog=0
+    bases="$(set -- $base; echo $#)"
+
+    info UNPACKBASE "Unpacking the base system..."
+
+    smallyes '' | (repeat 5 in_target_failmsg INST_BASE_FAIL_FIVE "Failure while installing base packages.  This will be re-attempted up to five times." "" dpkg --status-fd 8 --force-auto-select --force-overwrite --force-confold --skip-same-version --unpack $(debfor $base) 8>&1 1>&7 | dpkg_progress $baseprog $bases UNPACKBASE "Unpacking base system" UNPACKING) 7>&1
+
+    baseprog=0
+
+    info CONFBASE "Configuring the base system..."
+
+    mv "$TARGET/usr/sbin/sendmail" "$TARGET/usr/sbin/sendmail.REAL"
+    ln -s /bin/true "$TARGET/usr/sbin/sendmail"
+
+    smallyes '' | (repeat 5 in_target_failmsg CONF_BASE_FAIL_FIVE "Failure while configuring base packages.  This will be attempted 5 times." "" dpkg --status-fd 8 --force-confold --skip-same-version  --configure -a 8>&1 1>&7 | dpkg_progress $baseprog $bases CONFBASE "Configuring base system" CONFIGURING) 7>&1
+
+    rm -f "$TARGET/usr/sbin/sendmail"
+    mv "$TARGET/usr/sbin/sendmail.REAL" "$TARGET/usr/sbin/sendmail"
+
+    mv "$TARGET/sbin/start-stop-daemon.REAL" "$TARGET/sbin/start-stop-daemon"
+
+    progress $bases $bases CONFBASE "Configuring base system"
+    info BASESUCCESS "Base system installed successfully."
+}
+

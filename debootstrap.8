@@ -1,0 +1,69 @@
+.TH DEBOOTSTRAP 8 2001-04-27 "Debian Project" "Debian GNU/Linux manual"
+.SH NAME
+debootstrap \- Bootstrap a basic Debian system
+.SH SYNOPSIS
+.B debootstrap
+.RB [ OPTION ]\&.\&.\&.
+.I SUITE TARGET
+.RI [ MIRROR
+.RI [ SCRIPT ]]
+.SH DESCRIPTION
+.B debootstrap
+bootstraps a basic Debian system of
+.I SUITE
+(eg, woody, sarge, sid) into
+.I TARGET
+from
+.I MIRROR
+by running
+.IR SCRIPT .
+.I MIRROR
+can be an http:// URL or a file:/ URL.
+.SH "OPTIONS"
+.PP
+.IP "\fB--arch ARCH\fP"
+Set the target architecture (use if dpkg isn't installed)
+.IP
+.IP "\fB--download-only\fP"
+Download packages, but don't perform installation
+.IP
+.IP "\fB--include=alpha,beta\fP"
+Comma separated list of packages which will be added to download and extract
+lists. Don't forget to resolve the dependencies manually, otherwise the
+installation may fail.
+.IP
+.IP "\fB--exclude=alpha,beta\fP"
+Comma separated list of packages which will be removed from download and
+extract lists. WARNING: you can and probably will exclude essential packages, be
+careful using this option.
+.IP
+.IP "\fB--variant=buildd\fP"
+Name of the bootstrap script variant to use.  Currently, the only variant
+supported is buildd, which installs the build-essential packages into
+.IR TARGET .
+The default, with no \fB--variant=X\fP argument, is to create a base
+Debian installation in
+.IR TARGET .
+.IP
+.IP "\fB--verbose\fP"
+Produce more info about downloading.
+.IP
+.IP "\fB--print-debs\fP"
+Print the packages to be installed, and exit
+.IP
+.IP "\fB--unpack-tarball FILE\fP"
+Acquire .debs from tarball FILE instead of downloading via http
+.IP
+.IP "\fB--boot-floppies\fP"
+Used for internal purposes by boot-floppies
+.IP
+.IP "\fB--debian-installer\fP"
+Used for internal purposes by the debian-installer
+.IP 
+.SH "EXAMPLE"
+.PP
+# debootstrap woody ./woody-chroot http://ftp.cx.debian.org/debian
+.SH AUTHOR
+.B debootstrap
+was written by Anthony Towns <ajt@debian.org>.
+This manpage was written by Matt Kraai <kraai@debian.org>.
