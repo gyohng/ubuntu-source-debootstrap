@@ -1,49 +1,31 @@
 mirror_style release
 download_style apt
+finddebs_style from-indices
+variants - buildd
 
 work_out_debs () {
-
-    required="@WARTY_REQUIRED@"
-
-    base="@WARTY_BASE@ $additional"
-
-    without_package () {
-        echo "$2" | tr ' ' '\n' | grep -v "^$1$" | tr '\n' ' '
-    }
-    subst_package () {
-        echo "$3" | tr ' ' '\n' | sed "s/^$1$/$2/" | tr '\n' ' '
-    }
-
     LIBC6=libc6
+    if [ "$ARCH" = "alpha" -o "$ARCH" = "ia64" ]; then LIBC6="libc6.1"; fi
 
-    case $ARCH in
-        "i386")
-            required="$required @WARTY_REQUIRED_I386@"
-            base="$base @WARTY_BASE_I386@"
-            ;;
-        "powerpc")
-            required="$required @WARTY_REQUIRED_POWERPC@"
-            base="$base @WARTY_BASE_POWERPC@"
-            ;;
-        "amd64")
-            base="$base @WARTY_BASE_AMD64@"
-            ;;
-        *)
-            # who knows?
-            ;;
-    esac
+    required="$(get_debs Priority: required)"
 
-    all_debs="$required $base"
+    if doing_variant -; then 
+      #required="$required $(get_debs Priority: important)"
+      #  ^^ should be getting debconf here somehow maybe
+      base="$(get_debs Priority: important)"
+    elif doing_variant buildd; then
+      # TODO: add Build-Essential: yes extraoverrides
+      #base="$(get_debs Build-Essential: yes)"
 
-    for x in $exclude; do
-      all_debs="$(without_package "$x" "$all_debs")"
-    done
-    
-}
+      add () { if [ "$ARCH" = "$1" ]; then eval "$2=\"\$$2 $3\""; fi; }
 
-install_debs () {
-    first_stage_install
-    second_stage_install
+      base="apt binutils cpio cpp cpp-4.0 dpkg-dev g++ g++-4.0 gcc gcc-4.0 gcc-4.0-base ${LIBC6}-dev libdb4.2 libgdbm3 libstdc++6 libstdc++6-4.0-dev linux-kernel-headers make patch perl perl-modules"
+
+      add ia64 base "libunwind7-dev"
+      add sparc base "lib64gcc1"
+      add sparc base "libc6-dev-sparc64"
+      add sparc base "libc6-sparc64"
+    fi
 }
 
 first_stage_install () {
@@ -59,14 +41,7 @@ first_stage_install () {
         chown 0.0 "$TARGET/etc/fstab"; chmod 644 "$TARGET/etc/fstab"
     fi
 
-    setup_proc
     setup_devices
-
-    in_target /sbin/ldconfig
-
-    p () {
-	baseprog="$(($baseprog + ${1:-1}))"
-    }
 
     x_feign_install () {
         local pkg="$1"
@@ -95,6 +70,13 @@ second_stage_install () {
 	smallyes '' | in_target dpkg --force-depends --install $(debfor "$@")
     }
 
+    p () {
+	baseprog="$(($baseprog + ${1:-1}))"
+    }
+
+    setup_proc
+    in_target /sbin/ldconfig
+
     DEBIAN_FRONTEND=noninteractive
     DEBCONF_NONINTERACTIVE_SEEN=true
     export DEBIAN_FRONTEND DEBCONF_NONINTERACTIVE_SEEN
@@ -120,20 +102,25 @@ second_stage_install () {
 
     p; progress $baseprog $bases INSTCORE "Installing core packages" #5
     x_core_install perl-base
+
     p; progress $baseprog $bases INSTCORE "Installing core packages" #6
     rm $TARGET/usr/bin/awk
     x_core_install mawk
+
     p; progress $baseprog $bases INSTCORE "Installing core packages" #7
-    x_core_install debconf
+    if doing_variant -; then
+      x_core_install debconf
+    fi
 
     baseprog=0
-    bases="$(set -- $required; echo $#)"
+    bases=$(set -- $required; echo $#)
 
     info UNPACKREQ "Unpacking required packages..."
 
-    smallyes '' | (repeat 5 in_target_failmsg UNPACK_REQ_FAIL_FIVE "Failure while unpacking required packages.  This will be attempted up to five times." "" dpkg --status-fd 8 --force-depends --unpack $(debfor $required) 8>&1 1>&7 | dpkg_progress $baseprog $bases UNPACKREQ "Unpacking required packages" UNPACKING) 7>&1
-
-    baseprog=0
+    smallyes '' | 
+      (repeat 5 in_target_failmsg UNPACK_REQ_FAIL_FIVE "Failure while unpacking required packages.  This will be attempted up to five times." "" \
+      dpkg --status-fd 8 --force-depends --unpack $(debfor $required) 8>&1 1>&7 |
+      dpkg_progress $baseprog $bases UNPACKREQ "Unpacking required packages" UNPACKING) 7>&1
 
     info CONFREQ "Configuring required packages..."
 
@@ -145,32 +132,31 @@ echo \"Warning: Fake start-stop-daemon called, doing nothing\"" > "$TARGET/sbin/
     chmod 755 "$TARGET/sbin/start-stop-daemon"
 
     setup_dselect_method apt
-    #on_exit "(in_target_nofail umount /dev/pts) || true"
 
-    smallyes '' | (in_target_failmsg CONF_REQ_FAIL "Failure while configuring required packages." "" dpkg --status-fd 8 --configure --pending --force-configure-any --force-depends 8>&1 1>&7 | dpkg_progress $baseprog $bases CONFREQ "Configuring required packages" CONFIGURING) 7>&1
+    smallyes '' | 
+      (in_target_failmsg CONF_REQ_FAIL "Failure while configuring required packages." "" \
+      dpkg --status-fd 8 --configure --pending --force-configure-any --force-depends 8>&1 1>&7 |
+      dpkg_progress $baseprog $bases CONFREQ "Configuring required packages" CONFIGURING) 7>&1
 
     baseprog=0
     bases="$(set -- $base; echo $#)"
 
     info UNPACKBASE "Unpacking the base system..."
 
-    smallyes '' | (repeat 5 in_target_failmsg INST_BASE_FAIL_FIVE "Failure while installing base packages.  This will be re-attempted up to five times." "" dpkg --status-fd 8 --force-auto-select --force-overwrite --force-confold --skip-same-version --unpack $(debfor $base) 8>&1 1>&7 | dpkg_progress $baseprog $bases UNPACKBASE "Unpacking base system" UNPACKING) 7>&1
-
-    baseprog=0
+    smallyes '' | 
+      (repeat 5 in_target_failmsg INST_BASE_FAIL_FIVE "Failure while installing base packages.  This will be re-attempted up to five times." "" \
+      dpkg --status-fd 8 --force-auto-select --force-overwrite --force-confold --skip-same-version --unpack $(debfor $base) 8>&1 1>&7 |
+      dpkg_progress $baseprog $bases UNPACKBASE "Unpacking base system" UNPACKING) 7>&1
 
     info CONFBASE "Configuring the base system..."
 
-    mv "$TARGET/usr/sbin/sendmail" "$TARGET/usr/sbin/sendmail.REAL"
-    ln -s /bin/true "$TARGET/usr/sbin/sendmail"
-
-    smallyes '' | (repeat 5 in_target_failmsg CONF_BASE_FAIL_FIVE "Failure while configuring base packages.  This will be attempted 5 times." "" dpkg --status-fd 8 --force-confold --skip-same-version  --configure -a 8>&1 1>&7 | dpkg_progress $baseprog $bases CONFBASE "Configuring base system" CONFIGURING) 7>&1
-
-    rm -f "$TARGET/usr/sbin/sendmail"
-    mv "$TARGET/usr/sbin/sendmail.REAL" "$TARGET/usr/sbin/sendmail"
+    smallyes '' |
+      (repeat 5 in_target_failmsg CONF_BASE_FAIL_FIVE "Failure while configuring base packages.  This will be attempted 5 times." "" \
+      dpkg --status-fd 8 --force-confold --skip-same-version --configure -a 8>&1 1>&7 |
+      dpkg_progress $baseprog $bases CONFBASE "Configuring base system" CONFIGURING) 7>&1
 
     mv "$TARGET/sbin/start-stop-daemon.REAL" "$TARGET/sbin/start-stop-daemon"
 
     progress $bases $bases CONFBASE "Configuring base system"
     info BASESUCCESS "Base system installed successfully."
 }
-

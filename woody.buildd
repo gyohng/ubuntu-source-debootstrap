@@ -5,7 +5,7 @@ work_out_debs () {
 
     required="base-files base-passwd bash bsdutils debianutils diff dpkg e2fsprogs fileutils findutils grep gzip hostname libc6 libcap1 libdb3 libgdbmg1 libncurses5 libpam-modules libpam-runtime libpam0g libperl5.6 libstdc++2.10-glibc2.2 login mawk mount ncurses-base ncurses-bin perl-base sed shellutils slang1 sysvinit tar textutils util-linux"
 
-    base="apt binutils cpio cpp cpp-2.95 debconf dpkg-dev g++ g++-2.95 gcc gcc-2.95 libc6-dev libdb2 libstdc++2.10-dev make patch perl perl-modules $additional"
+    base="apt binutils cpio cpp cpp-2.95 debconf dpkg-dev g++ g++-2.95 gcc gcc-2.95 libc6-dev libdb2 libstdc++2.10-dev make patch perl perl-modules"
 
     without_package () {
         echo "$2" | tr ' ' '\n' | grep -v "^$1$" | tr '\n' ' '
@@ -51,18 +51,6 @@ work_out_debs () {
             # who knows?
             ;;
     esac
-
-    all_debs="$required $base"
-
-    for x in $exclude; do
-      all_debs="$(without_package "$x" "$all_debs")"
-    done
-    
-}
-
-install_debs () {
-    first_stage_install
-    second_stage_install
 }
 
 first_stage_install () {
@@ -78,14 +66,7 @@ first_stage_install () {
         chown 0.0 "$TARGET/etc/fstab"; chmod 644 "$TARGET/etc/fstab"
     fi
 
-    setup_proc
     setup_devices
-
-    in_target /sbin/ldconfig
-
-    p () {
-	baseprog="$(($baseprog + ${1:-1}))"
-    }
 
     x_feign_install () {
         local pkg="$1"
@@ -114,6 +95,13 @@ second_stage_install () {
 	smallyes '' | in_target dpkg --force-depends --install $(debfor "$@")
     }
 
+    p () {
+	baseprog="$(($baseprog + ${1:-1}))"
+    }
+
+    setup_proc
+    in_target /sbin/ldconfig
+
     DEBIAN_FRONTEND=noninteractive
     export DEBIAN_FRONTEND
 
@@ -124,7 +112,7 @@ second_stage_install () {
     info INSTCORE "Installing core packages..."
 
     p; progress $baseprog $bases INSTBASE "Installing base system" #2
-    ln -sf mawk $TARGET/usr/bin/awk
+    ln -s mawk $TARGET/usr/bin/awk
     x_core_install base-files base-passwd
     p; progress $baseprog $bases INSTBASE "Installing base system" #3
     x_core_install dpkg
@@ -159,7 +147,6 @@ echo \"Warning: Fake start-stop-daemon called, doing nothing\"" > "$TARGET/sbin/
     chmod 755 "$TARGET/sbin/start-stop-daemon"
 
     setup_dselect_method apt
-    on_exit "(in_target_nofail umount /dev/pts) || true"
 
     p; progress $baseprog $bases INSTBASE "Installing base system" #19
     smallyes '' | in_target_failmsg CONF_REQ_FAIL "Failure while configuring required packages." "" dpkg --configure --pending --force-configure-any --force-depends

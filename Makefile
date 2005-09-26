@@ -13,9 +13,10 @@ DEVS := generic hde hdf hdg hdh sde sdf sdg sdh scd-all initrd input usb md lp r
         $(call setarchdevs,powerpc,hdc hdd fd0 fd1 isdn-io m68k-mice) \
         $(call setarchdevs,ia64,ida fd0 fd1 ataraid cciss)
 
-all: pkgdetails devices.tar.gz debootstrap-arch
+all: pkgdetails devices-std.tar.gz devices.tar.gz debootstrap-arch
 clean:
-	rm -f pkgdetails pkgdetails.o devices.tar.gz debootstrap-arch
+	rm -f pkgdetails pkgdetails.o devices-std.tar.gz devices.tar.gz
+	rm -f debootstrap-arch
 	rm -rf dev
 
 DSDIR=$(DESTDIR)/usr/lib/debootstrap
@@ -23,30 +24,47 @@ install:
 	mkdir -p $(DSDIR)/scripts
 	mkdir -p $(DESTDIR)/usr/sbin
 	mkdir -p $(DESTDIR)/usr/share/man/man8
-	install -o root -g root -m 0644 slink $(DSDIR)/scripts/
 	install -o root -g root -m 0644 potato $(DSDIR)/scripts/
 	install -o root -g root -m 0644 woody $(DSDIR)/scripts/
+	install -o root -g root -m 0644 woody.buildd $(DSDIR)/scripts/
 	install -o root -g root -m 0644 sarge $(DSDIR)/scripts/
+	install -o root -g root -m 0644 sarge.buildd $(DSDIR)/scripts/
+	install -o root -g root -m 0644 sarge.fakechroot $(DSDIR)/scripts/
+	install -o root -g root -m 0644 etch $(DSDIR)/scripts/
 	install -o root -g root -m 0644 sid $(DSDIR)/scripts/
 	install -o root -g root -m 0644 warty $(DSDIR)/scripts/
-	install -o root -g root -m 0644 hoary $(DSDIR)/scripts/
-	install -o root -g root -m 0644 woody.buildd $(DSDIR)/scripts/
-	install -o root -g root -m 0644 sarge.buildd $(DSDIR)/scripts/
-	install -o root -g root -m 0644 sid.buildd $(DSDIR)/scripts/
 	install -o root -g root -m 0644 warty.buildd $(DSDIR)/scripts/
+	install -o root -g root -m 0644 hoary $(DSDIR)/scripts/
 	install -o root -g root -m 0644 hoary.buildd $(DSDIR)/scripts/
+	install -o root -g root -m 0644 breezy $(DSDIR)/scripts/
 	install -o root -g root -m 0644 functions $(DSDIR)/
+
+	install -o root -g root -m 0755 debootstrap.8 $(DESTDIR)/usr/share/man/man8/
+	install -o root -g root -m 0755 debootstrap $(DESTDIR)/usr/sbin/
+
+install-allarch: install
+	install -o root -g root -m 0644 devices-std.tar.gz \
+		$(DSDIR)/devices.tar.gz
+
+install-arch: install
 	install -o root -g root -m 0755 pkgdetails $(DSDIR)/
 	install -o root -g root -m 0644 devices.tar.gz $(DSDIR)/
 	install -o root -g root -m 0644 debootstrap-arch $(DSDIR)/arch
-	install -o root -g root -m 0755 debootstrap.8 $(DESTDIR)/usr/share/man/man8/
-	install -o root -g root -m 0755 debootstrap $(DESTDIR)/usr/sbin/
 
 pkgdetails: pkgdetails.o
 	$(CC) -o $@ $^
 
 debootstrap-arch:
 	echo $(ARCH) >debootstrap-arch
+
+devices-std.tar.gz:
+	rm -rf dev
+	mkdir -p dev
+	chown 0:0 dev
+	chmod 755 dev
+	(cd dev && /dev/MAKEDEV std)
+	tar cf - dev | gzip -9 >devices-std.tar.gz
+	rm -rf dev
 
 devices.tar.gz:
 	rm -rf dev
@@ -78,3 +96,4 @@ endif
 
 	tar cf - dev | gzip -9 >devices.tar.gz
 	rm -rf dev
+

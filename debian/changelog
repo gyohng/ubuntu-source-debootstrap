@@ -1,3 +1,285 @@
+debootstrap (0.3.1.6ubuntu1) breezy; urgency=low
+
+  * Resynchronise with Debian.
+  * [breezy] Fix use of additions in buildd variant.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Mon, 26 Sep 2005 09:52:25 +0100
+
+debootstrap (0.3.1.6) unstable; urgency=low
+
+  * NMU.
+  * Patch from Colin to redirect status messages to stderr when running
+    --print-debs. Closes: #315875
+  * Restore logging to stderr in debian-installer mode. Closes: #314160
+
+ -- Joey Hess <joeyh@debian.org>  Mon, 12 Sep 2005 15:27:14 -0400
+
+debootstrap (0.3.1.5ubuntu1) breezy; urgency=low
+
+  * Resynchronise with Debian.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Mon, 12 Sep 2005 14:17:53 +0100
+
+debootstrap (0.3.1.5) unstable; urgency=low
+
+  * NMU.
+  * Fixed "--variant=buildd option does not work" for pbuilder,
+    closes: #314858. Patch by Matt Kraai <kraai@ftbfs.org>.
+
+ -- Anibal Monsalve Salazar <anibal@debian.org>  Sat, 13 Aug 2005 15:38:54 +1000
+
+debootstrap (0.3.1.4ubuntu4) breezy; urgency=low
+
+  * [breezy] Add libc6-sparc64 for buildd variant on sparc.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Fri, 29 Jul 2005 10:52:39 +0100
+
+debootstrap (0.3.1.4ubuntu3) breezy; urgency=low
+
+  * [breezy] Add gcc-4.0-base for buildd variant. (Tested this time.)
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Fri, 22 Jul 2005 18:44:59 +0100
+
+debootstrap (0.3.1.4ubuntu2) breezy; urgency=low
+
+  * [breezy] Add libstdc++6 for buildd variant.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Fri, 22 Jul 2005 18:04:17 +0100
+
+debootstrap (0.3.1.4ubuntu1) breezy; urgency=low
+
+  * Resynchronise with Debian.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Mon, 27 Jun 2005 19:28:18 +0100
+
+debootstrap (0.3.1.4) unstable; urgency=low
+
+  * NMU.
+  * Wrap eval statement in exit_function in parens, working around
+    bug #315444 in busybox sh. Closes: #314373
+
+ -- Joey Hess <joeyh@debian.org>  Sun, 26 Jun 2005 23:35:20 -0400
+
+debootstrap (0.3.1.3ubuntu1) breezy; urgency=low
+
+  * Resynchronise with Debian.
+  * [breezy] Determine the base system dynamically. The buildd variant base
+    is still hardcoded.
+  * Send progress output to stderr rather than stdout when doing
+    --print-debs (Debian #315875).
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Mon, 27 Jun 2005 12:01:45 +0100
+
+debootstrap (0.3.1.3) unstable; urgency=low
+
+  * NMU.
+  * Updated fakechroot's ldd. Now it works on 64-bit architectures.
+    Closes: #315044.
+
+ -- Piotr Roszatycki <dexter@debian.org>  Mon, 20 Jun 2005 10:17:04 +0200
+
+debootstrap (0.3.1.2) unstable; urgency=low
+
+  * NMU.
+  * Fix incorrect use of "$@" in local. Closes: #314157, #314547
+  * Fix fd redirection in download progress code. See #314373
+  * Remove md5sums file from udeb. Closes: #314378
+  * Fix debian-installer mode warning code. Closes: #314340
+
+ -- Joey Hess <joeyh@debian.org>  Sat, 18 Jun 2005 11:45:24 -0400
+
+debootstrap (0.3.1.1) unstable; urgency=low
+
+  * NMU.
+  * Added fakechroot variant. Closes: #204652.
+
+ -- Piotr Roszatycki <dexter@debian.org>  Thu, 16 Jun 2005 11:20:15 +0200
+
+debootstrap (0.3.1) unstable; urgency=low
+
+  * sid script updated:
+    - Determine base dynamically (Priority: required for required packages,
+      Priority: important for base packages, Build-Essential: yes for buildd
+      variant base). (Closes: Bug#88984, Bug#193134)
+    - Use fine grained dpkg progress display, thanks again to Colin Watson.
+      (Closes: Bug#229314, Bug#231109, Bug#244563)
+
+  * dpkg output (etc) goes to /var/log/bootstrap.log in the target, rather
+    than stdout. This is probably difficult for frontends to capture
+    at present.
+
+  * Parsing of Packages file sped up. (Yay!)
+
+  * debootstrap.deb now arch: all (Closes: Bug#122465, Bug#131552)
+    - perl implementation of pkgdetails used by preference
+    - devices.tar.gz reduced to minimal set of devices; frontends should
+      setup udev or supply their own devices or similar in future
+    - /usr/lib/debootstrap/arch not shipped
+    - none of the above applies to udebs yet; though the devices.tar.gz
+      change will eventually
+
+  * Support for verifying based on Release.gpg files (--keyring). Thanks
+    to Colin Watson. (Closes: Bug#313383)
+
+ -- Anthony Towns <aj@azure.humbug.org.au>  Tue, 14 Jun 2005 00:22:55 +1000
+
+debootstrap (0.3.0) unstable; urgency=low
+
+  * The Gernot Heiser release, dedicated to everyone who drinks enough to
+    lose their better judgement, and those of us who didn't have any in
+    the first place.
+
+  * Major update. New features:
+    + Use $TARGET/debootstrap directory for state info
+      (--keep-debootstrap-dir)
+    + Support for cross-strapping (--foreign / --second-stage)
+      (Closes: Bug#202529)
+    + Support for resolving dependencies (--resolve-deps)
+    + Support for Debian etch, and Ubuntu warty and hoary (Closes: Bug#312417)
+    + Support for handling variants within the main suite script
+    + Support for other versions of base packages in /v/c/apt/archives
+    + Initial support for fine-grained dpkg progress display, thanks to
+      Colin Watson (currently only for warty and hoary)
+    + Initial support for determining base system dynamically.
+    + No longer display "debootstrap.invalid" when working with
+      Release/Packages files. (Closes: Bug#241795, Bug#256255)
+    + Ignores failures for on_exit cleanup commands. (Closes: Bug#253387,
+      Bug#253468, Bug#308774)
+    + Early reporting of unavailable packages.
+    + More efficient parsing of Packages files.
+    + Generalised additions and exclusions. (Closes: Bug#191793)
+    + Handles symlinked configuration files in /etc a little better.
+      (Closes: Bug#161987, Bug#252907, Bug#272257)
+
+  * Dropped support for slink.
+
+  * Use ln -fs for mawk/awk link. (Closes: Bug#248398, Bug#258524)
+
+  * Dropped mail-transport-agent, and hence mailx and at from sid/etch base.
+    (Closes: Bug#168473)
+  * Dropped ipchains for i386 (Closes: Bug#266119)
+  * Other minor changes to meet dependencies, also. (Closes: Bug#312701)
+
+  * Minor manpage fixes. (Closes: Bug#285777)
+  * Add check for specifying no components (CloseS: Bug#283810)
+
+  * Include 0.2.45 NMUs, thanks to Steve Langasek.
+    (Closes: Bug#295571, Bug#283752, Bug#278158)
+
+ -- Anthony Towns <aj@azure.humbug.org.au>  Sun, 12 Jun 2005 23:49:58 +1000
+
+debootstrap (0.2.45-0.2) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * [sarge, sid] Replace libparted1.6-0 with libparted1.6-12 for ia64,
+    to keep up with the ABI changes for that package. (Closes: #295571)
+  * [sarge, sid] include pciutils on hppa as well, per request of the
+    hppa folks. (Closes: #283752)
+
+ -- Steve Langasek <vorlon@debian.org>  Fri, 25 Feb 2005 22:23:30 -0800
+
+debootstrap (0.2.45-0.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * [sarge, sid] Drop libgnutls10 and libgcrypt7, since they are no
+    longer needed by exim4. (Closes: #278158).
+
+ -- Steve Langasek <vorlon@debian.org>  Thu, 20 Jan 2005 21:20:22 -0800
+
+debootstrap (0.2.45ubuntu38) breezy; urgency=low
+
+  * [breezy] Add libdevmapper1.01; add libsigc++-1.2-5 on sparc; remove
+    gcc-3.3-base and libstdc++5 from sparc.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Fri, 17 Jun 2005 09:24:45 +0100
+
+debootstrap (0.2.45ubuntu37) breezy; urgency=low
+
+  * [breezy] Add libdb4.3; remove libreadline4.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Wed, 15 Jun 2005 22:48:39 +0100
+
+debootstrap (0.2.45ubuntu36) breezy; urgency=low
+
+  * Colin Watson
+    - [breezy] Remove dselect, gcc-3.3-base (except sparc),
+      libsigc++-1.2-5c102, libstdc++5 (except sparc). Add gcc-4.0-base,
+      libsigc++-1.2-5 (except sparc), libstdc++6.
+  * Fabio M. Di Nitto:
+    - [breezy.buildd] Add libstdc++6, libstdc++6-4.0-dev. Remove cpp-3.3,
+      g++-3.3, gcc-3.3, libstdc++5-3.3-dev.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Tue, 24 May 2005 16:02:47 +0100
+
+debootstrap (0.2.45ubuntu35) breezy; urgency=low
+
+  * [breezy] Remove netkit-inetd.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Fri, 13 May 2005 10:16:58 +0100
+
+debootstrap (0.2.45ubuntu34) breezy; urgency=low
+
+  * [breezy.build]:
+    - Add gcc-4.0-base to required, cpp-4.0 and gcc-4.0 to base.
+    - Add specific sparc section that adds lib64gcc1 libc6-dev-sparc64
+      libc6-sparc64 to base.
+
+ -- Fabio M. Di Nitto <fabbione@ubuntu.com>  Thu, 12 May 2005 10:33:56 +0200
+
+debootstrap (0.2.45ubuntu33) breezy; urgency=low
+
+  * [breezy] Remove discover1, discover1-data, and libdiscover1. Add
+    ubuntu-minimal on sparc.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Wed,  4 May 2005 17:34:47 +0100
+
+debootstrap (0.2.45ubuntu32) breezy; urgency=low
+
+  * Resynchronise breezy.template with breezy.
+  * Fix debootstrapping of woody (!) by checking that /sys exists before
+    trying to mount it.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Wed,  4 May 2005 10:01:01 +0100
+
+debootstrap (0.2.45ubuntu31) breezy; urgency=low
+
+  * Remove code which fiddles with /usr/sbin/sendmail (it isn't there anymore)
+
+ -- Matt Zimmerman <mdz@ubuntu.com>  Tue,  3 May 2005 19:32:38 -0700
+
+debootstrap (0.2.45ubuntu30) breezy; urgency=low
+
+  * [breezy] Reduce to minimal seed:
+    - Remove at, bind9-host, bsdmainutils, cron, dmidecode, dmsetup,
+      dnsutils, ed, evms, evms-ncurses, fdutils, file, ftp, groff-base,
+      hdparm, info, iptables, iputils-arping, iputils-tracepath,
+      libdevmapper1.00, libdns16, libelfg0, libevms-2.5, libgc1, libgdbm3,
+      libidn11, libisc7, liblockfile1, liblwres1, libmagic1, libncursesw5,
+      libparted1.6-12, libpcap0.8, logrotate, lshw, ltrace, lvm-common,
+      lvm10, lvm2, mailx, man-db, manpages, mdadm, mime-support, mtr-tiny,
+      mutt, nano, ntp, openssh-client, parted, popularity-contest, postfix,
+      postfix-tls, ppp, pppconfig, pppoeconf, psmisc, reportbug, rsync,
+      tcpdump, telnet, time, ubuntu-base, w3m, and wget.
+    - Add ubuntu-minimal on amd64, i386, ia64, and powerpc.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Wed,  4 May 2005 00:10:39 +0100
+
+debootstrap (0.2.45ubuntu29) breezy; urgency=low
+
+  * [breezy] Add libatm1 and libreadline5 on amd64, i386, and powerpc.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Thu, 14 Apr 2005 16:22:24 +0100
+
+debootstrap (0.2.45ubuntu28) breezy; urgency=low
+
+  * [breezy] New script to install Breezy Badger; a copy of hoary for now.
+  * [breezy.buildd] New, copy of hoary.buildd.
+  * [Makefile] Install breezy and breezy.buildd.
+  * [debootstrap] Default mirror to http://archive.ubuntu.com/ubuntu
+    (closes: Ubuntu #9132).
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Wed, 13 Apr 2005 14:02:00 +0100
+
 debootstrap (0.2.45ubuntu27) hoary; urgency=low
 
   * [hoary] Add memtest86+ on amd64.

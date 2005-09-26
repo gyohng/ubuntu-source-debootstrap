@@ -1,15 +1,14 @@
 Source: debootstrap
 Section: admin
-Priority: required
 Maintainer: Anthony Towns <ajt@debian.org>
 Uploaders: J.H.M. Dassen (Ray) <jdassen@debian.org>
 Build-Depends: debhelper (>> 2.0.0), makedev (>= 2.3.1-69)
-Standards-Version: 3.6.1
+Standards-Version: 3.6.2
 
 Package: debootstrap
 Priority: extra
-Architecture: any
-Depends: ${shlibs:Depends}, wget, binutils
+Architecture: all
+Depends: wget, binutils
 Description: Bootstrap a basic Debian system
  debootstrap is used to create a Debian base system from scratch,
  without requiring the availability of dpkg or apt. It does this by
