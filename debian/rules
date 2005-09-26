@@ -39,8 +39,8 @@ install: real-build
 	dh_installdirs
 
 #	 install the package into debian/debootstrap
-	$(MAKE) install DESTDIR=$(CURDIR)/debian/debootstrap
-	$(MAKE) install DESTDIR=$(CURDIR)/debian/debootstrap-udeb
+	$(MAKE) install-allarch DESTDIR=$(CURDIR)/debian/debootstrap
+	$(MAKE) install-arch    DESTDIR=$(CURDIR)/debian/debootstrap-udeb
 
 binary-indep: install
 # We have nothing to do by default.
@@ -97,9 +97,8 @@ debootstrap-udeb: install
 	dh_testdir
 	dh_testroot
 	-rm -rf debian/debootstrap-udeb/usr/share \
-		debian/debootstrap-udeb/usr/lib/debootstrap/scripts/slink \
 		debian/debootstrap-udeb/usr/lib/debootstrap/scripts/potato \
-		debian/debootstrap-udeb/usr/lib/debootstrap/scripts/*.buildd
+		debian/debootstrap-udeb/usr/lib/debootstrap/scripts/*.*
 	dh_strip -pdebootstrap-udeb
 	dh_compress -pdebootstrap-udeb
 	dh_fixperms -pdebootstrap-udeb
@@ -107,7 +106,6 @@ debootstrap-udeb: install
 	dh_shlibdeps -pdebootstrap-udeb
 	dh_gencontrol -- -fdebian/debootstrap-udeb.files~
 	dpkg-distaddfile $(FILENAME) debian-installer required
-	dh_md5sums -pdebootstrap-udeb
 	dh_builddeb -pdebootstrap-udeb --filename=$(FILENAME) 
 
 binary: binary-indep binary-arch

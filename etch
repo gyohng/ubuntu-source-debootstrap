@@ -1,68 +1,66 @@
 mirror_style release
 download_style apt
+variants - buildd
 
 work_out_debs () {
-
-    required="base-files base-passwd bash bsdutils coreutils debianutils diff dpkg dselect e2fslibs e2fsprogs findutils gcc-3.3-base grep gzip hostname initscripts libacl1 libattr1 libblkid1 libc6 libcap1 libcomerr2 libdb1-compat libdb3 libgcc1 libncurses5 libpam-modules libpam-runtime libpam0g libss2 libstdc++5 libuuid1 login mawk mount ncurses-base ncurses-bin passwd perl-base sed slang1a-utf8 sysv-rc sysvinit tar util-linux zlib1g"
-
-    base="apt binutils cpio cpp cpp-3.3 dpkg-dev g++ g++-3.3 gcc gcc-3.3 libc6-dev libdb4.2 libgdbm3 libstdc++5-3.3-dev linux-kernel-headers make patch perl perl-modules $additional"
-
-    without_package () {
-        echo "$2" | tr ' ' '\n' | grep -v "^$1$" | tr '\n' ' '
-    }
-    subst_package () {
-        echo "$3" | tr ' ' '\n' | sed "s/^$1$/$2/" | tr '\n' ' '
+    add () { if [ "$ARCH" = "$1" ]; then eval "$2=\"\$$2 $3\""; fi; }
+    drop () { 
+     if [ "$ARCH" = "$1" ]; then eval "$2=\"\$(without \"\$$2\" \"$3\")\""; fi
     }
 
     LIBC6=libc6
+    if [ "$ARCH" = "alpha" -o "$ARCH" = "ia64" ]; then LIBC6="libc6.1"; fi
 
-    case $ARCH in
-        "alpha")
-            required="$(subst_package "libc6" "libc6.1" "$required")"
-	    base="$(subst_package "libc6-dev" "libc6.1-dev" "$base")"
-            LIBC6="libc6.1"
-            ;;
-        "arm")
-            ;;
-        "i386")
-            ;;
-        "ia64")
-            required="$(subst_package "libc6" "libc6.1" "$required")"
-	    base="$(without_package "libc6-dev" "libc6.1-dev" "$base")"
-            LIBC6="libc6.1"
-            ;;
-        "m68k")
-            ;;
-        "powerpc")
-            ;;
-        "sparc")
-            ;;
-        "mips")
-            ;;
-        "mipsel")
-            ;;
-        "hppa")
-            ;;
-        s390|s390x)
-            ;;
-	sh*)
-	    ;;
-        *)
-            # who knows?
-            ;;
-    esac
+    required="base-files base-passwd bash bsdutils coreutils libacl1 libattr1 debianutils diff dpkg dselect libblkid1 e2fsprogs e2fslibs libcomerr2 libss2 libuuid1 findutils grep gzip hostname libcap1 libdb1-compat libdb3 libncurses5 libnewt0.51 libpam-modules libpam-runtime libpam0g login makedev mawk mount ncurses-base ncurses-bin passwd perl-base procps sed slang1a-utf8 initscripts sysvinit sysv-rc tar util-linux libgcc1 gcc-3.3-base libstdc++5 zlib1g $LIBC6"
 
-    all_debs="$required $base"
+    if doing_variant -; then 
+      if [ "$ARCH" = "alpha" -o "$ARCH" = "m68k" ]; then
+        IPFWTOOL="ipchains"
+      elif [ "$ARCH" = "powerpc" -o "$ARCH" = sparc ]; then
+        IPFWTOOL="ipchains iptables"
+      else
+        IPFWTOOL=iptables
+      fi
 
-    for x in $exclude; do
-      all_debs="$(without_package "$x" "$all_debs")"
-    done
-    
-}
+      required="$required debconf debconf-i18n liblocale-gettext-perl libtext-wrapi18n-perl libtext-charwidth-perl libtext-iconv-perl"
 
-install_debs () {
-    first_stage_install
-    second_stage_install
+      base="adduser apt apt-utils libdb4.2 base-config aptitude libsigc++-1.2-5c102 bsdmainutils console-common console-tools libconsole console-data cpio cron dhcp-client ed libgnutls11 libgcrypt11 libgpg-error0 libncursesw5 libopencdk8 libtasn1-2 fdutils gettext-base groff-base ifupdown info klogd libssl0.9.7 liblzo1 liblockfile1 libpcre3 libwrap0 logrotate man-db libgdbm3 manpages nano net-tools netbase netkit-inetd iputils-ping nvi ppp pppconfig pppoe pppoeconf libpcap0.7 sysklogd tasksel libtextwrap1 tcpd telnet wget libpopt0 modutils whiptail $IPFWTOOL" 
+
+      # libthings
+      drop i386 required "libperl5.8"
+      drop hppa required "libstdc++2.10-glibc2.2"
+
+      add ia64 required "libreadline4"
+      add m68k required "libreadline4"
+      add powerpc required "libreadline4"
+
+      add arm base "libgpmg1"
+      add i386 base "psmisc"
+      add amd64 base "psmisc"
+      add powerpc base "psmisc"
+
+      # hardware
+      add alpha base "pciutils"
+      add i386 base "pciutils"
+      add ia64 base "elilo efibootmgr pciutils dosfstools libparted1.6-12 parted"
+      add m68k base "atari-bootstrap atari-fdisk amiga-fdisk eject mac-fdisk pmac-fdisk-cross vmelilo"
+      add powerpc base "mac-fdisk amiga-fdisk powerpc-utils pciutils hfsutils"
+      add sparc base "silo eject pciutils sparc-utils"
+      add mips base "dvhtool pciutils"
+      add mipsel base "pciutils"
+      add hppa base "palo pciutils"
+      add amd64 base "pciutils"
+
+      # base-config depends on console-tools and console-data
+      # so we can't exclude them although they are useless on s390
+      add s390 base "s390-tools telnetd devfsd"
+      drop s390 base "console-tools-libs fdutils ppp pppconfig pppoe pppoeconf"
+      add s390x base "s390-tools telnetd devfsd"
+      drop s390x base "console-tools-libs fdutils ppp pppconfig pppoe pppoeconf"
+
+    elif doing_variant buildd; then
+      base="apt binutils cpio cpp cpp-3.3 dpkg-dev g++ g++-3.3 gcc gcc-3.3 ${LIBC6}-dev libdb4.2 libgdbm3 libstdc++5-3.3-dev linux-kernel-headers make patch perl perl-modules"
+    fi
 }
 
 first_stage_install () {
@@ -78,14 +76,7 @@ first_stage_install () {
         chown 0.0 "$TARGET/etc/fstab"; chmod 644 "$TARGET/etc/fstab"
     fi
 
-    setup_proc
     setup_devices
-
-    in_target /sbin/ldconfig
-
-    p () {
-	baseprog="$(($baseprog + ${1:-1}))"
-    }
 
     x_feign_install () {
         local pkg="$1"
@@ -114,6 +105,13 @@ second_stage_install () {
 	smallyes '' | in_target dpkg --force-depends --install $(debfor "$@")
     }
 
+    p () {
+	baseprog="$(($baseprog + ${1:-1}))"
+    }
+
+    setup_proc
+    in_target /sbin/ldconfig
+
     DEBIAN_FRONTEND=noninteractive
     export DEBIAN_FRONTEND
 
@@ -124,7 +122,7 @@ second_stage_install () {
     info INSTCORE "Installing core packages..."
 
     p; progress $baseprog $bases INSTBASE "Installing base system" #2
-    ln -sf mawk $TARGET/usr/bin/awk
+    ln -fs mawk $TARGET/usr/bin/awk
     x_core_install base-files base-passwd
     p; progress $baseprog $bases INSTBASE "Installing base system" #3
     x_core_install dpkg
@@ -138,10 +136,15 @@ second_stage_install () {
 
     p; progress $baseprog $bases INSTBASE "Installing base system" #5
     x_core_install perl-base
+
     p; progress $baseprog $bases INSTBASE "Installing base system" #6
     rm $TARGET/usr/bin/awk
     x_core_install mawk
+
     p; progress $baseprog $bases INSTBASE "Installing base system" #7
+    if doing_variant -; then
+      x_core_install debconf
+    fi
 
     info UNPACKREQ "Unpacking required packages..."
 
@@ -159,7 +162,6 @@ echo \"Warning: Fake start-stop-daemon called, doing nothing\"" > "$TARGET/sbin/
     chmod 755 "$TARGET/sbin/start-stop-daemon"
 
     setup_dselect_method apt
-    #on_exit "in_target_nofail umount /dev/pts"
 
     p; progress $baseprog $bases INSTBASE "Installing base system" #19
     smallyes '' | in_target_failmsg CONF_REQ_FAIL "Failure while configuring required packages." "" dpkg --configure --pending --force-configure-any --force-depends

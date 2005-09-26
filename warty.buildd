@@ -5,7 +5,7 @@ work_out_debs () {
 
     required="base-files base-passwd bash bsdutils build-essential coreutils debianutils diff dpkg dselect e2fslibs e2fsprogs fakeroot findutils gcc-3.3-base grep gzip hostname initscripts libacl1 libattr1 libblkid1 libc6 libcap1 libcomerr2 libdb1-compat libdb3 libgcc1 libncurses5 libpam-modules libpam-runtime libpam0g libss2 libstdc++5 libuuid1 login lsb-base mawk mount ncurses-base ncurses-bin perl-base sed slang1a-utf8 sysv-rc sysvinit tar util-linux zlib1g"
 
-    base="apt binutils cpio cpp cpp-3.3 dpkg-dev g++ g++-3.3 gcc gcc-3.3 libc6-dev libdb4.2 libgdbm3 libstdc++5-3.3-dev linux-kernel-headers make patch perl perl-modules $additional"
+    base="apt binutils cpio cpp cpp-3.3 dpkg-dev g++ g++-3.3 gcc gcc-3.3 libc6-dev libdb4.2 libgdbm3 libstdc++5-3.3-dev linux-kernel-headers make patch perl perl-modules"
 
     without_package () {
         echo "$2" | tr ' ' '\n' | grep -v "^$1$" | tr '\n' ' '
@@ -39,13 +39,6 @@ work_out_debs () {
             # who knows?
             ;;
     esac
-
-    all_debs="$required $base"
-
-    for x in $exclude; do
-      all_debs="$(without_package "$x" "$all_debs")"
-    done
-    
 }
 
 install_debs () {
@@ -66,14 +59,7 @@ first_stage_install () {
         chown 0.0 "$TARGET/etc/fstab"; chmod 644 "$TARGET/etc/fstab"
     fi
 
-    setup_proc
     setup_devices
-
-    in_target /sbin/ldconfig
-
-    p () {
-	baseprog="$(($baseprog + ${1:-1}))"
-    }
 
     x_feign_install () {
         local pkg="$1"
@@ -101,12 +87,18 @@ second_stage_install () {
     x_core_install () {
 	smallyes '' | in_target dpkg --force-depends --install $(debfor "$@")
     }
+    p () {
+	baseprog="$(($baseprog + ${1:-1}))"
+    }
 
     DEBIAN_FRONTEND=noninteractive
     export DEBIAN_FRONTEND
 
     baseprog=0
     bases=40
+
+    setup_proc
+    in_target /sbin/ldconfig
 
     p; progress $baseprog $bases INSTCORE "Installing core packages" #1
     info INSTCORE "Installing core packages..."

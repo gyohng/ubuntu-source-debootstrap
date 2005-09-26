@@ -1,4 +1,3 @@
-
 mirror_style release
 download_style apt var-state
 
@@ -25,11 +24,9 @@ work_out_debs () {
         # other arches may have special needs not yet represented here
         # oh well, Potato is old
     esac
-
-    all_debs="$required $base"
 }
 
-install_debs () {
+first_stage_install () {
     extract $required
 
     :> "$TARGET/var/lib/dpkg/status"
@@ -39,11 +36,7 @@ install_debs () {
     echo '# UNCONFIGURED FSTAB FOR BASE SYSTEM' > "$TARGET/etc/fstab"
     chown 0.0 "$TARGET/etc/fstab"; chmod 644 "$TARGET/etc/fstab"
 
-    setup_proc
     setup_devices
-
-    ln "$TARGET/sbin/ldconfig.new" "$TARGET/sbin/ldconfig"
-    in_target /sbin/ldconfig
 
     x_feign_install () {
         local pkg=$1
@@ -64,13 +57,7 @@ Status: install ok installed" >> "$TARGET/var/lib/dpkg/status"
         touch "$TARGET/var/lib/dpkg/info/${pkg}.list"
     }
 
-    x_core_install () {
-        in_target dpkg --force-depends --install $(debfor "$@")
-    }
-
     x_feign_install dpkg
-
-    export DEBIAN_FRONTEND=Noninteractive
 
     if [ -e "$TARGET/usr/bin/perl-5.005.dist" ]; then
         mv "$TARGET/usr/bin/perl-5.005.dist" "$TARGET/usr/bin/perl-5.005"
@@ -78,6 +65,18 @@ Status: install ok installed" >> "$TARGET/var/lib/dpkg/status"
     if [ ! -e "$TARGET/usr/bin/perl" ]; then
         ln -sf perl-5.005 "$TARGET/usr/bin/perl"
     fi
+}
+
+second_stage_install () {
+    x_core_install () {
+        in_target dpkg --force-depends --install $(debfor "$@")
+    }
+
+    export DEBIAN_FRONTEND=Noninteractive
+
+    setup_proc
+    ln "$TARGET/sbin/ldconfig.new" "$TARGET/sbin/ldconfig"
+    in_target /sbin/ldconfig
 
     x_core_install base-files base-passwd ldso
     x_core_install dpkg
@@ -97,7 +96,6 @@ Status: install ok installed" >> "$TARGET/var/lib/dpkg/status"
     cp "$TARGET/bin/true" "$TARGET/sbin/start-stop-daemon"
 
     setup_dselect_method apt
-    on_exit "in_target umount /dev/pts"
 
     in_target dpkg --configure --pending --force-configure-any --force-depends
 
