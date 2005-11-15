@@ -1,0 +1,220 @@
+[debootstrap 0.2.33
+aj@azure.humbug.org.au**20041001125558] 
+[debootstrap 0.2.45
+aj@azure.humbug.org.au**20041001125836] 
+[reindent debootstrap script to two-space tabs
+aj@azure.humbug.org.au**20041001125926] 
+[changed debootstrap structure to be phase based
+aj@azure.humbug.org.au**20041001155115] 
+[drop support for slink
+aj@azure.humbug.org.au**20041001160640] 
+[first pass conversion to two stage bootstrap
+aj@azure.humbug.org.au**20041001161200] 
+[change pkgdetails to accept pkg as last argument not first
+aj@azure.humbug.org.au**20041001175506
+ This change then allows us to get the details of many packages at once, 
+ which is more efficient. Yay!
+] 
+[make pkgdetails accept many packages
+aj@azure.humbug.org.au**20041001180437] 
+[check many pkg details in one parse
+aj@azure.humbug.org.au**20041001184016] 
+[convert debootstrap to allow two stage installs
+aj@azure.humbug.org.au**20041002060355] 
+[report debs that can't be found as early as possible
+aj@azure.humbug.org.au**20041002060440] 
+[make on_exit's never fail, and ignore any error messages
+aj@azure.humbug.org.au**20041002150315] 
+[don't run pkgdetails over a Packages file when we don't have any pkgs to look for
+aj@azure.humbug.org.au**20041002150940] 
+[close the Packages file explicitly (especially since we potentially open it many times)
+aj@azure.humbug.org.au**20041002151433] 
+[change displayname for Release/Packages downloads to just be "Release" or "Packages"
+aj@azure.humbug.org.au**20041002153819] 
+[create $TARGET/debootstrap dir for state information
+aj@azure.humbug.org.au**20041002154949] 
+[use debootstrap/debpaths for locations of downloaded debs
+aj@azure.humbug.org.au**20041002155021] 
+[add TODO file
+aj@azure.humbug.org.au**20041002231619] 
+[sync with debootstrap 0.2.45-0.2
+aj@azure.humbug.org.au**20050611061015
+ [sarge, sid] Replace libparted1.6-0 with libparted1.6-12 for ia64
+ [sarge, sid] include pciutils on hppa as well
+ [sarge, sid] Drop libgnutls10 and libgcrypt7
+] 
+[support in chroot second-stage install
+aj@azure.humbug.org.au**20050611065424] 
+[initial support for --resolve-deps
+aj@azure.humbug.org.au**20050611162906
+ handles virtual packages poorly 
+  -- unless there's a real|virt, chooses first real package alphabetically
+ as such, awk becomes gawk (not mawk), and m-t-a = courier-mta not exim
+ as such, at and mailx are dropped from sid's base, and thus exim/m-t-a too
+ also tidied up handling of --include/--exclude and calculation of all_debs
+ this means that --print-debs may have to download Packages now
+] 
+[drop sendmail -> true handling from sid script
+aj@azure.humbug.org.au**20050612040149] 
+[drop virtual package support from resolve-deps
+aj@azure.humbug.org.au**20050612040208] 
+[add notes on determining base/required from Packages
+aj@azure.humbug.org.au**20050612055738] 
+[allow variants to be specified in a single file
+aj@azure.humbug.org.au**20050612055924] 
+[merge buildd variant into main sid script
+aj@azure.humbug.org.au**20050612060002] 
+[add reporting of changes needed to req/base when --resolve-deps is used
+aj@azure.humbug.org.au**20050612063258] 
+[tidy up sid base handling
+aj@azure.humbug.org.au**20050612063424] 
+[add etch target
+aj@azure.humbug.org.au**20050612063503] 
+[zlib1g not needed in base if already in required
+aj@azure.humbug.org.au**20050612063927] 
+[use pkgdetails instead of perl for resolving deps
+aj@azure.humbug.org.au**20050612072531] 
+[initial support for dpkg progress display
+aj@azure.humbug.org.au**20050612074507] 
+[add support for warty and hoary
+aj@azure.humbug.org.au**20050612074532] 
+[actually install warty and hoary scripts
+aj@azure.humbug.org.au**20050612081232] 
+[update copyright
+aj@azure.humbug.org.au**20050612081243] 
+[handle old-style scripts when not doing variants correctly
+aj@azure.humbug.org.au**20050612083332] 
+[fix warty and hoary for two stage installs
+aj@azure.humbug.org.au**20050612083410] 
+[store required/base in $T/debootstrap/
+aj@azure.humbug.org.au**20050612092753] 
+[update TODO
+aj@azure.humbug.org.au**20050612094851] 
+[add upstream site to copyright
+aj@azure.humbug.org.au**20050612111727] 
+[add support for choosing pkgs on random fields to pkgdetails
+aj@azure.humbug.org.au**20050612112657] 
+[give in, and use ln -fs for mawk
+aj@azure.humbug.org.au**20050612135045] 
+[initial support for scripts that dynamically determine base
+aj@azure.humbug.org.au**20050612135119] 
+[make conditional_cp work with symlinks
+aj@azure.humbug.org.au**20050612135607] 
+[m68k can't both have and not have iptables
+aj@azure.humbug.org.au**20050612140856] 
+[first pass at a script that dynamically calculates base
+aj@azure.humbug.org.au**20050612141026] 
+[remove priority from source package
+aj@azure.humbug.org.au**20050612143131] 
+[check for an argument to --component
+aj@azure.humbug.org.au**20050612143149] 
+[update manpage
+aj@azure.humbug.org.au**20050612143414] 
+[bump to 0.3.0 add changelog
+aj@azure.humbug.org.au**20050612143500] 
+[fix email address in changelog
+aj@azure.humbug.org.au**20050613083618] 
+[clean up support for scripts that dynamically determine base
+aj@azure.humbug.org.au**20050613083648] 
+[make sid script dynamically determine base, and clean it up a bit
+aj@azure.humbug.org.au**20050613083804] 
+[finish off pkgdetails_perl
+aj@azure.humbug.org.au**20050613100642] 
+[make deb only install a minimal set of devices, and nothing arch specific
+aj@azure.humbug.org.au**20050613100829] 
+[make deb arch:all
+aj@azure.humbug.org.au**20050613100912] 
+[make perl pkgdetails slightly faster
+aj@azure.humbug.org.au**20050613102218] 
+[only parse Packages file once for all the debs we're downloading from it
+aj@azure.humbug.org.au**20050613105442] 
+[warn on failure to download a package as well as error out if no mirrors worked either
+aj@azure.humbug.org.au**20050613105907] 
+[forcibly symlink awk in the dynamic sid too
+aj@azure.humbug.org.au**20050613110010] 
+[update TODO
+aj@azure.humbug.org.au**20050613111353] 
+[dpkg output goes to $T/var/log/bootstrap.log instead of stdout
+aj@azure.humbug.org.au**20050613131852] 
+[update sid script to use fine grained dpkg progress display
+aj@azure.humbug.org.au**20050613132115] 
+[suppress untrue Validating... messages
+aj@azure.humbug.org.au**20050613134048] 
+[support for Release.gpg checking with --keyring
+aj@azure.humbug.org.au**20050613135449] 
+[dump all extraneous output to debootstrap.log, not just second stage
+aj@azure.humbug.org.au**20050613142155] 
+[tidy up Release.gpg message
+aj@azure.humbug.org.au**20050613142223] 
+[report valid signature
+aj@azure.humbug.org.au**20050613143502] 
+[update changelog to 0.3.1
+aj@azure.humbug.org.au**20050613144735] 
+[changes from NMU 0.3.1.4
+Anthony Towns <aj@azure.humbug.org.au>**20051023050635] 
+[changes from NMU 0.3.1.5
+Anthony Towns <aj@azure.humbug.org.au>**20051023051052] 
+[changes from NMU 0.3.1.6
+Anthony Towns <aj@azure.humbug.org.au>**20051023053519] 
+[changes from NMU 0.3.1.8
+Anthony Towns <aj@azure.humbug.org.au>**20051023054117] 
+[changes from NMU 0.3.1.2
+Anthony Towns <aj@azure.humbug.org.au>**20051023061542] 
+[changelog notes for 0.3.1.x NMUs
+Anthony Towns <aj@azure.humbug.org.au>**20051023150109] 
+[changes from NMU 0.3.1.9
+Anthony Towns <aj@azure.humbug.org.au>**20051023150217] 
+[att /dev/ptmx
+Anthony Towns <aj@azure.humbug.org.au>**20051023150301] 
+[don't make empty available files
+Anthony Towns <aj@azure.humbug.org.au>**20051023150506] 
+[cleanup packaging
+Anthony Towns <aj@azure.humbug.org.au>**20051023150650] 
+[warn if no pkgdetails
+Anthony Towns <aj@azure.humbug.org.au>**20051023150813] 
+[make --resolve-deps the default
+Anthony Towns <aj@azure.humbug.org.au>**20051023151134] 
+[use DEF_MIRROR variable
+Anthony Towns <aj@azure.humbug.org.au>**20051023151246] 
+[deal with md5sum.textutils braindamage
+Anthony Towns <aj@azure.humbug.org.au>**20051023151800] 
+[handle --status-fd errors
+Anthony Towns <aj@azure.humbug.org.au>**20051023152243] 
+[handle dupes with without()
+Anthony Towns <aj@azure.humbug.org.au>**20051023152257] 
+[fix up fd handling
+Anthony Towns <aj@azure.humbug.org.au>**20051023152827] 
+[clean up handling of $TARGET
+Anthony Towns <aj@azure.humbug.org.au>**20051023153314] 
+[add --make-tarball
+Anthony Towns <aj@azure.humbug.org.au>**20051023153451] 
+[finish off pkgdetails checks
+Anthony Towns <aj@azure.humbug.org.au>**20051023153549] 
+[update help text a bit
+Anthony Towns <aj@azure.humbug.org.au>**20051023153617] 
+[create sources.list in $TARGET
+Anthony Towns <aj@azure.humbug.org.au>**20051023153654] 
+[update manpage from woody to sarge
+Anthony Towns <aj@azure.humbug.org.au>**20051023153753] 
+[use partial/ directory when downloading
+Anthony Towns <aj@azure.humbug.org.au>**20051023153833] 
+[wow, $# is a great invention!
+Anthony Towns <aj@azure.humbug.org.au>**20051023153858] 
+[$APTSTATE needs a /lists
+Anthony Towns <aj@azure.humbug.org.au>**20051023154531] 
+[0.3.2.1 nmu
+Anthony Towns <aj@azure.humbug.org.au>**20051105180228] 
+[0.3.2.2 nmu
+Anthony Towns <aj@azure.humbug.org.au>**20051105181854
+ Added relicensed fakechroot variant. Closes: #204652.
+] [0.3.3 upload
+Anthony Towns <aj@azure.humbug.org.au>**20051105181957
+ Include kFreeBSD and fakechroot support from 0.3.2.1 and 0.3.2.2 NMUs,
+ thanks to Otavio Salvador and Piotr Roszatycki. (Closes: Bug#319100,
+ Bug#328446, Bug#204652, Bug#315044, Bug#Bug#319799)
+ 
+ Require target to be specified in all cases; document usage of target
+ for --print-debs. (Closes: Bug#335922, Bug#337230)
+ 
+ Use ln -sf when symlinking awk for woody and sarge. (Closes: Bug#299048)
+] 

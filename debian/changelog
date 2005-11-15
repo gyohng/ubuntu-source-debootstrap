@@ -1,3 +1,129 @@
+debootstrap (0.3.3.0ubuntu1) dapper; urgency=low
+
+  * Resynchronise with Debian.
+    - A bit silly version number, since debootstrap has a long history of
+    being NMU-ed, we try to be prepared for it.
+
+ -- Tollef Fog Heen <tfheen@ubuntu.com>  Tue, 15 Nov 2005 14:37:51 +0100
+
+debootstrap (0.3.3) unstable; urgency=low
+
+  * Include kFreeBSD and fakechroot support from 0.3.2.1 and 0.3.2.2 NMUs,
+    thanks to Otavio Salvador and Piotr Roszatycki. (Closes: Bug#319100,
+    Bug#328446, Bug#204652, Bug#315044, Bug#Bug#319799)
+
+  * Require target to be specified in all cases; document usage of target
+    for --print-debs. (Closes: Bug#335922, Bug#337230)
+
+  * Use ln -sf when symlinking awk for woody and sarge. (Closes: Bug#299048)
+
+ -- Anthony Towns <aj@azure.humbug.org.au>  Sun,  6 Nov 2005 04:12:39 +1000
+
+debootstrap (0.3.2.2) unstable; urgency=low
+
+  * NMU
+  * Added relicensed fakechroot variant. Closes: #204652.
+
+ -- Piotr Roszatycki <dexter@debian.org>  Sat, 29 Oct 2005 11:29:00 +0200
+
+debootstrap (0.3.2.1) unstable; urgency=low
+
+  * NMU with maintainer approval
+  * Applied patch from Robert Millan <rmh@aybabtu.com> to add support to
+    Debian GNU/kFreeBSD. Closes: #319799
+
+ -- Otavio Salvador <otavio@debian.org>  Fri, 28 Oct 2005 16:14:57 -0200
+
+debootstrap (0.3.2) unstable; urgency=low
+
+  * Revert fakechroot NMUs (0.3.1.1, 0.3.1.3, 0.3.1.7) due to incompatible
+    license requirements (GPL) (Reopens: Bug#204652)
+
+  * Changes from 0.3.1.2 NMU, thanks to Joey Hess: (Closes: Bug#314810)
+    + Fix incorrect use of "$@" in local. Closes: #314157, #314547
+    + Fix fd redirection in download progress code. See #314373
+    + Remove md5sums file from udeb. Closes: #314378
+    + Fix debian-installer mode warning code. Closes: #314340
+
+  * Changes from 0.3.1.4 NMU, thanks to Joey Hess:
+    + Wrap eval statement in exit_function in parens, working around
+      bug #315444 in busybox sh. Closes: #314373
+
+  * Changes from 0.3.1.5 NMU, thanks to Anibal Monsalve Salazar:
+    + Fixed "--variant=buildd option does not work" for pbuilder,
+      closes: #314858. Patch by Matt Kraai <kraai@ftbfs.org>.
+
+  * Changes from 0.3.1.6 NMU, thanks to Joey Hess:
+    + Patch from Colin to redirect status messages to stderr when running
+      --print-debs. Closes: #315875
+    + Restore logging to stderr in debian-installer mode. Closes: #314160
+
+  * Changes from 0.3.1.8 NMU, thanks to Petter Reinholdtsen:
+    + [functions] Mount /sys if it exist and is supported by the kernel.
+      Patch from Cajus Pollmeier, Colin Watson and Ubuntu. (Closes: #289105)
+    + [debootstrap] Document --resolve-deps in usage info. (Closes: #328161)
+    + [etch] Replace libsigc++-1.2-5c102 with libsigc++-1.2-5c2. (Closes: #334506)
+    + [etch] Remove pppoe from base, and only install
+      ipchains on m68k.  Patch from Sven Luther. (Closes: #239390)
+    + [sarge] Remove duplicate entries for m68k and amd64.  Patch from
+      Frans Pop. (Workaround for bug #319777)
+    + [etch] Add support for ppc64.  The patch for 'sid' did no longer
+      apply.  Patch from Andreas Jochens. (Closes: #313353)
+    + [sarge,etch,sid] Set DEBCONF_NONINTERACTIVE_SEEN=true during build, to
+      avoid questions during upgrade. (Closes: #238301)
+    + Add script for breezy.  Patch from Colin Watson. (Closes: #315940)
+
+  * Changes from 0.3.1.9 NMU, thanks to Joey Hess:
+    + Replace the etch script with a copy of the sid script, which pulls in
+      gnupg, so the installed etch system has a usable apt. Closes: #334521
+
+  * Create /dev/ptmx in minimal devices tarball. (Closes: Bug#317072)
+
+  * Don't create empty available files, since old dpkg and new kernels can't
+    deal with them. (Closes: Bug#308169, Bug#329468)
+
+  * Bump Standards-Version. Bump debhelper compatability level to 4.
+  * Cleanup debian/rules, thanks to Joey Hess. (Closes: Bug#314863)
+
+  * Emit error message if no pkgdetails is available. (Closes: Bug#326831)
+
+  * Turn on --resolve-deps by default. Add --no-resolve-deps as an option.
+    Combined with the previous changes to make the etch script dynamically
+    determine base, this should resolve all the "can't install <foo>"
+    bugs. (Closes: Bug#280210, Bug#308361, Bug#318281, Bug#323362,
+    Bug#318254, Bug#313292, Bug#334683, Bug#248578, Bug#289635)
+
+  * md5sum doesn't exist when coreutils is unpacked but not configured;
+    cp it across so it's available for --second-stage. (Closes: Bug#329394)
+
+  * Catch failures in "dpkg --status-fd" (Closes: Bug#317447, Bug#323661)
+
+  * Make "without" work right for duplicates (Closes: Bug#316884,
+    Bug#319777)
+
+  * Simplify and correct file descriptor handling and debootstrap.log
+    behaviour.
+
+  * Delete $TARGET with --print-debs and --make-tarball. (Closes: Bug#328369)
+
+  * Add a --make-tarball option. (Closes: Bug#152845)
+
+  * Create a default sources.list for apt. (Closes: Bug#283234, Bug#315225)
+
+  * Update manpage to talk about woody instead of sarge. (Closes: Bug#315862)
+
+  * Use partial/ directory when downloading. (Closes: Bug#109176)
+
+ -- Anthony Towns <aj@azure.humbug.org.au>  Sun, 23 Oct 2005 14:49:08 +1000
+
+debootstrap (0.3.1.9ubuntu1) dapper; urgency=low
+
+  * Resynchronise with Debian.
+  * [dapper] New script to install Dapper Drake; a copy of breezy for now.
+  * [Makefile] Install dapper.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Tue, 25 Oct 2005 11:36:38 +0100
+
 debootstrap (0.3.1.6ubuntu1) breezy; urgency=low
 
   * Resynchronise with Debian.
@@ -5,28 +131,11 @@ debootstrap (0.3.1.6ubuntu1) breezy; urgency=low
 
  -- Colin Watson <cjwatson@ubuntu.com>  Mon, 26 Sep 2005 09:52:25 +0100
 
-debootstrap (0.3.1.6) unstable; urgency=low
-
-  * NMU.
-  * Patch from Colin to redirect status messages to stderr when running
-    --print-debs. Closes: #315875
-  * Restore logging to stderr in debian-installer mode. Closes: #314160
-
- -- Joey Hess <joeyh@debian.org>  Mon, 12 Sep 2005 15:27:14 -0400
-
 debootstrap (0.3.1.5ubuntu1) breezy; urgency=low
 
   * Resynchronise with Debian.
 
  -- Colin Watson <cjwatson@ubuntu.com>  Mon, 12 Sep 2005 14:17:53 +0100
-
-debootstrap (0.3.1.5) unstable; urgency=low
-
-  * NMU.
-  * Fixed "--variant=buildd option does not work" for pbuilder,
-    closes: #314858. Patch by Matt Kraai <kraai@ftbfs.org>.
-
- -- Anibal Monsalve Salazar <anibal@debian.org>  Sat, 13 Aug 2005 15:38:54 +1000
 
 debootstrap (0.3.1.4ubuntu4) breezy; urgency=low
 
@@ -52,14 +161,6 @@ debootstrap (0.3.1.4ubuntu1) breezy; urgency=low
 
  -- Colin Watson <cjwatson@ubuntu.com>  Mon, 27 Jun 2005 19:28:18 +0100
 
-debootstrap (0.3.1.4) unstable; urgency=low
-
-  * NMU.
-  * Wrap eval statement in exit_function in parens, working around
-    bug #315444 in busybox sh. Closes: #314373
-
- -- Joey Hess <joeyh@debian.org>  Sun, 26 Jun 2005 23:35:20 -0400
-
 debootstrap (0.3.1.3ubuntu1) breezy; urgency=low
 
   * Resynchronise with Debian.
@@ -69,31 +170,6 @@ debootstrap (0.3.1.3ubuntu1) breezy; urgency=low
     --print-debs (Debian #315875).
 
  -- Colin Watson <cjwatson@ubuntu.com>  Mon, 27 Jun 2005 12:01:45 +0100
-
-debootstrap (0.3.1.3) unstable; urgency=low
-
-  * NMU.
-  * Updated fakechroot's ldd. Now it works on 64-bit architectures.
-    Closes: #315044.
-
- -- Piotr Roszatycki <dexter@debian.org>  Mon, 20 Jun 2005 10:17:04 +0200
-
-debootstrap (0.3.1.2) unstable; urgency=low
-
-  * NMU.
-  * Fix incorrect use of "$@" in local. Closes: #314157, #314547
-  * Fix fd redirection in download progress code. See #314373
-  * Remove md5sums file from udeb. Closes: #314378
-  * Fix debian-installer mode warning code. Closes: #314340
-
- -- Joey Hess <joeyh@debian.org>  Sat, 18 Jun 2005 11:45:24 -0400
-
-debootstrap (0.3.1.1) unstable; urgency=low
-
-  * NMU.
-  * Added fakechroot variant. Closes: #204652.
-
- -- Piotr Roszatycki <dexter@debian.org>  Thu, 16 Jun 2005 11:20:15 +0200
 
 debootstrap (0.3.1) unstable; urgency=low
 
@@ -260,7 +336,7 @@ debootstrap (0.2.45ubuntu30) breezy; urgency=low
       mutt, nano, ntp, openssh-client, parted, popularity-contest, postfix,
       postfix-tls, ppp, pppconfig, pppoeconf, psmisc, reportbug, rsync,
       tcpdump, telnet, time, ubuntu-base, w3m, and wget.
-    - Add ubuntu-minimal on amd64, i386, ia64, and powerpc.
+   - Add ubuntu-minimal on amd64, i386, ia64, and powerpc.
 
  -- Colin Watson <cjwatson@ubuntu.com>  Wed,  4 May 2005 00:10:39 +0100
 

@@ -30,14 +30,17 @@ install:
 	install -o root -g root -m 0644 sarge $(DSDIR)/scripts/
 	install -o root -g root -m 0644 sarge.buildd $(DSDIR)/scripts/
 	install -o root -g root -m 0644 sarge.fakechroot $(DSDIR)/scripts/
-	install -o root -g root -m 0644 etch $(DSDIR)/scripts/
 	install -o root -g root -m 0644 sid $(DSDIR)/scripts/
 	install -o root -g root -m 0644 warty $(DSDIR)/scripts/
 	install -o root -g root -m 0644 warty.buildd $(DSDIR)/scripts/
 	install -o root -g root -m 0644 hoary $(DSDIR)/scripts/
 	install -o root -g root -m 0644 hoary.buildd $(DSDIR)/scripts/
 	install -o root -g root -m 0644 breezy $(DSDIR)/scripts/
+	install -o root -g root -m 0644 dapper $(DSDIR)/scripts/
 	install -o root -g root -m 0644 functions $(DSDIR)/
+
+        # no special script for etch anymore
+	ln -s sid $(DSDIR)/scripts/etch
 
 	install -o root -g root -m 0755 debootstrap.8 $(DESTDIR)/usr/share/man/man8/
 	install -o root -g root -m 0755 debootstrap $(DESTDIR)/usr/sbin/
@@ -62,7 +65,7 @@ devices-std.tar.gz:
 	mkdir -p dev
 	chown 0:0 dev
 	chmod 755 dev
-	(cd dev && /dev/MAKEDEV std)
+	(cd dev && /dev/MAKEDEV std ptmx)
 	tar cf - dev | gzip -9 >devices-std.tar.gz
 	rm -rf dev
 
