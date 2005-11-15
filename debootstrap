@@ -27,6 +27,8 @@ USE_COMPONENTS=main
 KEYRING=""
 VARIANT=""
 
+DEF_MIRROR="http://archive.ubuntu.com/ubuntu"
+
 export LANG USE_COMPONENTS
 umask 022
 
@@ -34,6 +36,8 @@ umask 022
 
 ## phases: 
 ##   finddebs dldebs printdebs first_stage second_stage
+
+RESOLVE_DEPS=true
 
 WHAT_TO_DO="finddebs dldebs first_stage second_stage"
 am_doing_phase () {
@@ -60,24 +64,37 @@ usage()
   echo "Bootstrap Debian base system."
   echo
   cat <<EOF
-      --arch                 set the target architecture (use if no dpkg)
-                               [ --arch powerpc ]
+      --help                 display this help and exit
+      --verbose              don't turn off the output of wget
+
       --download-only        download packages, but don't perform installation
       --print-debs           print the packages to be installed, and exit
-      --unpack-tarball       acquire .debs from a tarball instead of http
-      --boot-floppies        used for internal purposes by boot-floppies
-      --debian-installer     used for internal purposes by debian-installer
-      --help                 display this help and exit
+
+      --arch A               set the target architecture (use if no dpkg)
+                               [ --arch powerpc ]
+
       --include=A,B,C        adds specified names to the list of base packages
       --exclude=A,B,C        removes specified packages from the list
-      --verbose              don't turn off the output of wget
       --components=A,B,C     use packages from the listed components of the 
                              archive
       --variant=X            use variant X of the bootstrap scripts
                              (currently supported variants: buildd, fakechroot)
       --keyring=K            check Release files against keyring K
+      --no-resolve-deps      don't try to resolve dependencies automatically
+
+      --unpack-tarball T     acquire .debs from a tarball instead of http
+      --make-tarball T       download .debs and create a tarball (tgz format)
+
+      --boot-floppies        used for internal purposes by boot-floppies
+      --debian-installer     used for internal purposes by debian-installer
 EOF
 }
+
+###########################################################################
+
+if [ "$PKGDETAILS" = "" ]; then
+  error 1 NO_PKGDETAILS "No pkgdetails available; either install perl, or build pkgdetails.c from source"
+fi
 
 ###########################################################################
 
@@ -96,6 +113,7 @@ if [ $# != 0 ] ; then
           error 1 ARG_BFBYHAND "If running debootstrap by hand, don't use --boot-floppies"
         fi
         USE_BOOTFLOPPIES_INTERACTION=yes
+        unset USE_GETTEXT_INTERACTION
         shift
         ;;
       --debian-installer)
@@ -106,7 +124,6 @@ if [ $# != 0 ] ; then
           error 1 ARG_DIBYHAND "If running debootstrap by hand, don't use --debian-installer"
         fi
         USE_DEBIANINSTALLER_INTERACTION=yes
-	LOG_STDERR=true
         shift
         ;;
       --foreign)
@@ -119,15 +136,29 @@ if [ $# != 0 ] ; then
 	shift
 	;;
       --print-debs)
-        WHAT_TO_DO="finddebs printdebs"
+        WHAT_TO_DO="finddebs printdebs kill_target"
         shift
         ;;
       --download-only)
 	WHAT_TO_DO="finddebs dldebs"
         shift
         ;;
+      --make-tarball)
+        WHAT_TO_DO="finddebs dldebs maketarball kill_target"
+        if [ -n "$2" ] ; then
+          MAKE_TARBALL="$2"
+          shift 2
+        else
+          error 1 NEEDARG "option requires an argument %s" "$1"
+        fi
+        ;;
       --resolve-deps)
+        # redundant, but avoids breaking compatability
         RESOLVE_DEPS=true
+        shift
+        ;;
+      --no-resolve-deps)
+        RESOLVE_DEPS=false
         shift
         ;;
       --keep-debootstrap-dir)
@@ -195,9 +226,7 @@ if [ $# != 0 ] ; then
   done
 fi
 
-if am_doing_phase printdebs; then
-  exec 4>&2
-fi
+###########################################################################
 
 if [ "$SECOND_STAGE_ONLY" = "true" ]; then
   SUITE=$(cat $DEBOOTSTRAP_DIR/suite)
@@ -210,14 +239,10 @@ if [ "$SECOND_STAGE_ONLY" = "true" ]; then
   MIRRORS=null:
   SCRIPT=$DEBOOTSTRAP_DIR/suite-script
 else
-  if [ "$1" = "" ]; then
+  if [ "$1" = "" -o "$2" = "" ]; then
     usage_err 1 NEEDSUITETARGET "You must specify a suite and a target."
   fi
   SUITE="$1"
-
-  if [ "$2" = "" ] && am_doing_phase dldebs first_stage second_stage; then
-    usage_err 1 NEEDSUITETARGET "You must specify a suite and a target."
-  fi
   TARGET="$2"
   TARGET="${TARGET%/}"
   if [ "${TARGET#/}" = "${TARGET}" ]; then
@@ -228,7 +253,7 @@ else
     fi
   fi
 
-  MIRRORS="http://archive.ubuntu.com/ubuntu"
+  MIRRORS="$DEF_MIRROR"
   SCRIPT="$DEBOOTSTRAP_DIR/scripts/$1"
   if [ -n "$VARIANT" -a -e "${SCRIPT}.${VARIANT}" ]; then
     SCRIPT="${SCRIPT}.${VARIANT}"
@@ -270,6 +295,42 @@ fi
 
 ###########################################################################
 
+if [ "$TARGET" != "" ]; then
+  mkdir -p "$TARGET/debootstrap"
+fi
+
+###########################################################################
+
+# Use of fd's by functions/scripts:
+#
+#    stdin/stdout/stderr: used normally
+#    fd 4: I:/W:/etc information
+#    fd 5,6: spare for functions
+#    fd 7,8: spare for scripts
+
+if [ "$USE_DEBIANINSTALLER_INTERACTION" = yes ]; then
+  #    stdout=stderr: full log of debootstrap run
+  #    fd 3: I:/W:/etc information
+  exec 4>&3
+elif [ "$USE_BOOTFLOPPIES_INTERACTION" = yes ]; then
+  #    stdout=stderr: full log of debootstrap run
+  #    fd 3: I:/W:/etc information
+  exec 4>&3
+elif am_doing_phase printdebs; then
+  #    stderr: I:/W:/etc information
+  #    stdout: debs needed
+  exec 4>&2
+else
+  #    stderr: used in exceptional circumstances only
+  #    stdout: I:/W:/etc information
+  #    $TARGET/debootstrap/debootstrap.log: full log of debootstrap run
+  exec 4>&1
+  exec >>$TARGET/debootstrap/debootstrap.log
+  exec 2>&1
+fi
+
+###########################################################################
+
 if [ "$UNPACK_TARBALL" ]; then
   if [ "${UNPACK_TARBALL#/}" = "$UNPACK_TARBALL" ]; then
     error 1 TARPATH "Tarball must be given a complete path"
@@ -299,12 +360,7 @@ fi
 
 if am_doing_phase finddebs; then
   if [ "$FINDDEBS_NEEDS_INDICES" = "true" -o "$RESOLVE_DEPS" = "true" ]; then
-    mkdir -p "$TARGET/debootstrap"
-    if [ "$LOG_STDERR" != true ]; then
-      download_indices >>$TARGET/debootstrap/debootstrap.log 2>&1
-    else
-      download_indices >&2
-    fi
+    download_indices
     GOT_INDICES=true
   fi
 
@@ -349,34 +405,23 @@ if am_doing_phase printdebs; then
   echo "$all_debs"
 fi
 
-if am_doing_phase dldebs first_stage; then
-  mkdir -p "$TARGET/debootstrap"
-fi
-
 if am_doing_phase dldebs; then
   if [ "$GOT_INDICES" != "true" ]; then
-    if [ "$LOG_STDERR" != true ]; then
-      download_indices >>$TARGET/debootstrap/debootstrap.log 2>&1
-    else
-      download_indices >&2
-    fi
+    download_indices
   fi
-  if [ "$LOG_STDERR" != true ]; then
-    download $all_debs >>$TARGET/debootstrap/debootstrap.log 2>&1
-  else
-    download $all_debs >&2
-  fi
+  download $all_debs
+fi
+
+if am_doing_phase maketarball; then
+  (cd $TARGET;
+   tar czf - var/lib/apt var/cache/apt) >$MAKE_TARBALL
 fi
 
 if am_doing_phase first_stage; then
   # first stage sets up the chroot -- no calls should be made to 
   # "chroot $TARGET" here; but they should be possible by the time it's
   # finished
-  if [ "$LOG_STDERR" != true ]; then
-    first_stage_install >>$TARGET/debootstrap/debootstrap.log 2>&1
-  else
-    first_stage_install >&2
-  fi
+  first_stage_install
 
   if ! am_doing_phase second_stage; then
     cp "$0"                        $TARGET/debootstrap/debootstrap
@@ -404,17 +449,22 @@ if am_doing_phase second_stage; then
   # work from entirely within the chroot (in case we've booted into it,
   # possibly over NFS eg)
 
-  if [ "$LOG_STDERR" != true ]; then
-    second_stage_install >>$TARGET/debootstrap/debootstrap.log 2>&1
-  else
-    second_stage_install >&2
-  fi
+  second_stage_install
 
+  # create sources.list
+  # first, kill debootstrap.invalid sources.list
   if [ -e "$TARGET/etc/apt/sources.list" ]; then
     rm -f "$TARGET/etc/apt/sources.list"
   fi
+  if [ "${MIRRORS#http://}" != "$MIRRORS" ]; then
+    setup_apt_sources ${MIRRORS%% *}
+    mv_invalid_to ${MIRRORS%% *}
+  else
+    setup_apt_sources $DEF_MIRROR
+    mv_invalid_to $DEF_MIRROR
+  fi
 
-  if [ "$LOG_STDERR" != true ]; then
+  if [ -e $TARGET/debootstrap/debootstrap.log ]; then
     cp $TARGET/debootstrap/debootstrap.log $TARGET/var/log/bootstrap.log
   fi
   sync
@@ -425,6 +475,13 @@ if am_doing_phase second_stage; then
     fi
   else
     rm -rf "$TARGET/debootstrap"
+  fi
+fi
+
+if am_doing_phase kill_target; then
+  if [ "$KEEP_DEBOOTSTRAP_DIR" != true ]; then
+    info KILLTARGET "Deleting target directory"
+    rm -rf "$TARGET"
   fi
 fi
 
