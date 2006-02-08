@@ -667,12 +667,13 @@ download_main () {
 
 get_debs () {
   local m1=${MIRRORS%% *}
-  local c="${COMPONENTS%% *}"
-  local path="dists/$SUITE/$c/binary-$ARCH/Packages"
-  local pkgdest="$TARGET/$($DLDEST pkg $SUITE $c $ARCH $m1 $path)"
   local field="$1"
   shift
-  echo $("$PKGDETAILS" FIELD "$field" $m1 "$pkgdest" "$@" | sed 's/ .*//')
+  echo $(for c in $COMPONENTS; do
+    local path="dists/$SUITE/$c/binary-$ARCH/Packages"
+    local pkgdest="$TARGET/$($DLDEST pkg $SUITE $c $ARCH $m1 $path)"
+    "$PKGDETAILS" FIELD "$field" $m1 "$pkgdest" "$@"
+  done | sed 's/ .*//')
 }
 
 ################################################################ extraction
