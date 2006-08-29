@@ -1,3 +1,9 @@
+debootstrap (0.3.3.0ubuntu3~dapper1) dapper-backports; urgency=low
+
+  * Automated backport upload; no source changes.
+
+ -- John Dong <john.dong@gmail.com>  Tue, 29 Aug 2006 18:31:51 +0100
+
 debootstrap (0.3.3.0ubuntu3) edgy; urgency=low
 
   * [edgy] New script to install Edgy Eft; as dapper but gcc 4.0 -> 4.1.
