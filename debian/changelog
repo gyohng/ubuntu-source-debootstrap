@@ -1,3 +1,9 @@
+debootstrap (0.3.3.0ubuntu5~dapper1) dapper-backports; urgency=low
+
+  * Automated backport upload; no source changes.
+
+ -- Colin Watson <cjwatson@canonical.com>  Tue,  3 Oct 2006 09:51:13 +0100
+
 debootstrap (0.3.3.0ubuntu5) edgy; urgency=low
 
   * [edgy] linux-kernel-headers -> linux-libc-dev (closes: Malone #62627).
