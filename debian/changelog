@@ -1,3 +1,9 @@
+debootstrap (0.3.3.0ubuntu6) edgy; urgency=low
+
+  * [edgy] Add libdb4.4 to buildd variant (thanks, LaMont Jones).
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Wed,  4 Oct 2006 22:11:11 +0100
+
 debootstrap (0.3.3.0ubuntu5) edgy; urgency=low
 
   * [edgy] linux-kernel-headers -> linux-libc-dev (closes: Malone #62627).
