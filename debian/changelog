@@ -1,3 +1,13 @@
+debootstrap (0.3.3.0ubuntu7) edgy; urgency=low
+
+  * When removing $TARGET/debootstrap, debootstrap.log is still open as
+    stdout/stderr and needs to remain so, but after unlinking it some NFS
+    servers implement this by a temporary file in the same directory, which
+    makes it impossible to rmdir that directory. Moving it instead works
+    around the problem (thanks, Steven McCoy; closes: Malone #65003).
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Thu, 12 Oct 2006 09:40:44 +0100
+
 debootstrap (0.3.3.0ubuntu6) edgy; urgency=low
 
   * [edgy] Add libdb4.4 to buildd variant (thanks, LaMont Jones).
