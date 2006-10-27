@@ -1,3 +1,10 @@
+debootstrap (0.3.3.0ubuntu8) feisty; urgency=low
+
+  * [feisty] New script to install Feisty Fawn, copied from edgy.
+  * [Makefile] Install feisty.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Fri, 27 Oct 2006 11:08:12 +0100
+
 debootstrap (0.3.3.0ubuntu7) edgy; urgency=low
 
   * When removing $TARGET/debootstrap, debootstrap.log is still open as
