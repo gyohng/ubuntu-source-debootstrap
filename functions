@@ -666,14 +666,16 @@ download_main () {
 ###################################################### deb choosing support
 
 get_debs () {
-  local m1=${MIRRORS%% *}
   local field="$1"
   shift
-  echo $(for c in $COMPONENTS; do
-    local path="dists/$SUITE/$c/binary-$ARCH/Packages"
-    local pkgdest="$TARGET/$($DLDEST pkg $SUITE $c $ARCH $m1 $path)"
-    "$PKGDETAILS" FIELD "$field" $m1 "$pkgdest" "$@"
-  done | sed 's/ .*//')
+  local m1 c
+  for m1 in $MIRRORS; do
+    for c in $COMPONENTS; do
+      local path="dists/$SUITE/$c/binary-$ARCH/Packages"
+      local pkgdest="$TARGET/$($DLDEST pkg $SUITE $c $ARCH $m1 $path)"
+      echo $("$PKGDETAILS" FIELD "$field" $m1 "$pkgdest" "$@" | sed 's/ .*//')
+    done
+  done
 }
 
 ################################################################ extraction
