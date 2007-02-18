@@ -1,3 +1,26 @@
+debootstrap (0.3.3.2ubuntu1) feisty; urgency=low
+
+  * Resynchronise with Debian. Remaining changes:
+    - Add dapper, edgy, and feisty scripts.
+    - Default mirror to http://archive.ubuntu.com/ubuntu.
+    - Move debootstrap.log before unlinking it to work around NFS
+      brain-damage.
+    - Fix typo in debootstrap(8) man page.
+  * [functions] Fix "htp" typo in temporary /etc/apt/sources.list.
+  * [edgy, feisty] Remove --force-auto-select option as it is no longer
+    supported by dpkg.
+  * [debian/control] Set Maintainer to me.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Sun, 18 Feb 2007 13:42:04 +0000
+
+debootstrap (0.3.3.2) unstable; urgency=low
+
+  * NMU with maintainer approval
+  * Remove --force-auto-select option for 'sid' script as it is no longer
+    supported by dpkg. Closes: #409527.
+
+ -- Frans Pop <fjp@debian.org>  Fri, 16 Feb 2007 20:43:36 +0100
+
 debootstrap (0.3.3.1ubuntu1) feisty; urgency=low
 
   * Resynchronise with Debian. Remaining changes:
