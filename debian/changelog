@@ -1,3 +1,11 @@
+debootstrap (0.3.3.2ubuntu3) feisty; urgency=low
+
+  * Add devices created by fd to devices-std.tar.gz (make dev/std*
+    available in a chroot with bind mounting /proc (and /dev/pts), but
+    without bind mounting /dev).
+
+ -- Matthias Klose <doko@ubuntu.com>  Mon,  5 Mar 2007 03:10:07 +0100
+
 debootstrap (0.3.3.2ubuntu2) feisty; urgency=low
 
   * Add {edgy,feisty}.fakechroot scripts and install them in Makefile.

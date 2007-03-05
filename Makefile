@@ -69,7 +69,7 @@ devices-std.tar.gz:
 	mkdir -p dev
 	chown 0:0 dev
 	chmod 755 dev
-	(cd dev && /dev/MAKEDEV std ptmx)
+	(cd dev && /dev/MAKEDEV std ptmx fd)
 	tar cf - dev | gzip -9 >devices-std.tar.gz
 	rm -rf dev
 
