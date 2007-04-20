@@ -1,3 +1,27 @@
+debootstrap (0.3.3.3ubuntu1) gutsy; urgency=low
+
+  * Resynchronise with Debian. Remaining changes:
+    - Add dapper, edgy, edgy.fakechroot, feisty, and feisty.fakechroot
+      scripts.
+    - Default mirror to http://archive.ubuntu.com/ubuntu.
+    - Move debootstrap.log before unlinking it to work around NFS
+      brain-damage.
+    - Fix typo in debootstrap(8) man page.
+    - Fix "htp" typo in temporary /etc/apt/sources.list.
+    - Add devices created by fd to devices-std.tar.gz.
+  * [gutsy] New script to install Gutsy Gibbon, copied from feisty.
+  * [gutsy.fakechroot] New fakechroot variant of gutsy.
+  * [Makefile] Install gutsy and gutsy.fakechroot.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Fri, 20 Apr 2007 15:06:32 +0100
+
+debootstrap (0.3.3.3) unstable; urgency=low
+
+  * NMU
+  * Add support for lenny.
+
+ -- Joey Hess <joeyh@debian.org>  Tue, 10 Apr 2007 15:24:15 -0400
+
 debootstrap (0.3.3.2ubuntu3) feisty; urgency=low
 
   * Add devices created by fd to devices-std.tar.gz (make dev/std*
