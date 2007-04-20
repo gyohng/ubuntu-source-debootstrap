@@ -41,10 +41,13 @@ install:
 	install -o root -g root -m 0644 edgy.fakechroot $(DSDIR)/scripts/
 	install -o root -g root -m 0644 feisty $(DSDIR)/scripts/
 	install -o root -g root -m 0644 feisty.fakechroot $(DSDIR)/scripts/
+	install -o root -g root -m 0644 gutsy $(DSDIR)/scripts/
+	install -o root -g root -m 0644 gutsy.fakechroot $(DSDIR)/scripts/
 	install -o root -g root -m 0644 functions $(DSDIR)/
 
         # no special script for etch anymore
 	ln -s sid $(DSDIR)/scripts/etch
+	ln -s sid $(DSDIR)/scripts/lenny
 
 	install -o root -g root -m 0755 debootstrap.8 $(DESTDIR)/usr/share/man/man8/
 	install -o root -g root -m 0755 debootstrap $(DESTDIR)/usr/sbin/
