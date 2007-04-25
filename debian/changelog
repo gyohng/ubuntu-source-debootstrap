@@ -1,3 +1,10 @@
+debootstrap (0.3.3.3ubuntu2) gutsy; urgency=low
+
+  * [gutsy, gutsy.fakechroot] Link /etc/localtime to Etc/UTC rather than
+    UTC, to work around Debian bug #420895.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Wed, 25 Apr 2007 10:57:26 +0100
+
 debootstrap (0.3.3.3ubuntu1) gutsy; urgency=low
 
   * Resynchronise with Debian. Remaining changes:
