@@ -1,3 +1,10 @@
+debootstrap (0.3.3.3ubuntu3) gutsy; urgency=low
+
+  * [gutsy, gutsy.fakechroot] Make libgcc4 build-essential on hppa
+    (LP: #111476).
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Tue, 01 May 2007 13:54:08 +0100
+
 debootstrap (0.3.3.3ubuntu2) gutsy; urgency=low
 
   * [gutsy, gutsy.fakechroot] Link /etc/localtime to Etc/UTC rather than
