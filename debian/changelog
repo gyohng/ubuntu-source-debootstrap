@@ -1,3 +1,9 @@
+debootstrap (0.3.3.3ubuntu3~edgy1) edgy-backports; urgency=low
+
+  * Automated backport upload; no source changes.
+
+ -- Colin Watson <cjwatson@canonical.com>  Tue,  1 May 2007 16:21:03 +0100
+
 debootstrap (0.3.3.3ubuntu3) gutsy; urgency=low
 
   * [gutsy, gutsy.fakechroot] Make libgcc4 build-essential on hppa
