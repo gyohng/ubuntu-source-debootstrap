@@ -1,3 +1,9 @@
+debootstrap (1.0.1~edgy1) edgy-backports; urgency=low
+
+  * Automated backport upload; no source changes.
+
+ -- Colin Watson <cjwatson@canonical.com>  Tue, 31 Jul 2007 17:27:35 +0100
+
 debootstrap (1.0.1) unstable; urgency=low
 
   * scripts/ubuntu/gutsy: Determine buildd variant dynamically using
