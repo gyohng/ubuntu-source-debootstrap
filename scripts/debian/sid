@@ -16,8 +16,12 @@ if doing_variant fakechroot; then
 fi
 
 work_out_debs () {
-    LIBC6=libc6
-    if [ "$ARCH" = "alpha" -o "$ARCH" = "ia64" ]; then LIBC6="libc6.1"; fi
+    LIBC=libc6
+    if [ "$ARCH" = "alpha" -o "$ARCH" = "ia64" ]; then
+      LIBC="libc6.1"
+    elif [ "$ARCH" = "hurd-i386" ]; then
+      LIBC="libc0.3"
+    fi
 
     required="$(get_debs Priority: required)"
 
@@ -48,8 +52,8 @@ first_stage_install () {
         chown 0.0 "$TARGET/etc/fstab"; chmod 644 "$TARGET/etc/fstab"
     fi
 
-    if [ -x $TARGET/usr/bin/md5sum.textutils -a \! -e $TARGET/usr/bin/md5sum ]; then
-        cp $TARGET/usr/bin/md5sum.textutils $TARGET/usr/bin/md5sum
+    if [ -x "$TARGET/usr/bin/md5sum.textutils" -a \! -e "$TARGET/usr/bin/md5sum" ]; then
+        cp "$TARGET/usr/bin/md5sum.textutils" "$TARGET/usr/bin/md5sum"
     fi
 
     if doing_variant fakechroot; then 
@@ -107,7 +111,7 @@ second_stage_install () {
     info INSTCORE "Installing core packages..."
 
     p; progress $baseprog $bases INSTCORE "Installing core packages" #2
-    ln -sf mawk $TARGET/usr/bin/awk
+    ln -sf mawk "$TARGET/usr/bin/awk"
     x_core_install base-files base-passwd
     p; progress $baseprog $bases INSTCORE "Installing core packages" #3
     x_core_install dpkg
@@ -121,13 +125,13 @@ second_stage_install () {
     fi
 
     p; progress $baseprog $bases INSTCORE "Installing core packages" #4
-    x_core_install $LIBC6
+    x_core_install $LIBC
 
     p; progress $baseprog $bases INSTCORE "Installing core packages" #5
     x_core_install perl-base
 
     p; progress $baseprog $bases INSTCORE "Installing core packages" #6
-    rm $TARGET/usr/bin/awk
+    rm "$TARGET/usr/bin/awk"
     x_core_install mawk
 
     p; progress $baseprog $bases INSTCORE "Installing core packages" #7

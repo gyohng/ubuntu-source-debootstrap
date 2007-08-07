@@ -1,3 +1,25 @@
+debootstrap (1.0.2) unstable; urgency=low
+
+  [ Joey Hess ]
+  * Document --components in man page.
+  * Update man page, as packages listed in --include should now be auto
+    dep-resolved by default.
+
+  [ Colin Watson ]
+  * Extensive quoting fixes, allowing installation to a target containing
+    spaces (closes: #387673).
+  * scripts/debian/sid: Handle libc0.3 on hurd-i386 (thanks, Michael Banck;
+    closes: #314304).
+  * functions: Stub out /proc setup and add device setup for the Hurd
+    (thanks, Michael Banck; closes: #314311).
+  * Add --version option (closes: #294484).
+
+  [ Otavio Salvador ]
+  * Fix bunzip2 path. Thanks Martín Ferrari <martin.ferrari@gmail.com> by
+    the patch (closes: #436218).
+
+ -- Otavio Salvador <otavio@debian.org>  Tue, 07 Aug 2007 20:12:55 -0300
+
 debootstrap (1.0.1) unstable; urgency=low
 
   * scripts/ubuntu/gutsy: Determine buildd variant dynamically using
