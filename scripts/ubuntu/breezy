@@ -6,7 +6,7 @@ variants - buildd
 
 work_out_debs () {
     LIBC6=libc6
-    if [ "$ARCH" = "alpha" -o "$ARCH" = "ia64" ]; then LIBC6="libc6.1"; fi
+    if [ "$ARCH" = "alpha" ] || [ "$ARCH" = "ia64" ]; then LIBC6="libc6.1"; fi
 
     required="$(get_debs Priority: required)"
 
@@ -50,7 +50,7 @@ first_stage_install () {
         local ver="$(
             ar -p "$TARGET/$deb" control.tar.gz | zcat |
                 tar -O -xf - control ./control 2>/dev/null |
-                sed -ne 's/^Version: *//Ip' | head -n 1
+                grep -i ^Version: | sed -e 's/[^:]*: *//' | head -n 1
         )"
 
         mkdir -p "$TARGET/var/lib/dpkg/info"
@@ -76,6 +76,8 @@ second_stage_install () {
     }
 
     setup_proc
+    umount_on_exit /dev/.static/dev
+    umount_on_exit /dev
     in_target /sbin/ldconfig
 
     DEBIAN_FRONTEND=noninteractive
