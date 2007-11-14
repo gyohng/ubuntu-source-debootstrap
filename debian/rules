@@ -30,8 +30,8 @@ install: real-build
 	dh_installdirs
 
 #	 install the package into debian/debootstrap
-	$(MAKE) install-allarch DESTDIR=$(CURDIR)/debian/debootstrap
-	$(MAKE) install-arch    DESTDIR=$(CURDIR)/debian/debootstrap-udeb
+	$(MAKE) install      DESTDIR=$(CURDIR)/debian/debootstrap
+	$(MAKE) install      DESTDIR=$(CURDIR)/debian/debootstrap-udeb
 
 binary-indep: install
 # We have nothing to do by default.
@@ -64,6 +64,17 @@ binary-indep: install
 	dh_installman -i debootstrap.8
 	dh_installchangelogs -i
 	dh_link -i
+	-rm -rf debian/debootstrap-udeb/usr/share/debootstrap/scripts/potato \
+		debian/debootstrap-udeb/usr/share/debootstrap/scripts/woody \
+		debian/debootstrap-udeb/usr/share/debootstrap/scripts/sarge \
+		debian/debootstrap-udeb/usr/share/debootstrap/scripts/warty \
+		debian/debootstrap-udeb/usr/share/debootstrap/scripts/hoary \
+		debian/debootstrap-udeb/usr/share/debootstrap/scripts/breezy \
+		debian/debootstrap-udeb/usr/share/debootstrap/scripts/dapper \
+		debian/debootstrap-udeb/usr/share/debootstrap/scripts/edgy \
+		debian/debootstrap-udeb/usr/share/debootstrap/scripts/feisty \
+		debian/debootstrap-udeb/usr/share/debootstrap/scripts/*.buildd \
+		debian/debootstrap-udeb/usr/share/debootstrap/scripts/*.fakechroot
 	dh_compress -i
 	dh_fixperms -i
 	dh_installdeb -i
@@ -72,28 +83,7 @@ binary-indep: install
 	dh_md5sums -i
 	dh_builddeb -i
 
-binary-arch: install
-	dh_testdir
-	dh_testroot
-	-rm -rf debian/debootstrap-udeb/usr/share \
-		debian/debootstrap-udeb/usr/lib/debootstrap/scripts/potato \
-		debian/debootstrap-udeb/usr/lib/debootstrap/scripts/woody \
-		debian/debootstrap-udeb/usr/lib/debootstrap/scripts/sarge \
-		debian/debootstrap-udeb/usr/lib/debootstrap/scripts/warty \
-		debian/debootstrap-udeb/usr/lib/debootstrap/scripts/hoary \
-		debian/debootstrap-udeb/usr/lib/debootstrap/scripts/breezy \
-		debian/debootstrap-udeb/usr/lib/debootstrap/scripts/dapper \
-		debian/debootstrap-udeb/usr/lib/debootstrap/scripts/edgy \
-		debian/debootstrap-udeb/usr/lib/debootstrap/scripts/feisty \
-		debian/debootstrap-udeb/usr/lib/debootstrap/scripts/*.buildd \
-		debian/debootstrap-udeb/usr/lib/debootstrap/scripts/*.fakechroot
-	dh_strip -s
-	dh_compress -s
-	dh_fixperms -s
-	dh_installdeb -s
-	dh_shlibdeps -s
-	dh_gencontrol -s
-	dh_builddeb -s
+binary-arch:
 
 binary: binary-indep binary-arch
 .PHONY: build real-build clean binary-indep binary-arch binary install configure binary-basedebs
