@@ -12,13 +12,16 @@ clean:
 
 DSDIR=$(DESTDIR)/usr/share/debootstrap
 install:
-	# Dirs are created by dh_installdirs
+	mkdir -p $(DSDIR)/scripts
+	mkdir -p $(DESTDIR)/usr/sbin
+
 	install -o root -g root -m 0644 scripts/debian/* $(DSDIR)/scripts/
 	install -o root -g root -m 0644 scripts/ubuntu/* $(DSDIR)/scripts/
 	install -o root -g root -m 0644 functions $(DSDIR)/
 
         # no special script for etch anymore
 	ln -s sid $(DSDIR)/scripts/etch
+	ln -s sid $(DSDIR)/scripts/etch-m68k
 	ln -s sid $(DSDIR)/scripts/lenny
 
 	ln -s gutsy $(DSDIR)/scripts/hardy
