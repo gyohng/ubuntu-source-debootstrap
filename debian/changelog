@@ -1,3 +1,9 @@
+debootstrap (1.0.9~hardy1) hardy-backports; urgency=low
+
+  * Automated backport upload; no source changes.
+
+ -- Scott Kitterman <ubuntu@kitterman.com>  Sat,  3 May 2008 11:37:02 +0100
+
 debootstrap (1.0.9) unstable; urgency=low
 
   [ Frans Pop ]
