@@ -23,9 +23,11 @@ install:
 	ln -s sid $(DSDIR)/scripts/etch
 	ln -s sid $(DSDIR)/scripts/etch-m68k
 	ln -s sid $(DSDIR)/scripts/lenny
+	ln -s sid $(DSDIR)/scripts/squeeze
 
 	ln -s gutsy $(DSDIR)/scripts/hardy
 	ln -s gutsy $(DSDIR)/scripts/intrepid
+	ln -s gutsy $(DSDIR)/scripts/jaunty
 
 	sed 's/@VERSION@/$(VERSION)/g' debootstrap >$(DESTDIR)/usr/sbin/debootstrap
 	chown root:root $(DESTDIR)/usr/sbin/debootstrap
@@ -38,6 +40,6 @@ devices.tar.gz:
 	mkdir -p dev
 	chown 0:0 dev
 	chmod 755 dev
-	(cd dev && $(MAKEDEV) std ptmx fd)
+	(cd dev && $(MAKEDEV) std ptmx fd consoleonly)
 	tar cf - dev | gzip -9 >devices.tar.gz
 	rm -rf dev

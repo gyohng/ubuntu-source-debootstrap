@@ -47,6 +47,11 @@ See also \-\-foreign.
 .IP "\fB\-\-include=alpha,beta\fP"
 Comma separated list of packages which will be added to download and extract
 lists.
+Beware that including packages that declare a Pre\-Depends relationship on
+any package that is not in the "required" set (i.e. "Priority: required"),
+or that depend directly or indirectly on packages that do so, will not work;
+you will need to install such packages separately after \fBdebootstrap\fP
+has completed.
 .IP
 .IP "\fB\-\-exclude=alpha,beta\fP"
 Comma separated list of packages which will be removed from download and
@@ -100,6 +105,8 @@ Do the initial unpack phase of bootstrapping only, for example if the
 target architecture does not match the host architecture.
 A copy of debootstrap sufficient for completing the bootstrap process
 will be installed as /debootstrap/debootstrap in the target filesystem.
+You can run it with the \fB\-\-second\-stage\fP option to complete the
+bootstrapping process.
 .IP
 .IP "\fB\-\-second\-stage\fP"
 Complete the bootstrapping process.
@@ -142,8 +149,10 @@ Full process to create a complete Debian installation of \fIsid\fR (unstable):
      main # cd / ; mkdir /sid-root
      main # debootstrap sid /sid-root http://ftp.us.debian.org/debian/
      [ ... watch it download the whole system ]
-     main # echo "proc /sid-root/proc proc none 0 0" >> /etc/fstab
+     main # echo "proc /sid-root/proc proc defaults 0 0" >> /etc/fstab
      main # mount proc /sid-root/proc -t proc
+     main # echo "sysfs /sid-root/sys sysfs defaults 0 0" >> /etc/fstab
+     main # mount sysfs /sid-root/sys -t sysfs
      main # cp /etc/hosts /sid-root/etc/hosts
      main # chroot /sid-root /bin/bash
      chroot # dselect  
