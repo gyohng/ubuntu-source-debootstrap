@@ -399,7 +399,7 @@ apt_dest () {
 	#   rel suite mirror path
 	case "$1" in
 	    deb)
-		echo "var/cache/apt/archives/${2}_${3}_${4}.deb" | sed 's/:/%3a/'
+		echo "/var/cache/apt/archives/${2}_${3}_${4}.deb" | sed 's/:/%3a/'
 		;;
 	    pkg)
 		local m="$5"
@@ -862,7 +862,7 @@ setup_devices () {
 		setup_devices_hurd ;;
 	    *)
 		if [ -e "$DEVICES_TARGZ" ]; then
-			(cd "$TARGET"; zcat "$DEVICES_TARGZ" | tar -xf -)
+			zcat "$DEVICES_TARGZ" | (cd "$TARGET"; tar -xf -)
 		else
 			if [ -e /dev/.devfsd ] ; then
 				in_target mount -t devfs devfs /dev
@@ -1096,7 +1096,8 @@ without () {
 	echo
 }
 
-repeat () {
+# Formerly called 'repeat', but that's a reserved word in zsh.
+repeatn () {
 	local n="$1"
 	shift
 	while [ "$n" -gt 0 ]; do
