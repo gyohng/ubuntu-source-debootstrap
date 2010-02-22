@@ -13,21 +13,8 @@ install:
 	mkdir -p $(DSDIR)/scripts
 	mkdir -p $(DESTDIR)/usr/sbin
 
-	install -o root -g root -m 0644 scripts/debian/* $(DSDIR)/scripts/
-	install -o root -g root -m 0644 scripts/ubuntu/* $(DSDIR)/scripts/
+	cp -a scripts/* $(DSDIR)/scripts/
 	install -o root -g root -m 0644 functions $(DSDIR)/
-
-        # no special script for etch anymore
-	ln -s sid $(DSDIR)/scripts/etch
-	ln -s sid $(DSDIR)/scripts/etch-m68k
-	ln -s sid $(DSDIR)/scripts/lenny
-	ln -s sid $(DSDIR)/scripts/squeeze
-
-	ln -s gutsy $(DSDIR)/scripts/hardy
-	ln -s gutsy $(DSDIR)/scripts/intrepid
-	ln -s gutsy $(DSDIR)/scripts/jaunty
-	ln -s gutsy $(DSDIR)/scripts/karmic
-	ln -s gutsy $(DSDIR)/scripts/lucid
 
 	sed 's/@VERSION@/$(VERSION)/g' debootstrap >$(DESTDIR)/usr/sbin/debootstrap
 	chown root:root $(DESTDIR)/usr/sbin/debootstrap

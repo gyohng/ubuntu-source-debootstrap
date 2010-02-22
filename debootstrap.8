@@ -15,7 +15,7 @@ debootstrap \- Bootstrap a basic Debian system
 .B debootstrap
 bootstraps a basic Debian system of
 .I SUITE
-(eg, lenny, squeeze, sid) into
+(eg, lenny, squeeze, sid; or stable, testing, unstable) into
 .I TARGET
 from
 .I MIRROR
@@ -132,6 +132,11 @@ Used for internal purposes by boot-floppies
 .IP "\fB\-\-debian\-installer\fP"
 Used for internal purposes by the debian-installer
 .IP 
+.IP "\fB\-\-extractor=TYPE\fP"
+Override automatic .deb extractor selection to
+.IR TYPE .
+Supported extractors are: dpkg-deb and ar.
+.IP
 .SH EXAMPLES
 .
 .PP 
@@ -161,8 +166,8 @@ Full process to create a complete Debian installation of \fIsid\fR (unstable):
      [ reload init ]
 .PP
 Note that you will generally need a recent version of debootstrap to
-do this; the version currently in stable will generally have stopped
-working due to changes to unstable shortly after the last release.
+do this; the version currently in stable may stop working due to changes
+to unstable shortly after the last release.
 .SH AUTHOR
 .B debootstrap
 was written by Anthony Towns <ajt@debian.org>.
