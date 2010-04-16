@@ -1,3 +1,9 @@
+debootstrap (1.0.20ubuntu1) lucid; urgency=low
+
+  * Add (Ubuntu) maverick as a symlink to gutsy.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Fri, 16 Apr 2010 11:04:50 +0100
+
 debootstrap (1.0.20) unstable; urgency=low
 
   * For recent Ubuntu versions, move $TARGET/sbin/initctl aside in the same
