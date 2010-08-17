@@ -1,3 +1,10 @@
+debootstrap (1.0.20ubuntu0.1) karmic-proposed; urgency=low
+
+  * Add apt to base packages for the buildd variant as it is no longer
+    marked Build-Essential (thanks Josef Spillner). (LP: #533369)
+
+ -- Nigel Babu <nigelbabu@gmail.com>  Tue, 17 Aug 2010 19:28:23 +0200
+
 debootstrap (1.0.20) unstable; urgency=low
 
   * For recent Ubuntu versions, move $TARGET/sbin/initctl aside in the same
