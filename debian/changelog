@@ -1,3 +1,11 @@
+debootstrap (1.0.20ubuntu1.1) lucid-proposed; urgency=low
+
+  * scripts/sid: 
+    + Fixed bug for not creating sid chroot because of missing apt
+      taken from mavericks debootstrap version (LP: #533369)
+
+ -- Stephan Hermann <sh@sourcecode.de>  Tue, 17 Aug 2010 15:58:06 +0200
+
 debootstrap (1.0.20ubuntu1) lucid; urgency=low
 
   * Add (Ubuntu) maverick as a symlink to gutsy.
