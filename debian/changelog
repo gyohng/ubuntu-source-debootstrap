@@ -1,3 +1,17 @@
+debootstrap (1.0.24) unstable; urgency=low
+
+  [ Miguel Figueiredo ]
+  * Apply patches from by Jonathan Klee and Guillaume Chauvel 
+    to add support to https (closes: #521196).
+
+  [ Colin Watson ]
+  * Add (Ubuntu) natty as a symlink to gutsy.
+
+  [ Joey Hess ]
+  * Add support for wheezy. Closes: #597461
+
+ -- Joey Hess <joeyh@debian.org>  Sun, 19 Sep 2010 21:40:00 -0400
+
 debootstrap (1.0.23) unstable; urgency=low
 
   * Add (Ubuntu) maverick as a symlink to gutsy.
