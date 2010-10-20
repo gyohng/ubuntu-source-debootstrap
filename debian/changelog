@@ -1,3 +1,9 @@
+debootstrap (1.0.20ubuntu1.2) lucid-proposed; urgency=low
+
+  * Add (Ubuntu) natty as a symlink to gutsy. LP: #673038
+
+ -- Tim Gardner <tim.gardner@canonical.com>  Wed, 20 Oct 2010 11:07:22 -0600
+
 debootstrap (1.0.20ubuntu1.1) lucid-proposed; urgency=low
 
   * scripts/sid: 
