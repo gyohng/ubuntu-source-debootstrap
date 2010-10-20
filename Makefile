@@ -29,6 +29,7 @@ install:
 	ln -s gutsy $(DSDIR)/scripts/karmic
 	ln -s gutsy $(DSDIR)/scripts/lucid
 	ln -s gutsy $(DSDIR)/scripts/maverick
+	ln -s gutsy $(DSDIR)/scripts/natty
 
 	sed 's/@VERSION@/$(VERSION)/g' debootstrap >$(DESTDIR)/usr/sbin/debootstrap
 	chown root:root $(DESTDIR)/usr/sbin/debootstrap
