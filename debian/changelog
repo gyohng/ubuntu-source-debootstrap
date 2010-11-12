@@ -1,3 +1,17 @@
+debootstrap (1.0.26) unstable; urgency=low
+
+  [ Christian Perrier ]
+  * Consistently use tab indenting in scripts/gutsy and scripts/sid
+    Patch by Karl Goetz. Closes: #601821
+  * Fix a typo in the debootstrap script
+    Patch by Karl Goetz. Closes: #601822
+
+  [ Joey Hess ]
+  * sid: Remove old workaround for etch era coreutils/textutils md5sum
+    diversion problem. (#329394)
+
+ -- Otavio Salvador <otavio@debian.org>  Fri, 12 Nov 2010 10:07:41 -0200
+
 debootstrap (1.0.25) unstable; urgency=low
 
   * Remove debug statement that slipped in.
