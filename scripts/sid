@@ -67,7 +67,9 @@ first_stage_install () {
 		echo \
 "Package: $pkg
 Version: $ver
-Status: install ok installed" >> "$TARGET/var/lib/dpkg/status"
+Status: install ok installed
+Maintainer: debootstrap
+Description: debootstrap" >> "$TARGET/var/lib/dpkg/status"
 
 		touch "$TARGET/var/lib/dpkg/info/${pkg}.list"
 	}
