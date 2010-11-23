@@ -1,3 +1,10 @@
+debootstrap (1.0.25ubuntu2) natty; urgency=low
+
+  * revert addition of dummy Maintainer: and Description:, the LP bug #674146
+    is being worked around by dropping dpkg optimization on armel instead.
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Tue, 23 Nov 2010 13:33:13 +0100
+
 debootstrap (1.0.25ubuntu1) natty; urgency=low
 
   * scripts/gutsy, scripts/sid: add dummy Maintainer: and Description: to the
