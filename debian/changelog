@@ -1,3 +1,17 @@
+debootstrap (1.0.27) unstable; urgency=low
+
+  [ Miguel Figueiredo ]
+  * Fix bug and typo on --private-key
+    Patch by Jonathan Klee. 
+
+  [ Jeremie Koenig ]
+  * Hurd support:
+    - Use the newer setup-translators script and firmlink
+      $TARGET/{dev,servers} in setup_devices_hurd;
+    - Don't attempt to build devices.tar.gz, which is not needed.
+
+ -- Otavio Salvador <otavio@debian.org>  Mon, 07 Feb 2011 19:40:24 -0200
+
 debootstrap (1.0.26) unstable; urgency=low
 
   [ Christian Perrier ]
