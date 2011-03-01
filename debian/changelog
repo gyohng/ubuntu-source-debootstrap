@@ -1,3 +1,10 @@
+debootstrap (1.0.28ubuntu1) natty; urgency=low
+
+  * Install /var/lib/dpkg/info/$(dpkg --print-architecture) -> . symlink, to
+    cope with multiarch dpkg.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Tue, 01 Mar 2011 13:38:49 +0000
+
 debootstrap (1.0.28) unstable; urgency=low
 
   [ Miguel Figueiredo ]
