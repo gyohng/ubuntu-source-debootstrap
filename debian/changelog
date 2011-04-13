@@ -1,3 +1,10 @@
+debootstrap (1.0.29ubuntu1) natty; urgency=low
+
+  * Cherry-pick from trunk:
+    - Resolve dependencies from all requested components (LP: #740167).
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Wed, 13 Apr 2011 18:48:24 +0100
+
 debootstrap (1.0.29) unstable; urgency=low
 
   [ Joey Hess ]
