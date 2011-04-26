@@ -1,3 +1,25 @@
+debootstrap (1.0.30) unstable; urgency=low
+
+  [ Joey Hess ]
+  * Recommend debian-archive-keyring, and if it is installed,
+    default to checking gpg signatures of the Release file against it
+    when bootstrapping sid, squeeze, wheezy, etch, and lenny.
+    Closes: #560038
+  * Add --no-check-gpg option that can be used to disable release file
+    verification. Closes: #624229
+  * Needs base-installer 1.117.
+  * Add a warning message if the keyring file is not available, and
+    --no-check-gpg is not specified.
+  * Clear all global variables used for options, so that unclean
+    environment doesn't break debootstrap. Closes: #621657
+  * Removed the --boot-floppies switch and mode. Assuming this has
+    not been used in 10 years.
+
+  [ Colin Watson ]
+  * Resolve dependencies from all requested components (LP: #740167).
+
+ -- Joey Hess <joeyh@debian.org>  Tue, 26 Apr 2011 17:10:00 -0400
+
 debootstrap (1.0.29) unstable; urgency=low
 
   [ Joey Hess ]

@@ -61,13 +61,10 @@ progress_next () {
 }
 
 wgetprogress () {
-	[ ! "$verbose" ] && QSWITCH="-q"
+	[ ! "$VERBOSE" ] && QSWITCH="-q"
 	local ret=0
 	if [ "$USE_DEBIANINSTALLER_INTERACTION" ] && [ "$PROGRESS_NEXT" ]; then
 		wget "$@" 2>&1 >/dev/null | $PKGDETAILS "WGET%" $PROGRESS_NOW $PROGRESS_NEXT $PROGRESS_END >&3
-		ret=$?
-	elif [ "$USE_BOOTFLOPPIES_INTERACTION" ] && [ "$PROGRESS_NEXT" ]; then
-		wget "$@" 2>&1 >/dev/null | $PKGDETAILS "WGET%" $PROGRESS_NOW $PROGRESS_NEXT $PROGRESS_END "$PROGRESS_WHAT" >&3
 		ret=$?
 	else
 		wget $QSWITCH "$@" 
@@ -90,12 +87,6 @@ progress () {
 		(echo "P: $now $end $name"
 		for x in "$@"; do echo "PA: $x"; done
 		echo "PF: $fmt") >&3
-	elif [ "$USE_BOOTFLOPPIES_INTERACTION" ]; then
-		PROGRESS_NOW="$now"
-		PROGRESS_END="$end"
-		PROGRESS_WHAT="`printf "$fmt" "$@"`"
-		PROGRESS_NEXT=""
-		printf "P: %s %s %s\n" $now $end "$PROGRESS_WHAT" >&3
 	fi
 }
 
@@ -189,6 +180,13 @@ download_style () {
 		error 1 BADDLOAD "unknown download style"
 		;;
 	esac
+}
+
+keyring () {
+	KEYRING_WANTED="$1"
+	if [ -z "$KEYRING" ] && [ -e "$KEYRING_WANTED" ]; then
+		KEYRING="$KEYRING_WANTED"
+	fi
 }
 
 ########################################################## variant handling
@@ -456,7 +454,7 @@ download_release_sig () {
 	local reldest="$2"
 	local relsigdest="$TARGET/$($DLDEST rel "$SUITE" "$m1" "dists/$SUITE/Release.gpg")"
 
-	if [ -n "$KEYRING" ]; then
+	if [ -n "$KEYRING" ] && [ -z "$DISABLE_KEYRING" ]; then
 		progress 0 100 DOWNRELSIG "Downloading Release file signature"
 		progress_next 50
 		get "$m1/dists/$SUITE/Release.gpg" "$relsigdest" nocache ||
@@ -470,6 +468,8 @@ download_release_sig () {
 		(gpgv --status-fd 1 --keyring "$KEYRING" --ignore-time-conflict \
 		 "$relsigdest" "$reldest" || true) | read_gpg_status
 		progress 100 100 DOWNRELSIG "Downloading Release file signature"
+	elif [ -z "$DISABLE_KEYRING" ] && [ -n "$KEYRING_WANTED" ]; then
+		warning KEYRING "Cannot check Release signature; keyring file not available %s" "$KEYRING_WANTED"
 	fi
 }
 
@@ -1124,19 +1124,24 @@ fi
 resolve_deps () {
 	local m1="${MIRRORS%% *}"
 
-	# XXX: I can't think how to deal well with dependency resolution and
-	#      lots of Packages files. -- aj 2005/06/12
-
-	c="${COMPONENTS%% *}"
-	local path="dists/$SUITE/$c/binary-$ARCH/Packages"
-	local pkgdest="$TARGET/$($DLDEST pkg "$SUITE" "$c" "$ARCH" "$m1" "$path")"
-
 	local PKGS="$*"
 	local ALLPKGS="$PKGS";
 	local ALLPKGS2="";
 	while [ "$PKGS" != "" ]; do
-		PKGS=$("$PKGDETAILS" GETDEPS "$pkgdest" $PKGS)
-		PKGS=$("$PKGDETAILS" PKGS REAL "$pkgdest" $PKGS | sed -n 's/ .*REAL.*$//p')
+		local NEWPKGS=""
+		for c in $COMPONENTS; do
+			local path="dists/$SUITE/$c/binary-$ARCH/Packages"
+			local pkgdest="$TARGET/$($DLDEST pkg "$SUITE" "$c" "$ARCH" "$m1" "$path")"
+			NEWPKGS="$NEWPKGS $("$PKGDETAILS" GETDEPS "$pkgdest" $PKGS)"
+		done
+		PKGS=$(echo "$PKGS $NEWPKGS" | tr ' ' '\n' | sort | uniq)
+		local REALPKGS=""
+		for c in $COMPONENTS; do
+			local path="dists/$SUITE/$c/binary-$ARCH/Packages"
+			local pkgdest="$TARGET/$($DLDEST pkg "$SUITE" "$c" "$ARCH" "$m1" "$path")"
+			REALPKGS="$REALPKGS $("$PKGDETAILS" PKGS REAL "$pkgdest" $PKGS | sed -n 's/ .*REAL.*$//p')"
+		done
+		PKGS="$REALPKGS"
 		ALLPKGS2=$(echo "$PKGS $ALLPKGS" | tr ' ' '\n' | sort | uniq)
 		PKGS=$(without "$ALLPKGS2" "$ALLPKGS")
 		ALLPKGS="$ALLPKGS2"
