@@ -1,3 +1,9 @@
+debootstrap (1.0.29ubuntu1~lucid1) lucid-backports; urgency=low
+
+  * Automated backport upload; no source changes.
+
+ -- Colin Watson <cjwatson@canonical.com>  Mon, 23 May 2011 11:57:33 +0000
+
 debootstrap (1.0.29ubuntu1) natty; urgency=low
 
   * Cherry-pick from trunk:
