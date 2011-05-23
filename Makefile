@@ -30,6 +30,7 @@ install:
 	ln -s gutsy $(DSDIR)/scripts/lucid
 	ln -s gutsy $(DSDIR)/scripts/maverick
 	ln -s gutsy $(DSDIR)/scripts/natty
+	ln -s gutsy $(DSDIR)/scripts/oneiric
 
 	sed 's/@VERSION@/$(VERSION)/g' debootstrap >$(DESTDIR)/usr/sbin/debootstrap
 	chown root:root $(DESTDIR)/usr/sbin/debootstrap
