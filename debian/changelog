@@ -1,3 +1,14 @@
+debootstrap (1.0.34) unstable; urgency=low
+
+  * Add more information regarding the version and architecture in case
+    a download fails. Closes: #633625.
+  * add /usr/sbin and /sbin to PATH for fakechroot variant. Closes:
+    #588773
+  * Move setup_devices to second stage of bootstrap. Closes: #498731,
+    #531316
+
+ -- Otavio Salvador <otavio@debian.org>  Thu, 28 Jul 2011 19:13:10 +0200
+
 debootstrap (1.0.33) unstable; urgency=low
 
   [ Joey Hess ]
