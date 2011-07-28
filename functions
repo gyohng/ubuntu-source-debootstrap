@@ -612,7 +612,7 @@ download_debs () {
 					dloaddebs="$(($dloaddebs + $size))"
 					echo >>$TARGET/debootstrap/debpaths "$p $debdest"
 				else
-					warning COULDNTDL "Couldn't download package %s" "$p"
+					warning COULDNTDL "Couldn't download package %s (ver %s arc %s)" "$p" "$ver" "$arc"
 				fi
 			fi
 		done
@@ -972,6 +972,11 @@ setup_proc_fakechroot () {
 }
 
 setup_devices () {
+	if doing_variant fakechroot; then
+		setup_devices_fakechroot
+		return 0
+	fi
+
 	case "$ARCH" in
 	    kfreebsd-*)
 		in_target mount -t devfs devfs /dev ;;
@@ -1290,6 +1295,10 @@ on_exit () {
 ############################################################## fakechroot tools
 
 install_fakechroot_tools () {
+	if [ "$VARIANT" = "fakechroot" ]; then
+		export PATH=/usr/sbin:/sbin:$PATH
+	fi
+
 	mv "$TARGET/sbin/ldconfig" "$TARGET/sbin/ldconfig.REAL"
 	echo \
 "#!/bin/sh
