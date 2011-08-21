@@ -5,6 +5,19 @@ smallyes() {
 	while echo "$YES" 2>/dev/null ; do : ; done
 }
 
+in_path () {
+	local OLD_IFS="$IFS"
+	IFS=":"
+	for dir in $PATH; do
+		if [ -x "$dir/$1" ]; then
+			IFS="$OLD_IFS"
+			return 0
+		fi
+	done
+	IFS="$OLD_IFS"
+	return 1
+}
+
 ############################################################### interaction
 
 error () {
@@ -236,9 +249,21 @@ verify_checksum () {
 	local expchecksum="$2"
 	local expsize="$3"
 	if [ "$DEBOOTSTRAP_CHECKSUM_FIELD" = "MD5SUM" ]; then
-		relchecksum=`md5sum < "$1" | sed 's/ .*$//'`
+		if in_path md5sum; then
+			relchecksum=`md5sum < "$1" | sed 's/ .*$//'`
+		elif in_path md5; then
+			relchecksum=`md5 < "$1"`
+		else
+			error 1 SIGCHECK "Cannot check md5sum"
+		fi
 	else
-		relchecksum=`sha${SHA_SIZE}sum < "$1" | sed 's/ .*$//'`
+		if in_path "sha${SHA_SIZE}sum"; then
+			relchecksum=`sha${SHA_SIZE}sum < "$1" | sed 's/ .*$//'`
+		elif in_path "sha${SHA_SIZE}"; then
+			relchecksum=`sha${SHA_SIZE} < "$1"`
+		else
+			error 1 SIGCHECK "Cannot check sha${SHA_SIZE}sum"
+		fi
 	fi
 	relsize=`wc -c < "$1"`
 	if [ "$expsize" -ne "$relsize" ] || [ "$expchecksum" != "$relchecksum" ]; then
@@ -524,9 +549,9 @@ download_release_indices () {
 		local i=
 		if [ "$normi" != "" ]; then
 			i="$normi"
-		elif [ -x /bin/bunzip2 ] && [ "$bz2i" != "" ]; then
+		elif in_path bunzip2 && [ "$bz2i" != "" ]; then
 			i="$bz2i"
-		elif [ -x /bin/gunzip ] && [ "$gzi" != "" ]; then
+		elif in_path gunzip && [ "$gzi" != "" ]; then
 			i="$gzi"
 		fi
 		if [ "$i" != "" ]; then
@@ -552,11 +577,11 @@ download_release_indices () {
 			ext="$ext $normi ."
 			i="$normi"
 		fi
-		if [ -x /bin/bunzip2 ] && [ "$bz2i" != "" ]; then
+		if in_path bunzip2 && [ "$bz2i" != "" ]; then
 			ext="$ext $bz2i bz2"
 			i="${i:-$bz2i}"
 		fi
-		if [ -x /bin/gunzip ] && [ "$gzi" != "" ]; then
+		if in_path gunzip && [ "$gzi" != "" ]; then
 			ext="$ext $gzi gz"
 			i="${i:-$gzi}"
 		fi
@@ -690,7 +715,7 @@ download_main_indices () {
 	    for c in $COMPONENTS; do
 		local path="dists/$SUITE/$c/binary-$ARCH/Packages"
 		local pkgdest="$TARGET/$($DLDEST pkg "$SUITE" "$c" "$ARCH" "$m" "$path")"
-		if [ -x /bin/gunzip ] && get "$m/${path}.gz" "${pkgdest}.gz"; then
+		if in_path gunzip && get "$m/${path}.gz" "${pkgdest}.gz"; then
 			rm -f "$pkgdest"
 			gunzip "$pkgdest.gz"
 		elif get "$m/$path" "$pkgdest"; then
@@ -918,7 +943,7 @@ UMOUNT_DIRS=
 
 umount_exit_function () {
 	for dir in $UMOUNT_DIRS; do
-		umount "$TARGET/${dir#/}" || true
+		( cd / ; umount "$TARGET/${dir#/}" ) || true
 	done
 }
 
@@ -938,14 +963,18 @@ clear_mtab () {
 }
 
 setup_proc () {
-	case "$HOST_ARCH" in
-	    kfreebsd-*)
+	case "$HOST_OS" in
+	    *freebsd*)
 		umount_on_exit /dev
 		umount_on_exit /proc
 		umount "$TARGET/proc" 2>/dev/null || true
-		in_target mount -t linprocfs proc /proc
+		if [ "$HOST_OS" = kfreebsd ]; then
+			in_target mount -t linprocfs proc /proc
+		else
+			mount -t linprocfs proc $TARGET/proc
+		fi
 		;;
-	    hurd-*)
+	    hurd*)
 		;;
 	    *)
 		umount_on_exit /dev/pts
@@ -977,10 +1006,12 @@ setup_devices () {
 		return 0
 	fi
 
-	case "$HOST_ARCH" in
-	    kfreebsd-*)
+	case "$HOST_OS" in
+	    kfreebsd*)
 		in_target mount -t devfs devfs /dev ;;
-	    hurd-*)
+	    freebsd)
+		mount -t devfs devfs $TARGET/dev ;;
+	    hurd*)
 		setup_devices_hurd ;;
 	    *)
 		if [ -e "$DEVICES_TARGZ" ]; then
@@ -1028,7 +1059,7 @@ setup_dselect_method () {
 # For the debootstrap udeb, pkgdetails is provided by the bootstrap-base
 # udeb, so the pkgdetails API needs to be kept in sync with that.
 
-if [ -x /usr/bin/perl ]; then
+if in_path perl; then
 	PKGDETAILS=pkgdetails_perl
 
 	pkgdetails_field () {
@@ -1198,8 +1229,8 @@ get_next_predep () {
 check_sane_mount () {
 	mkdir -p "$1"
 
-	case "$HOST_ARCH" in
-	    kfreebsd-*|hurd-*)
+	case "$HOST_OS" in
+	    *freebsd*|hurd*)
 		;;
 	    *)
 		mknod "$1/test-dev-null" c 1 3 || return 1
