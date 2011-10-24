@@ -1,3 +1,9 @@
+debootstrap (1.0.20ubuntu1.4) lucid-proposed; urgency=low
+
+  * Add (Ubuntu) precise as a symlink to gutsy (LP: #880926).
+
+ -- Tim Gardner <tim.gardner@canonical.com>  Mon, 24 Oct 2011 09:58:13 -0600
+
 debootstrap (1.0.20ubuntu1.3) lucid-proposed; urgency=low
 
   * Add (Ubuntu) oneiric as a symlink to gutsy (LP: #786956).
