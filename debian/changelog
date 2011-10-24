@@ -1,3 +1,9 @@
+debootstrap (1.0.37ubuntu1~lucid1) lucid-backports; urgency=low
+
+  * No change backport.
+
+ -- Tim Gardner <tim.gardner@canonical.com>  Mon, 24 Oct 2011 10:34:22 -0600
+
 debootstrap (1.0.37) unstable; urgency=low
 
   * Add (Ubuntu) precise as a symlink to gutsy.
