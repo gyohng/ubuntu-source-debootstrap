@@ -1,3 +1,9 @@
+debootstrap (1.0.37~maverick1) maverick-backports; urgency=low
+
+  * Automated backport upload; no source changes.
+
+ -- Colin Watson <cjwatson@canonical.com>  Fri, 11 Nov 2011 12:09:46 +0000
+
 debootstrap (1.0.37) unstable; urgency=low
 
   * Add (Ubuntu) precise as a symlink to gutsy.
