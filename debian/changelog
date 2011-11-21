@@ -1,3 +1,20 @@
+debootstrap (1.0.38) unstable; urgency=low
+
+  [ Joey Hess ]
+  * Improve error message when a decompressor is not available, 
+    to indicate which package has been built with bzip today.
+    Closes: #644719
+
+  [ Otavio Salvador ]
+  * Fix --print-debs support when using --foreign param. Closes:
+    #551837.
+
+  [ Colin Watson ]
+  * pkgdetails_perl: Use the last of a sequence of stanzas for the same
+    package name, rather than the first (closes: #649319).
+
+ -- Colin Watson <cjwatson@debian.org>  Mon, 21 Nov 2011 13:20:53 +0000
+
 debootstrap (1.0.37) unstable; urgency=low
 
   * Add (Ubuntu) precise as a symlink to gutsy.
