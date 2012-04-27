@@ -1,3 +1,9 @@
+debootstrap (1.0.40~precise1) precise-backports; urgency=low
+
+  * Automated backport upload; no source changes.
+
+ -- Scott Kitterman <ubuntu@kitterman.com>  Fri, 27 Apr 2012 22:13:21 +0000
+
 debootstrap (1.0.40) unstable; urgency=low
 
   [ Joey Hess ]
