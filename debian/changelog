@@ -1,3 +1,20 @@
+debootstrap (1.0.43) unstable; urgency=low
+
+  [ Joey Hess ]
+  * Fix "arc" typo. Closes: #686680
+
+  [ Colin Watson ]
+  * Add (Ubuntu) raring as a symlink to gutsy.
+
+  [ Christian Perrier ]
+  * Add myself to Uploaders and drop Anthony Towns who is no
+    longer active in debootstrap maintenance for a few years. Thanks
+    for your work, Anthony.
+  * Bump Standards to 3.9.3 (checked)
+  * Replace XC-Package-Type by Package-Type in debian/control
+
+ -- Christian Perrier <bubulle@debian.org>  Sat, 27 Oct 2012 12:46:46 +0200
+
 debootstrap (1.0.42) unstable; urgency=low
 
   * Downgrade the absence of an InRelease file from a warning to an info
