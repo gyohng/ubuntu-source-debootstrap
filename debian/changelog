@@ -1,3 +1,9 @@
+debootstrap (1.0.39ubuntu0.2) precise-proposed; urgency=low
+
+  * Add (Ubuntu) raring as a symlink to gutsy. (LP: #1068707)
+
+ -- Adam Stokes <adam.stokes@canonical.com>  Mon, 05 Nov 2012 18:06:40 +0100
+
 debootstrap (1.0.39ubuntu0.1) precise-proposed; urgency=low
 
   * Add (Ubuntu) quantal as a symlink to gutsy. (LP: #992669)
