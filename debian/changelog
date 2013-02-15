@@ -1,3 +1,11 @@
+debootstrap (1.0.20ubuntu1.5) lucid-proposed; urgency=low
+
+  * Fix Packages was corrupt warning on preseed install. Backport fix for
+    Debian bug #618920 to solve LP: #1023069. Patch slightly reworked to adapt
+    to older codebase.
+
+ -- Louis Bouchard <louis.bouchard@canonical.com>  Fri, 15 Feb 2013 11:12:31 +0100
+
 debootstrap (1.0.20ubuntu1.4) lucid-proposed; urgency=low
 
   * Add (Ubuntu) precise as a symlink to gutsy (LP: #880926).
