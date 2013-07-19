@@ -1,3 +1,9 @@
+debootstrap (1.0.40~precise2) precise-backports; urgency=low
+
+  * Add support for raring/saucy to match -updates
+
+ -- Scott Kitterman <scott@kitterman.com>  Fri, 19 Jul 2013 12:26:58 -0400
+
 debootstrap (1.0.40~precise1) precise-backports; urgency=low
 
   * Automated backport upload; no source changes.
