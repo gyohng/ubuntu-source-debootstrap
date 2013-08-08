@@ -1,3 +1,10 @@
+debootstrap (1.0.20ubuntu1.6) lucid; urgency=low
+
+  * Stop at the end of the retrieval phase if any packages failed to
+    download (LP: #1023069).
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Thu, 08 Aug 2013 17:49:14 +0100
+
 debootstrap (1.0.20ubuntu1.5) lucid-proposed; urgency=low
 
   * Fix Packages was corrupt warning on preseed install. Backport fix for
