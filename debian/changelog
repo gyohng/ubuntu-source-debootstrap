@@ -1,3 +1,9 @@
+debootstrap (1.0.53ubuntu1) trusty; urgency=low
+
+  * Add (Ubuntu) trusty as a symlink to gutsy.
+
+ -- Matthias Klose <doko@ubuntu.com>  Fri, 18 Oct 2013 17:31:32 +0200
+
 debootstrap (1.0.53) unstable; urgency=low
 
   [ Dmitrijs Ledkovs ]
