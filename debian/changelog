@@ -1,3 +1,9 @@
+debootstrap (1.0.46ubuntu1.1) raring; urgency=low
+
+  * Add (Ubuntu) trusty as a symlink to gutsy. (LP: #1242747)
+
+ -- Chris J Arges <chris.j.arges@ubuntu.com>  Mon, 21 Oct 2013 10:40:13 -0500
+
 debootstrap (1.0.46ubuntu1) raring; urgency=low
 
   * Add (Ubuntu) saucy as a symlink to gutsy.
