@@ -1,3 +1,10 @@
+debootstrap (1.0.40~ubuntu0.4) precise; urgency=low
+
+  * Add (Ubuntu) trusty as a symlink to gutsy. (LP: #1242747)
+  * Fudge version to trump the version in precise-backports.
+
+ -- Adam Conrad <adconrad@ubuntu.com>  Mon, 21 Oct 2013 09:33:47 -0600
+
 debootstrap (1.0.39ubuntu0.3) precise; urgency=low
 
   * Add (Ubuntu) saucy as a symlink to gutsy. (LP: #1172920)
