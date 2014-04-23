@@ -1,3 +1,9 @@
+debootstrap (1.0.59ubuntu1) utopic; urgency=medium
+
+  * Add utopic as a symlink to gutsy.
+
+ -- Adam Conrad <adconrad@ubuntu.com>  Wed, 23 Apr 2014 15:03:36 -0600
+
 debootstrap (1.0.59) unstable; urgency=medium
 
   * Install ca-certificates as well as apt-transport-https for HTTPS
