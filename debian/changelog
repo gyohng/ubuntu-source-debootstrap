@@ -1,3 +1,13 @@
+debootstrap (1.0.40~ubuntu0.6) precise; urgency=medium
+
+  * pkgdetails_perl: Only interpret percentages following whitespace, to
+    cope with GNU wget outputting the local file name (which may contain "%"
+    due to URL-encoding) after it finishes the download (LP: #1172101).
+  * Install apt-transport-https and ca-certificates if installing from an
+    HTTPS mirror (LP: #1135163).
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Mon, 23 Jun 2014 16:40:02 +0100
+
 debootstrap (1.0.40~ubuntu0.5) precise; urgency=medium
 
   * Add (Ubuntu) utopic as a symlink to gutsy. (LP: #1312393)
