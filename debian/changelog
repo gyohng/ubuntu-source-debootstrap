@@ -1,3 +1,11 @@
+debootstrap (1.0.62) unstable; urgency=medium
+
+  [ Cyril Brulebois ]
+  * Fix reporting of package version in retrieval and validation steps
+    to cope with epochs.
+
+ -- Christian Perrier <bubulle@debian.org>  Mon, 15 Sep 2014 11:40:54 +0200
+
 debootstrap (1.0.61) unstable; urgency=medium
 
   * Fix "possibly the package $pkg is at fault" warnings to account for
