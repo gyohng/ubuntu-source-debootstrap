@@ -1,3 +1,10 @@
+debootstrap (1.0.63) unstable; urgency=medium
+
+  [ Joey Hess ]
+  * Move set -e out of shebang line. Closes: #762713
+
+ -- Christian Perrier <bubulle@debian.org>  Thu, 25 Sep 2014 06:44:16 +0200
+
 debootstrap (1.0.62) unstable; urgency=medium
 
   [ Cyril Brulebois ]
