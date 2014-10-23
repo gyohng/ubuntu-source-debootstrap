@@ -1,3 +1,9 @@
+debootstrap (1.0.40~ubuntu0.7) precise; urgency=medium
+
+  * Add (Ubuntu) vivid as a symlink to gutsy. (LP: #1384925)
+
+ -- Adam Conrad <adconrad@ubuntu.com>  Thu, 23 Oct 2014 14:50:52 -0600
+
 debootstrap (1.0.40~ubuntu0.6) precise; urgency=medium
 
   * pkgdetails_perl: Only interpret percentages following whitespace, to
