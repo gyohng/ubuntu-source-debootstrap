@@ -1,3 +1,10 @@
+debootstrap (1.0.65) unstable; urgency=medium
+
+  [ Julien Cristau ]
+  * Add support for stretch.
+
+ -- Christian Perrier <bubulle@debian.org>  Mon, 10 Nov 2014 09:24:56 +0100
+
 debootstrap (1.0.64) unstable; urgency=medium
 
   * Add (Ubuntu) vivid as a symlink to gutsy.
