@@ -1,3 +1,9 @@
+debootstrap (1.0.67ubuntu1) wily; urgency=medium
+
+  * Add Ubuntu wily as a symlink to gutsy.
+
+ -- Iain Lane <iain@orangesquash.org.uk>  Tue, 05 May 2015 16:00:24 +0100
+
 debootstrap (1.0.67) unstable; urgency=medium
 
   [ Cyril Brulebois ]
