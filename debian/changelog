@@ -1,3 +1,9 @@
+debootstrap (1.0.64ubuntu0.1) utopic; urgency=medium
+
+  * Add (Ubuntu) wily as a symlink to gutsy. (LP: #1452877)
+
+ -- Chris J Arges <chris.j.arges@canonical.com>  Thu, 07 May 2015 14:56:32 -0500
+
 debootstrap (1.0.64) unstable; urgency=medium
 
   * Add (Ubuntu) vivid as a symlink to gutsy.
