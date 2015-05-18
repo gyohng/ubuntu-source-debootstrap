@@ -1,3 +1,24 @@
+debootstrap (1.0.69) unstable; urgency=medium
+
+  [ Cyril Brulebois ]
+  * Make sure to deduplicate package list in download_release to avoid
+    issues while counting downloaded packages. The failure path could lead
+    to printing some strange integer (Closes: #709751, #768445, #785276,
+    #774752).
+    This was reported to mostly happen whenever --no-resolve-deps is used.
+  * Add support for --force-check-gpg so that one can programmatically
+    make sure keyring checks are used and that no fallback to an https
+    mirror happens (Closes: #661501, #733179, #775454).
+  * Switch default mirror from ftp.us.debian.org to the new, official
+    http redirector service: httpredir.debian.org
+  * Make it possible to override the MAKEDEV variable (Closes: #734743).
+    Thanks, Wookey!
+
+  [ Christian Perrier ]
+  * Update Standards to 3.9.6 (checked)
+
+ -- Christian Perrier <bubulle@debian.org>  Mon, 18 May 2015 14:07:43 +0200
+
 debootstrap (1.0.68) unstable; urgency=medium
 
   [ Steven Chamberlain ]
