@@ -1,3 +1,9 @@
+debootstrap (1.0.67ubuntu0.2) vivid; urgency=medium
+
+  * Add (Ubuntu) xenial as a symlink to gutsy. (LP: #1510173) 
+
+ -- Chris J Arges <chris.j.arges@canonical.com>  Mon, 26 Oct 2015 11:46:19 -0500
+
 debootstrap (1.0.67ubuntu0.1) vivid; urgency=medium
 
   * Add (Ubuntu) wily as a symlink to gutsy. (LP: #1452877) 
