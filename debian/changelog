@@ -1,3 +1,10 @@
+debootstrap (1.0.74) unstable; urgency=medium
+
+  [ Colin Watson ]
+  * Add (Ubuntu) xenial as a symlink to gutsy.
+
+ -- Christian Perrier <bubulle@debian.org>  Tue, 03 Nov 2015 07:09:23 +0100
+
 debootstrap (1.0.73) unstable; urgency=medium
 
   * Generate a deburis file with (package, version, uri) tuples, similar
