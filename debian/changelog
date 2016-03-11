@@ -1,3 +1,11 @@
+debootstrap (1.0.78+nmu1ubuntu1) xenial; urgency=medium
+
+  * Reinstate InRelease file support to better deal with proxies where Release
+    files may be cached and thus out of sync. InRelease is atomic and therefore
+    not subject to failing validation because of proxy servers. (LP: #1485511)
+
+ -- Mathieu Trudel-Lapierre <mathieu-tl@ubuntu.com>  Fri, 11 Mar 2016 13:03:43 -0500
+
 debootstrap (1.0.78+nmu1) unstable; urgency=medium
 
   * Non-maintainer upload.
