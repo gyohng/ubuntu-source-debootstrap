@@ -1,3 +1,9 @@
+debootstrap (1.0.59ubuntu0.5) trusty; urgency=medium
+
+  * Add (Ubuntu) yakkety as a symlink to gutsy.  (LP: #1573596)
+
+ -- Andy Whitcroft <apw@ubuntu.com>  Fri, 22 Apr 2016 14:32:30 +0100
+
 debootstrap (1.0.59ubuntu0.4) trusty; urgency=medium
 
   * Add (Ubuntu) xenial as a symlink to gutsy. (LP: #1510173)
