@@ -1,3 +1,10 @@
+debootstrap (1.0.81ubuntu2) yakkety; urgency=medium
+
+  * Fix debootstrap --variant=fakechroot failure because initscripts is no
+    longer part of the base system.
+
+ -- Steve Langasek <steve.langasek@ubuntu.com>  Sat, 01 Oct 2016 00:25:49 +0000
+
 debootstrap (1.0.81ubuntu1) yakkety; urgency=low
 
   * Merge from Debian unstable (LP: #1591675).  Remaining changes:
