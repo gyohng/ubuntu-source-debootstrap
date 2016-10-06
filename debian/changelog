@@ -1,3 +1,10 @@
+debootstrap (1.0.84) unstable; urgency=medium
+
+  [ Ansgar Burchardt ]
+  * Add support for xz-compressed Packages indices. (Closes: #837649)
+
+ -- Christian Perrier <bubulle@debian.org>  Thu, 06 Oct 2016 06:59:38 +0200
+
 debootstrap (1.0.83) unstable; urgency=medium
 
   [ Ansgar Burchardt ]
