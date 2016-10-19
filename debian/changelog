@@ -1,3 +1,9 @@
+debootstrap (1.0.81ubuntu3) zesty; urgency=medium
+
+  * Add (Ubuntu) zesty as a symlink to gutsy.
+
+ -- Chris J Arges <chris.j.arges@canonical.com>  Tue, 18 Oct 2016 20:16:36 -0500
+
 debootstrap (1.0.81ubuntu2) yakkety; urgency=medium
 
   * Fix debootstrap --variant=fakechroot failure because initscripts is no
