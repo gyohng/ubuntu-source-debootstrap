@@ -1,3 +1,9 @@
+debootstrap (1.0.40~ubuntu0.11) precise; urgency=medium
+
+  * Add (Ubuntu) zesty as a symlink to gutsy. (LP: #1636583)
+
+ -- Joshua Powers <josh.powers@canonical.com>  Tue, 25 Oct 2016 15:46:11 -0600
+
 debootstrap (1.0.40~ubuntu0.10) precise; urgency=low
 
   * Add (Ubuntu) yakkety as a symlink to gutsy.  (LP: #1573596)
