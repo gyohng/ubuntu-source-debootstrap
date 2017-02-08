@@ -1,3 +1,10 @@
+debootstrap (1.0.88) unstable; urgency=high
+
+  [ Sven Joachim ]
+  * Strip the arch-qualifier (Closes: #836525)
+
+ -- Steve McIntyre <93sam@debian.org>  Wed, 08 Feb 2017 23:53:10 +0000
+
 debootstrap (1.0.87) unstable; urgency=high
 
   [ Julien Cristau ]
