@@ -1,3 +1,9 @@
+debootstrap (1.0.81ubuntu4) artful; urgency=medium
+
+  * Add (Ubuntu) artful as a symlink to gutsy.
+
+ -- Adam Conrad <adconrad@ubuntu.com>  Thu, 20 Apr 2017 19:15:09 -0600
+
 debootstrap (1.0.81ubuntu3) zesty; urgency=medium
 
   * Add (Ubuntu) zesty as a symlink to gutsy.
