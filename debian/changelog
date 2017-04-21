@@ -1,3 +1,9 @@
+debootstrap (1.0.78+nmu1ubuntu1.3) xenial; urgency=medium
+
+  * Add (Ubuntu) artful as a symlink to gutsy.
+
+ -- Andy Whitcroft <apw@ubuntu.com>  Fri, 21 Apr 2017 14:54:09 +0100
+
 debootstrap (1.0.78+nmu1ubuntu1.2) xenial; urgency=medium
 
   * Add (Ubuntu) zesty as a symlink to gutsy. (LP: #1636583)
