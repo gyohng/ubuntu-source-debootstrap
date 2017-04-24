@@ -1,3 +1,10 @@
+debootstrap (1.0.90) unstable; urgency=medium
+
+  [ Mattia Rizzolo ]
+  * Add (Ubuntu) artful as a symlink to gutsy.
+
+ -- Christian Perrier <bubulle@debian.org>  Mon, 24 Apr 2017 06:49:33 +0200
+
 debootstrap (1.0.89) unstable; urgency=medium
 
   [ Simon McVittie ]
