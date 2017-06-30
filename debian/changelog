@@ -1,3 +1,10 @@
+debootstrap (1.0.59ubuntu0.8) trusty; urgency=medium
+
+  * Add (Debian) stretch, buster and bullseye as a symlink to sid.
+    LP: #1698686
+
+ -- Mattia Rizzolo <mapreri@ubuntu.com>  Fri, 30 Jun 2017 16:34:26 +0200
+
 debootstrap (1.0.59ubuntu0.7) trusty; urgency=medium
 
   * Add (Ubuntu) artful as a symlink to gutsy.
