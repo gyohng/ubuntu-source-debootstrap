@@ -1,9 +1,32 @@
+debootstrap (1.0.91ubuntu1) artful; urgency=low
+
+  * Merge from Debian unstable.  Remaining changes:
+    - Fix debootstrap --variant=fakechroot failure because initscripts is no
+      longer part of the base system.
+    - sync scripts/sid with scripts/gutsy
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Fri, 28 Jul 2017 10:55:17 +0200
+
 debootstrap (1.0.91) unstable; urgency=medium
 
   [ Sven Joachim ]
   * Avoid the 'type' shell command (closes: #860545).
 
  -- Christian Perrier <bubulle@debian.org>  Wed, 26 Jul 2017 06:53:10 +0200
+
+debootstrap (1.0.90ubuntu1) artful; urgency=low
+
+  * Merge from Debian unstable.  Remaining changes:
+    - Fix debootstrap --variant=fakechroot failure because initscripts is no
+      longer part of the base system.
+    - Add (Ubuntu) artful as a symlink to gutsy.
+    - sync scripts/sid with scripts/gutsy
+  * Drop changes merged in Debian
+    - Reinstate InRelease file support to better deal with proxies where Release
+      files may be cached and thus out of sync. InRelease is atomic and therefore
+      not subject to failing validation because of proxy servers. (LP: #1485511)
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Sun, 23 Apr 2017 12:01:38 +0200
 
 debootstrap (1.0.90) unstable; urgency=medium
 
@@ -111,6 +134,34 @@ debootstrap (1.0.82) unstable; urgency=medium
 
  -- Christian Perrier <bubulle@debian.org>  Thu, 08 Sep 2016 07:09:56 +0200
 
+debootstrap (1.0.81ubuntu4) artful; urgency=medium
+
+  * Add (Ubuntu) artful as a symlink to gutsy.
+
+ -- Adam Conrad <adconrad@ubuntu.com>  Thu, 20 Apr 2017 19:15:09 -0600
+
+debootstrap (1.0.81ubuntu3) zesty; urgency=medium
+
+  * Add (Ubuntu) zesty as a symlink to gutsy.
+
+ -- Chris J Arges <chris.j.arges@canonical.com>  Tue, 18 Oct 2016 20:16:36 -0500
+
+debootstrap (1.0.81ubuntu2) yakkety; urgency=medium
+
+  * Fix debootstrap --variant=fakechroot failure because initscripts is no
+    longer part of the base system.
+
+ -- Steve Langasek <steve.langasek@ubuntu.com>  Sat, 01 Oct 2016 00:25:49 +0000
+
+debootstrap (1.0.81ubuntu1) yakkety; urgency=low
+
+  * Merge from Debian unstable (LP: #1591675).  Remaining changes:
+    - Reinstate InRelease file support to better deal with proxies where Release
+      files may be cached and thus out of sync. InRelease is atomic and therefore
+      not subject to failing validation because of proxy servers. (LP: #1485511)
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Sun, 12 Jun 2016 12:59:12 +0200
+
 debootstrap (1.0.81) unstable; urgency=medium
 
   [ Luca Falavigna ]
@@ -134,6 +185,20 @@ debootstrap (1.0.79) unstable; urgency=medium
     (Closes: #768102)
 
  -- Christian Perrier <bubulle@debian.org>  Fri, 19 Feb 2016 07:23:59 +0100
+
+debootstrap (1.0.78+nmu1ubuntu2) yakkety; urgency=medium
+
+  * Add (Ubuntu) yakkety as a symlink to gutsy.
+
+ -- Adam Conrad <adconrad@ubuntu.com>  Fri, 22 Apr 2016 05:42:34 -0600
+
+debootstrap (1.0.78+nmu1ubuntu1) xenial; urgency=medium
+
+  * Reinstate InRelease file support to better deal with proxies where Release
+    files may be cached and thus out of sync. InRelease is atomic and therefore
+    not subject to failing validation because of proxy servers. (LP: #1485511)
+
+ -- Mathieu Trudel-Lapierre <mathieu-tl@ubuntu.com>  Fri, 11 Mar 2016 13:03:43 -0500
 
 debootstrap (1.0.78+nmu1) unstable; urgency=medium
 
