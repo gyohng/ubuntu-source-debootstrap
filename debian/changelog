@@ -1,3 +1,9 @@
+debootstrap (1.0.91ubuntu1.1) artful; urgency=medium
+
+  * Add (Ubuntu) bionic as a symlink to gutsy.  (LP: #1727732)
+
+ -- Andy Whitcroft <apw@ubuntu.com>  Thu, 26 Oct 2017 14:30:19 +0100
+
 debootstrap (1.0.91ubuntu1) artful; urgency=low
 
   * Merge from Debian unstable.  Remaining changes:
