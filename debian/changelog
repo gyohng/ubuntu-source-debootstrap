@@ -1,3 +1,9 @@
+debootstrap (1.0.59ubuntu0.9) trusty; urgency=medium
+
+  * Add (Ubuntu) bionic as a symlink to gutsy.  (LP: #1727732)
+
+ -- Andy Whitcroft <apw@ubuntu.com>  Thu, 26 Oct 2017 14:38:38 +0100
+
 debootstrap (1.0.59ubuntu0.8) trusty; urgency=medium
 
   * Add (Debian) stretch, buster and bullseye as a symlink to sid.
