@@ -1,3 +1,9 @@
+debootstrap (1.0.93+nmu1ubuntu1) bionic; urgency=medium
+
+  * Fixup error in previous upload (missing esac clause)
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Sat, 17 Mar 2018 14:26:06 +0100
+
 debootstrap (1.0.93+nmu1) unstable; urgency=medium
 
   * Non-maintainer Upload.
