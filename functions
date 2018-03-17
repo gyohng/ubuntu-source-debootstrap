@@ -976,7 +976,7 @@ extract () { (
 ); }
 
 in_target_nofail () {
-	if ! $CHROOT_CMD "$@" 2>/dev/null; then
+	if ! PATH=/sbin:/usr/sbin:/bin:/usr/bin $CHROOT_CMD "$@" 2>/dev/null; then
 		true
 	fi
 	return 0
@@ -987,7 +987,7 @@ in_target_failmsg () {
 	local msg="$2"
 	local arg="$3"
 	shift; shift; shift
-	if ! $CHROOT_CMD "$@"; then
+	if ! PATH=/sbin:/usr/sbin:/bin:/usr/bin $CHROOT_CMD "$@"; then
 		warning "$code" "$msg" "$arg"
 		# Try to point user at actual failing package.
 		msg="See %s for details"
@@ -1170,7 +1170,8 @@ setup_devices_simple () {
 	mknod -m 666 $TARGET/dev/random	c 1 8
 	mknod -m 666 $TARGET/dev/urandom	c 1 9
 	mknod -m 666 $TARGET/dev/tty	c 5 0
-	mkdir $TARGET/dev/pts/ $TARGET/dev/shm/
+	# To avoid pre-exist directory causes error, specify "-p" option
+	mkdir -p $TARGET/dev/pts/ $TARGET/dev/shm/
 	# Inside a container, we might not be allowed to create /dev/ptmx.
 	# If not, do the next best thing.
 	if ! mknod -m 666 $TARGET/dev/ptmx c 5 2; then
