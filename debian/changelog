@@ -1,3 +1,14 @@
+debootstrap (1.0.94) unstable; urgency=medium
+
+  * debian/control
+    - Add myself to Uploaders
+  * scripts/sid
+    - Regression fix with #798562 change, work on non-package environment.
+      Thanks to Nicolas Boichat <drinkcat@chromium.org> for the report
+      (Closes: #894415)
+
+ -- Hideki Yamane <henrich@debian.org>  Fri, 30 Mar 2018 21:41:52 +0900
+
 debootstrap (1.0.93+nmu3) unstable; urgency=medium
 
   * Non-maintainer Upload.
