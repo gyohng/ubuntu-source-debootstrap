@@ -1,3 +1,37 @@
+debootstrap (1.0.97) unstable; urgency=medium
+
+  [ Dan Nicholson ]
+  * Handle existing /dev (Closes: #872577)
+
+  [ Hideki Yamane ]
+  * Create /dev/console as same as previous (Closes: #872059)
+  * Do not ignore HTTPS mirror setting (Closes: #893954)
+  * Improve manpage "what is calls a Debian base system" (Closes: #872948)
+    Thanks to Emmanuel Kasper <manu@debian.org> for the patch
+  * Improve error message when download fails (Closes: #866401)
+    Thanks to Raphaël Hertzog <hertzog@debian.org> for the patch
+  * Use wget --non-verbose option instead of --quiet
+  * Improve error message on Release signed by unknown key (Closes: #698677)
+  * Add --cache-dir feature (Closes: #844118)
+    It is enabled by default and use /var/cache/apt/archives as default value
+
+  [ Adam Borowski ]
+  * Use arch-test if installed to check whether second stage is possible.
+    (Closes: #826709)
+
+  [ Lubomir Rintel ]
+  * Fix boostrapping libvirt LXC containers (Closes: #890419)
+
+  [ Raphaël Hertzog ]
+  * Use "command -v apt-config" to check for apt-config's presence
+    (Closes: #895466)
+  * Drop default value for --cache-dir parameter
+  * Forbid the usage of non-empty directories with --print-debs and
+    --make-tarball
+  * Do not use HTTPS for Kali bootstrap script
+
+ -- Hideki Yamane <henrich@debian.org>  Tue, 17 Apr 2018 11:06:32 +0900
+
 debootstrap (1.0.96) unstable; urgency=medium
 
   * Escape spaces to fix debootstrap on path contains space fails
