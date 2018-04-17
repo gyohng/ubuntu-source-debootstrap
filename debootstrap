@@ -18,7 +18,7 @@ if [ -z "$DEBOOTSTRAP_DIR" ]; then
 	fi
 fi
 
-. $DEBOOTSTRAP_DIR/functions
+. "$DEBOOTSTRAP_DIR/functions"
 exec 4>&1
 
 LANG=C
@@ -45,22 +45,11 @@ VERBOSE=""
 CERTIFICATE=""
 CHECKCERTIF=""
 PRIVATEKEY=""
+CACHE_DIR=""
 
 DEF_MIRROR="http://deb.debian.org/debian"
 DEF_HTTPS_MIRROR="https://deb.debian.org/debian"
 
-# do auto proxy discovery
-AUTOPROXY=""
-if [ "apt-config -v > /dev/null" ]; then
-    eval $(apt-config shell AUTOPROXY Acquire::http::ProxyAutoDetect)
-    if [ -z "$http_proxy" ] && [ -x "$AUTOPROXY" ]; then
-        http_proxy="$($AUTOPROXY)"
-        if [ -n "$http_proxy" ]; then
-            echo "Using auto-detected proxy: $http_proxy"
-            export http_proxy
-        fi
-    fi
-fi
 export LANG USE_COMPONENTS
 umask 022
 
@@ -121,6 +110,8 @@ usage()
                              of a missing keyring), aborting otherwise
       --no-resolve-deps      don't try to resolve dependencies automatically
 
+      --cache-dir=DIR        Use specified directory as package cache directory
+
       --unpack-tarball=T     acquire .debs from a tarball instead of http
       --make-tarball=T       download .debs and create a tarball (tgz format)
       --second-stage-target=DIR
@@ -177,7 +168,7 @@ if [ $# != 0 ] ; then
 		if [ "$SECOND_STAGE_ONLY" != "true" ] ; then
 			error 1 STAGE2ONLY "option %s only applies in the second stage" "$1"
 		fi
-		if [ "$1" = "--second-stage-target" -a -n "$2" ] ; then
+		if [ "$1" = "--second-stage-target" ] && [ -n "$2" ] ; then
 			CHROOTDIR="$2"
 			shift 2
 		elif [ "$1" != "${1#--second-stage-target=}" ]; then
@@ -198,7 +189,7 @@ if [ $# != 0 ] ; then
 		;;
 	    --make-tarball|--make-tarball=?*)
 		WHAT_TO_DO="finddebs dldebs maketarball kill_target"
-		if [ "$1" = "--make-tarball" -a -n "$2" ] ; then
+		if [ "$1" = "--make-tarball" ] && [ -n "$2" ] ; then
 			MAKE_TARBALL="$2"
 			shift 2
 		elif [ "$1" != "${1#--make-tarball=}" ]; then
@@ -222,7 +213,7 @@ if [ $# != 0 ] ; then
 		shift
 		;;
 	    --arch|--arch=?*)
-		if [ "$1" = "--arch" -a -n "$2" ] ; then
+		if [ "$1" = "--arch" ] && [ -n "$2" ] ; then
 			ARCH="$2"
 			shift 2
                 elif [ "$1" != "${1#--arch=}" ]; then
@@ -233,7 +224,7 @@ if [ $# != 0 ] ; then
 		fi
 		;;
 	    --extractor|--extractor=?*)
-		if [ "$1" = "--extractor" -a -n "$2" ] ; then
+		if [ "$1" = "--extractor" ] && [ -n "$2" ] ; then
 			EXTRACTOR_OVERRIDE="$2"
 			shift 2
 		elif [ "$1" != "${1#--extractor=}" ]; then
@@ -251,7 +242,7 @@ if [ $# != 0 ] ; then
 		fi
 		;;
 	    --unpack-tarball|--unpack-tarball=?*)
-		if [ "$1" = "--unpack-tarball" -a -n "$2" ] ; then
+		if [ "$1" = "--unpack-tarball" ] && [ -n "$2" ] ; then
 			UNPACK_TARBALL="$2"
 			shift 2
 		elif [ "$1" != "${1#--unpack-tarball=}" ]; then
@@ -265,7 +256,7 @@ if [ $# != 0 ] ; then
 		fi
 		;;
 	    --include|--include=?*)
-		if [ "$1" = "--include" -a -n "$2" ]; then
+		if [ "$1" = "--include" ] && [ -n "$2" ]; then
 			ADDITIONAL="$2"
 			shift 2
                 elif [ "$1" != "${1#--include=}" ]; then
@@ -277,7 +268,7 @@ if [ $# != 0 ] ; then
 		ADDITIONAL="$(echo "$ADDITIONAL" | tr , " ")"
 		;;
 	    --exclude|--exclude=?*)
-		if [ "$1" = "--exclude" -a -n "$2" ]; then
+		if [ "$1" = "--exclude" ] && [ -n "$2" ]; then
 			EXCLUDE="$2"
 			shift 2
                 elif [ "$1" != "${1#--exclude=}" ]; then
@@ -294,7 +285,7 @@ if [ $# != 0 ] ; then
 		shift 1
 		;;
 	    --components|--components=?*)
-		if [ "$1" = "--components" -a -n "$2" ]; then
+		if [ "$1" = "--components" ] && [ -n "$2" ]; then
 			USE_COMPONENTS="$2"
 			shift 2
                 elif [ "$1" != "${1#--components=}" ]; then
@@ -306,7 +297,7 @@ if [ $# != 0 ] ; then
 		USE_COMPONENTS="$(echo "$USE_COMPONENTS" | tr , "|")"
 		;;
 	    --variant|--variant=?*)
-		if [ "$1" = "--variant" -a -n "$2" ]; then
+		if [ "$1" = "--variant" ] && [ -n "$2" ]; then
 			VARIANT="$2"
 			shift 2
                 elif [ "$1" != "${1#--variant=}" ]; then
@@ -314,6 +305,24 @@ if [ $# != 0 ] ; then
 			shift 1
 		else
 			error 1 NEEDARG "option requires an argument %s" "$1"
+		fi
+		;;
+	    --cache-dir|--cache-dir=?*)
+		# Okay, let's check user's option
+		if [ "$1" = "--cache-dir" ] && [ -n "$2" ] ; then
+			CACHE_DIR="$2"
+			shift 2
+		elif [ "$1" != "${1#--cache-dir=}" ]; then
+			CACHE_DIR="${1#--cache-dir=}"
+			shift
+		else
+			error 1 NEEDARG "option requires an argument %s" "$1"
+		fi
+		if [ ! -d "$CACHE_DIR" ] ; then
+			error 1 NOCACHEDIR "%s: No such directory" "$CACHE_DIR"
+		fi
+		if [ ! -z "${CACHE_DIR##/*}" ]; then
+			error 1 NOTABSOLUTEPATH "cache directory should be specified with an absolute path"
 		fi
 		;;
             --merged-usr)
@@ -328,7 +337,7 @@ if [ $# != 0 ] ; then
 		if ! gpgv --version >/dev/null 2>&1; then
 			error 1 NEEDGPGV "gpgv not installed, but required for Release verification"
 		fi
-		if [ "$1" = "--keyring" -a -n "$2" ]; then
+		if [ "$1" = "--keyring" ] && [ -n "$2" ]; then
 			KEYRING="$2"
 			shift 2
                 elif [ "$1" != "${1#--keyring=}" ]; then
@@ -350,7 +359,7 @@ if [ $# != 0 ] ; then
 			FORCE_KEYRING=1
 		;;
 	    --certificate|--certificate=?*)
-		if [ "$1" = "--certificate" -a -n "$2" ]; then
+		if [ "$1" = "--certificate" ] && [ -n "$2" ]; then
 			CERTIFICATE="--certificate=$2"
 			shift 2
 		elif [ "$1" != "${1#--certificate=}" ]; then
@@ -361,7 +370,7 @@ if [ $# != 0 ] ; then
 		fi
 		;;
 	    --private-key|--private-key=?*)
-		if [ "$1" = "--private-key" -a -n "$2" ]; then
+		if [ "$1" = "--private-key" ] && [ -n "$2" ]; then
 			PRIVATEKEY="--private-key=$2"
 			shift 2
 		elif [ "$1" != "${1#--private-key=}" ]; then
@@ -386,8 +395,21 @@ if [ $# != 0 ] ; then
 fi
 
 ###########################################################################
+# do auto proxy discovery
+AUTOPROXY=""
+if ! doing_variant fakechroot && command -v apt-config >/dev/null; then
+    eval "$(apt-config shell AUTOPROXY Acquire::http::ProxyAutoDetect)"
+    if [ -z "$http_proxy" ] && [ -x "$AUTOPROXY" ]; then
+        http_proxy="$($AUTOPROXY)"
+        if [ -n "$http_proxy" ]; then
+            echo "Using auto-detected proxy: $http_proxy"
+            export http_proxy
+        fi
+    fi
+fi
 
-if [ -n "$DISABLE_KEYRING" -a -n "$FORCE_KEYRING" ]; then
+###########################################################################
+if [ -n "$DISABLE_KEYRING" ] && [ -n "$FORCE_KEYRING" ]; then
 	error 1 BADARG "Both --no-check-gpg and --force-check-gpg specified, please pick one (at most)"
 fi
 
@@ -416,9 +438,9 @@ else
 	TARGET="${TARGET%/}"
 	if [ "${TARGET#/}" = "${TARGET}" ]; then
 		if [ "${TARGET%/*}" = "$TARGET" ] ; then
-			TARGET="$(echo "`pwd`/$TARGET")"
+			TARGET="$(pwd)/$TARGET"
 		else
-			TARGET="$(cd "${TARGET%/*}"; echo "`pwd`/${TARGET##*/}")"
+			TARGET="$(cd "${TARGET%/*}"; echo "$(pwd)/${TARGET##*/}")"
 		fi
 	fi
 
@@ -434,26 +456,29 @@ fi
 
 ###########################################################################
 
-TARGET_EMPTY=true
-if [ "$(ls -A "$TARGET")" ]; then
-	TARGET_EMPTY=false
+if am_doing_phase kill_target; then
+	# Require empty target when we are going to remove it afterwards
+	if [ -d "$TARGET" ] && [ -n "$(ls -A "$TARGET")" ] && \
+	   [ "$KEEP_DEBOOTSTRAP_DIR" != "true" ]; then
+		error 1 BADTARGET "Target directory '$TARGET' is not empty and it would be wiped"
+	fi
 fi
 
 ###########################################################################
 
 if in_path dpkg && \
      dpkg --print-architecture >/dev/null 2>&1; then
-	HOST_ARCH=`/usr/bin/dpkg --print-architecture`
+	HOST_ARCH=$(/usr/bin/dpkg --print-architecture)
 elif in_path udpkg && \
      udpkg --print-architecture >/dev/null 2>&1; then
-	HOST_ARCH=`/usr/bin/udpkg --print-architecture`
-elif [ -e $DEBOOTSTRAP_DIR/arch ]; then
-	HOST_ARCH=`cat $DEBOOTSTRAP_DIR/arch`
+	HOST_ARCH=$(/usr/bin/udpkg --print-architecture)
+elif [ -e "$DEBOOTSTRAP_DIR/arch" ]; then
+	HOST_ARCH=$(cat "$DEBOOTSTRAP_DIR/arch")
 fi
 HOST_OS="$HOST_ARCH"
 # basic host OS guessing for non-Debian systems
 if [ -z "$HOST_OS" ]; then
-	case `uname` in
+	case $(uname) in
 		Linux)
 			HOST_OS=linux
 		;;
@@ -470,7 +495,7 @@ if [ -z "$HOST_OS" ]; then
 fi
 
 if [ -z "$ARCH" ]; then
-	ARCH=$HOST_ARCH
+	ARCH="$HOST_ARCH"
 fi
 
 if [ -z "$ARCH" ] || [ -z "$HOST_OS" ]; then
@@ -490,6 +515,12 @@ else
 	CHROOT_CMD="chroot \"$TARGET\""
 fi
 
+# fakeroot cannot check /proc/1/environ
+if [ "$HOST_OS" = Linux ] && ! doing_variant fakechroot && \
+   grep -q container=lxc-libvirt /proc/1/environ; then
+       CHROOT_CMD="unshare --net $CHROOT_CMD"
+fi
+
 if [ -z "$SHA_SIZE" ]; then
 	SHA_SIZE=256
 fi
@@ -502,7 +533,7 @@ DEBOOTSTRAP_CHECKSUM_FIELD="SHA$SHA_SIZE"
 export ARCH SUITE TARGET CHROOT_CMD SHA_SIZE DEBOOTSTRAP_CHECKSUM_FIELD
 
 if am_doing_phase first_stage second_stage; then
-	if in_path id && [ `id -u` -ne 0 ]; then
+	if in_path id && [ "$(id -u)" -ne 0 ]; then
 		error 1 NEEDROOT "debootstrap can only run as root"
 	fi
 	# Ensure that we can create working devices and executables on the target.
@@ -549,6 +580,24 @@ fi
 
 ###########################################################################
 
+if [ -x /usr/bin/arch-test ] && am_doing_phase second_stage; then
+	if doing_variant fakechroot; then
+		ret=0; arch-test "$ARCH" || ret=$?
+	else
+		ret=0; arch-test -c "$TARGET" "$ARCH" || ret=$?
+	fi
+
+	case $ret in
+	0)      info ARCHEXEC "Target architecture can be executed" ;;
+	1)      error 1 ARCHNOTEXEC "Unable to execute target architecture" ;;
+	*)      info ARCHEXECUNKNOWN "Can't verify that target arch works" ;;
+	esac
+fi
+
+###########################################################################
+
+
+
 if [ "$UNPACK_TARBALL" ]; then
 	if [ "${UNPACK_TARBALL#/}" = "$UNPACK_TARBALL" ]; then
 		error 1 TARPATH "Tarball must be given an absolute path"
@@ -580,9 +629,9 @@ export MIRRORS
 
 ok=false
 for v in $SUPPORTED_VARIANTS; do
-	if doing_variant $v; then ok=true; fi
+	if doing_variant "$v"; then ok=true; fi
 done
-if ! $ok; then
+if ! "$ok"; then
 	error 1 UNSUPPVARIANT "unsupported variant"
 fi
 
@@ -600,8 +649,8 @@ if am_doing_phase finddebs; then
 	base=$(without "$base $ADDITIONAL" "$EXCLUDE")
 
 	if [ "$RESOLVE_DEPS" = true ]; then
-		requiredX=$(echo $(echo $required | tr ' ' '\n' | sort | uniq))
-		baseX=$(echo $(echo $base | tr ' ' '\n' | sort | uniq))
+		requiredX=$(echo "$required" | tr ' ' '\n' | sort | uniq)
+		baseX=$(echo "$base" | tr ' ' '\n' | sort | uniq)
 
 		baseN=$(without "$baseX" "$requiredX")
 		baseU=$(without "$baseX" "$baseN")
@@ -611,9 +660,9 @@ if am_doing_phase finddebs; then
 		fi
 
 		info RESOLVEREQ "Resolving dependencies of required packages..."
-		required=$(resolve_deps $requiredX)
+		required=$(resolve_deps "$requiredX")
 		info RESOLVEBASE "Resolving dependencies of base packages..."
-		base=$(resolve_deps $baseX)
+		base=$(resolve_deps "$baseX")
 		base=$(without "$base" "$required")
 
 		requiredX=$(without "$required" "$requiredX")
@@ -637,12 +686,12 @@ if am_doing_phase dldebs; then
 	if [ "$GOT_INDICES" != "true" ]; then
 		download_indices
 	fi
-	download $all_debs
+	download "$all_debs"
 fi
 
 if am_doing_phase maketarball; then
 	(cd "$TARGET";
-	 tar czf - var/lib/apt var/cache/apt) >$MAKE_TARBALL
+	 tar czf - var/lib/apt var/cache/apt) >"$MAKE_TARBALL"
 fi
 
 if am_doing_phase first_stage; then
@@ -655,8 +704,8 @@ if am_doing_phase first_stage; then
 
 	if ! am_doing_phase second_stage; then
 		cp "$0"				 "$TARGET/debootstrap/debootstrap"
-		cp $DEBOOTSTRAP_DIR/functions	 "$TARGET/debootstrap/functions"
-		cp $SCRIPT			 "$TARGET/debootstrap/suite-script"
+		cp "$DEBOOTSTRAP_DIR/functions"	 "$TARGET/debootstrap/functions"
+		cp "$SCRIPT"			 "$TARGET/debootstrap/suite-script"
 		# pick up common setting scripts
 		cp "$DEBOOTSTRAP_DIR"/scripts/*-common	"$TARGET/debootstrap/"
 		echo "$ARCH"			>"$TARGET/debootstrap/arch"
@@ -688,7 +737,7 @@ if am_doing_phase second_stage; then
 	if [ -e "$TARGET/etc/apt/sources.list" ]; then
 		rm -f "$TARGET/etc/apt/sources.list"
 	fi
-	if [ "${MIRRORS#http://}" != "$MIRRORS" ]; then
+	if [ "${MIRRORS#http*://}" != "$MIRRORS" ]; then
 		setup_apt_sources "${MIRRORS%% *}"
 		mv_invalid_to "${MIRRORS%% *}"
 	else
@@ -720,12 +769,7 @@ if am_doing_phase second_stage; then
 fi
 
 if am_doing_phase kill_target; then
-	if [ "$KEEP_DEBOOTSTRAP_DIR" = true ]; then
-		true
-	# prevent removal when print-deb option was specified and its directory doesn't empty
-	elif [ "$PRINT_DEBS" = true ] && [ "$TARGET_EMPTY" != true ]; then
-		true
-	else
+	if [ "$KEEP_DEBOOTSTRAP_DIR" != true ]; then
                 info KILLTARGET "Deleting target directory"
 		rm -rf --one-file-system "$TARGET"
 	fi
