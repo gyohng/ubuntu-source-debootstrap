@@ -1,3 +1,9 @@
+debootstrap (1.0.95ubuntu1) cosmic; urgency=medium
+
+  * Add (Ubuntu) cosmic as a symlink to gutsy.
+
+ -- Adam Conrad <adconrad@ubuntu.com>  Wed, 02 May 2018 14:38:37 -0600
+
 debootstrap (1.0.95) unstable; urgency=medium
 
   * Really fix #894415 (Closes: #894415) 
