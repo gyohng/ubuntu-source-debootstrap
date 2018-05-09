@@ -1,3 +1,10 @@
+debootstrap (1.0.97ubuntu1) cosmic; urgency=low
+
+  * Merge from Debian unstable.  Remaining changes:
+    - Add (Ubuntu) cosmic as a symlink to gutsy.
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Wed, 09 May 2018 11:14:34 +0200
+
 debootstrap (1.0.97) unstable; urgency=medium
 
   [ Dan Nicholson ]
@@ -64,6 +71,12 @@ debootstrap (1.0.96) unstable; urgency=medium
     (Closes: #732628)
 
  -- Hideki Yamane <henrich@debian.org>  Fri, 06 Apr 2018 10:02:20 +0900
+
+debootstrap (1.0.95ubuntu1) cosmic; urgency=medium
+
+  * Add (Ubuntu) cosmic as a symlink to gutsy.
+
+ -- Adam Conrad <adconrad@ubuntu.com>  Wed, 02 May 2018 14:38:37 -0600
 
 debootstrap (1.0.95) unstable; urgency=medium
 
@@ -2740,3 +2753,4 @@ debootstrap (0.1.1) unstable; urgency=low
     in a chroot, or as a standalone system. Blame Adam di Carlo. :)
 
  -- Anthony Towns <ajt@debian.org>  Tue, 30 Jan 2001 10:54:45 +1000
+
