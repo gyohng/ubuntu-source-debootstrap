@@ -1,3 +1,12 @@
+debootstrap (1.0.103) unstable; urgency=medium
+
+  * Avoid failure with old arch-test package (Closes: #900925)
+    Thanks to jhcha54008 <jhcha54008@free.fr>
+  * Relax merged-usr blacklist restriction (Closes: #901808)
+    Thanks to Tianon Gravi <tianon@debian.org>
+
+ -- Hideki Yamane <henrich@debian.org>  Sat, 23 Jun 2018 11:44:57 +0900
+
 debootstrap (1.0.102) unstable; urgency=medium
 
   * Enable merged-/usr by default (Closes: #839046)
@@ -44,8 +53,8 @@ debootstrap (1.0.100) unstable; urgency=medium
   [ Hideki Yamane ]
   * Specify https mirror to check https mirror specific problem
     (See #896071)
-  * Quote $DEBOOTSTRP_DIR properly (Closes: #586158)
-  * Simpify checking debian-common file (Closes: #897379)
+  * Quote $DEBOOTSTRAP_DIR properly (Closes: #586158)
+  * Simplify checking debian-common file (Closes: #897379)
 
   [ Philipp Kern ]
   * Add an initial Gitlab CI config file.
