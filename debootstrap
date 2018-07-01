@@ -322,11 +322,11 @@ if [ $# != 0 ] ; then
 		else
 			error 1 NEEDARG "option requires an argument %s" "$1"
 		fi
-		if [ ! -d "$CACHE_DIR" ] ; then
-			error 1 NOCACHEDIR "%s: No such directory" "$CACHE_DIR"
-		fi
 		if [ ! -z "${CACHE_DIR##/*}" ]; then
 			error 1 NOTABSOLUTEPATH "cache directory should be specified with an absolute path"
+		fi
+		if [ ! -d "$CACHE_DIR" ] ; then
+			error 1 NOCACHEDIR "%s: No such directory" "$CACHE_DIR"
 		fi
 		;;
             --merged-usr)
@@ -667,10 +667,6 @@ if am_doing_phase finddebs; then
 		info RESOLVEBASE "Resolving dependencies of base packages..."
 		base=$(resolve_deps "$baseX")
 		base=$(without "$base" "$required")
-
-		# Check exclude package again since it may be added after resolution
-		base=$(without "$base" "$EXCLUDE")
-		required=$(without "$required" "$EXCLUDE")
 
 		if [ "$LOG_EXTRA_DEPS" = true ]; then
 			baseN=$(without "$baseX" "$requiredX")
