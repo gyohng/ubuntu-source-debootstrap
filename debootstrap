@@ -50,6 +50,9 @@ CACHE_DIR=""
 DEF_MIRROR="http://deb.debian.org/debian"
 DEF_HTTPS_MIRROR="https://deb.debian.org/debian"
 
+# set $CONTAINER
+detect_container
+
 export LANG USE_COMPONENTS
 umask 022
 
@@ -434,6 +437,9 @@ if [ "$SECOND_STAGE_ONLY" = "true" ]; then
 	fi
 	SCRIPT="$DEBOOTSTRAP_DIR/suite-script"
 else
+	if ! in_path wget; then
+		error 1 NEEDWGET "You must install wget to download packages."
+	fi
 	if [ -z "$1" ] || [ -z "$2" ]; then
 		usage_err 1 NEEDSUITETARGET "You must specify a suite and a target."
 	fi
@@ -525,8 +531,7 @@ else
 fi
 
 # fakeroot cannot check /proc/1/environ
-if [ "$HOST_OS" = Linux ] && ! doing_variant fakechroot && \
-   grep -q container=lxc-libvirt /proc/1/environ; then
+if [ "$HOST_OS" = Linux ] && ! doing_variant fakechroot && [ "$CONTAINER" = "lxc-libvirt" ]; then
        CHROOT_CMD="unshare --net $CHROOT_CMD"
 fi
 
