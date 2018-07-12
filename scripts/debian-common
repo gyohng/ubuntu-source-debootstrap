@@ -36,21 +36,13 @@ work_out_debs () {
 
 first_stage_install () {
 	case "$CODENAME" in
-		# "merged-usr" blacklist for past releases
-		etch*|lenny|squeeze|wheezy|jessie*)
-			[ -z "$MERGED_USR" ] && MERGED_USR="no"
-			;;
+		etch|etch-m68k|jessie|jessie-kfreebsd|lenny|squeeze|wheezy) ;;
 		*)
-			# see https://bugs.debian.org/838388
 			EXTRACT_DEB_TAR_OPTIONS="$EXTRACT_DEB_TAR_OPTIONS -k"
+			setup_merged_usr
 			;;
 	esac
 
-	if [ "$CODENAME" = "stretch" ] && [ -z "$MERGED_USR" ]; then
-		MERGED_USR="no"
-	fi
-		
-	setup_merged_usr
 	extract $required
 
 	mkdir -p "$TARGET/var/lib/dpkg"
@@ -64,10 +56,6 @@ first_stage_install () {
 	fi
 
 	setup_devices
-
-	if doing_variant fakechroot || [ "$CONTAINER" = "docker" ]; then
-		setup_proc_symlink
-	fi
 }
 
 second_stage_install () {
@@ -101,7 +89,9 @@ Status: install ok installed" >> "$TARGET/var/lib/dpkg/status"
 		baseprog="$(($baseprog + ${1:-1}))"
 	}
 
-	if ! doing_variant fakechroot; then
+	if doing_variant fakechroot; then
+		setup_proc_fakechroot
+	else
 		setup_proc
 		in_target /sbin/ldconfig
 	fi
