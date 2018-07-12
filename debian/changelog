@@ -1,3 +1,11 @@
+debootstrap (1.0.106ubuntu2+really1.0.97ubuntu1) cosmic; urgency=medium
+
+  * Revert to last known good version to avoid bugs like
+    https://bugs.debian.org/903481. Careful testing will be needed before
+    we merge again.
+
+ -- Michael Hudson-Doyle <michael.hudson@ubuntu.com>  Thu, 12 Jul 2018 12:01:58 +1200
+
 debootstrap (1.0.106ubuntu1) cosmic; urgency=medium
 
   * debootstrap does not make a destinction between priviledged and
