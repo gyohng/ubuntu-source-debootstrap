@@ -80,8 +80,18 @@ wgetprogress () {
 	[ ! "$VERBOSE" ] && NVSWITCH="-nv"
 	local ret=0
 	if [ "$USE_DEBIANINSTALLER_INTERACTION" ] && [ "$PROGRESS_NEXT" ]; then
-		wget $@ 2>&1 >/dev/null | "$PKGDETAILS" "WGET%" "$PROGRESS_NOW" "$PROGRESS_NEXT" "$PROGRESS_END" >&3
-		ret=$?
+		# The exit status of a pipeline is that of the last command in
+		# the pipeline, so wget's exit status must be saved in the
+		# pipeline's first command.  Since commands in a pipeline run in
+		# subshells, we have to print the exit status (on a file
+		# descriptor other than standard output, which is used by the
+		# pipeline itself) and then assign it to $ret outside of the
+		# pipeline.  The "||" is necessary due to "set -e"; otherwise, a
+		# non-zero exit status would cause the echo command to be
+		# skipped.  If wget succeeds, $ret will be "", so it then has to
+		# be set to a default value of 0.
+		ret=$({ { wget $@ 2>&1 >/dev/null || echo $? >&2; } | "$PKGDETAILS" "WGET%" "$PROGRESS_NOW" "$PROGRESS_NEXT" "$PROGRESS_END" >&3; } 2>&1)
+		: ${ret:=0}
 	else
 		wget $NVSWITCH $@
 		ret=$?
@@ -490,12 +500,12 @@ apt_dest () {
 	    pkg)
 		local m="$5"
 		printf "%s" "$APTSTATE/lists/"
-		echo "${m}_$6" | sed 's/\//_/g'
+		echo "${m}_$6" | sed -e 's,^[^:]\+://,,' -e 's/\//_/g'
 		;;
 	    rel)
 		local m="$3"
 		printf "%s" "$APTSTATE/lists/"
-		echo "${m}_$4" | sed 's/\//_/g'
+		echo "${m}_$4" | sed -e 's,^[^:]\+://,,' -e 's/\//_/g'
 		;;
 	esac
 }
@@ -1141,7 +1151,8 @@ setup_proc () {
 
 		# some container environment are used at second-stage, it already treats /proc and so on
 		if [ -z "$(ls -A "$TARGET/proc")" ]; then
-			in_target mount -t proc proc /proc
+			# second-stage in docker, we cannot detect it is inside docker... just ignore warning
+			in_target mount -t proc proc /proc || true
 			umount_on_exit /proc
 		fi
 		if [ -n "$(ls -A "$TARGET/sys")" ] && \
@@ -1150,7 +1161,8 @@ setup_proc () {
 				umount_on_exit /sys
 				umount "$TARGET/sys" 2>/dev/null || true
 		else
-			in_target mount -t sysfs sysfs /sys
+			# second-stage in docker, we cannot detect it is inside docker... just ignore warning
+			in_target mount -t sysfs sysfs /sys || true
 			umount_on_exit /sys
 		fi
 		on_exit clear_mtab
@@ -1180,7 +1192,9 @@ setup_devices () {
 		;;
 	    *)
 		if [ "$CONTAINER" = "lxc" ] || [ "$CONTAINER" = "lxc-libvirt" ]; then
-			setup_devices_bind
+			if ! setup_devices_simple; then
+				setup_devices_bind
+			fi
 			return 0
 		fi
 
