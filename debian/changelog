@@ -1,3 +1,16 @@
+debootstrap (1.0.108ubuntu1) cosmic; urgency=medium
+
+  [ Raphaël Hertzog ]
+  * Keep all script files in the udeb so that derivatives can use the
+    udeb built by Debian. Related to #893713.
+
+  [ Dimitri John Ledkov ]
+  * Demote arch-test to suggests.
+  * Drop ubuntu-archive-kerying suggests, such a package does not
+    exist in Ubuntu.
+
+ -- Dimitri John Ledkov <xnox@ubuntu.com>  Thu, 23 Aug 2018 18:01:19 +0100
+
 debootstrap (1.0.108) unstable; urgency=medium
 
   * Fix "Do not download packages with --unpack-tarball option"
