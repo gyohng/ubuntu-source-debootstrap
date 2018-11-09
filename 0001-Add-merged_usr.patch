@@ -1,0 +1,82 @@
+From f981d351e2d417c37e0474c25145027e76a4d450 Mon Sep 17 00:00:00 2001
+From: Dimitri John Ledkov <xnox@ubuntu.com>
+Date: Fri, 9 Nov 2018 14:01:43 +0000
+Subject: [PATCH 1/4] Add merged_usr.
+
+---
+ functions     | 37 +++++++++++++++++++++++++++++++++++++
+ scripts/gutsy | 10 ++++++++++
+ 2 files changed, 47 insertions(+)
+
+diff --git a/functions b/functions
+index d75c11d..2f82ef7 100644
+--- a/functions
++++ b/functions
+@@ -1153,6 +1153,43 @@ setup_dselect_method () {
+ 	esac
+ }
+ 
++# Find out where the runtime dynamic linker and the shared libraries
++# can be installed on each architecture: native, multilib and multiarch.
++# This data can be verified by checking the files in the debian/sysdeps/
++# directory of the glibc package.
++#
++# This function must be updated to support any new architecture which
++# either installs the RTLD in a directory different from /lib or builds
++# multilib library packages.
++setup_merged_usr() {
++	if [ "$MERGED_USR" = "no" ]; then return 0; fi
++
++	local link_dir
++	case $ARCH in
++	    hurd-*)	return 0 ;;
++	    amd64)	link_dir="lib32 lib64 libx32" ;;
++	    i386)	link_dir="lib64 libx32" ;;
++	    mips|mipsel)
++			link_dir="lib32 lib64" ;;
++	    mips64*|mipsn32*)
++			link_dir="lib32 lib64 libo32" ;;
++	    powerpc)	link_dir="lib64" ;;
++	    ppc64)	link_dir="lib32 lib64" ;;
++	    ppc64el)	link_dir="lib64" ;;
++	    s390x)	link_dir="lib32" ;;
++	    sparc)	link_dir="lib64" ;;
++	    sparc64)	link_dir="lib32 lib64" ;;
++	    x32)	link_dir="lib32 lib64 libx32" ;;
++	esac
++	link_dir="bin sbin lib $link_dir"
++
++	local dir
++	for dir in $link_dir; do
++		ln -s usr/"$dir" "$TARGET/$dir"
++		mkdir -p "$TARGET/usr/$dir"
++	done
++}
++
+ ################################################################ pkgdetails
+ 
+ # NOTE
+diff --git a/scripts/gutsy b/scripts/gutsy
+index c91c322..9d9c3d1 100644
+--- a/scripts/gutsy
++++ b/scripts/gutsy
+@@ -52,6 +52,16 @@ work_out_debs () {
+ }
+ 
+ first_stage_install () {
++	case "$CODENAME" in
++		gutsy|hardy|intrepid|jaunty|karmic|lucid|maverick|natty|oneiric|precise|quantal|raring|saucy|trusty|utopic|vivid|wily|xenial|yakkety|zesty|artful|bionic|cosmic) ;;
++		*)
++			# disco+ is merged-usr by default
++			MERGED_USR=yes
++			# see https://bugs.debian.org/838388
++			EXTRACT_DEB_TAR_OPTIONS="$EXTRACT_DEB_TAR_OPTIONS -k"
++			setup_merged_usr
++			;;
++	esac
+ 	extract $required
+ 
+ 	mkdir -p "$TARGET/var/lib/dpkg"
+-- 
+2.19.1
+

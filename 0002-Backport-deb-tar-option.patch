@@ -1,0 +1,42 @@
+From 6980d375a49df1ba59b3a1a7c03eba6385a07856 Mon Sep 17 00:00:00 2001
+From: Dimitri John Ledkov <xnox@ubuntu.com>
+Date: Fri, 9 Nov 2018 14:04:20 +0000
+Subject: [PATCH 2/4] Backport deb-tar-option.
+
+---
+ functions | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/functions b/functions
+index 2f82ef7..5eeafb5 100644
+--- a/functions
++++ b/functions
+@@ -817,6 +817,7 @@ get_debs () {
+ ################################################################ extraction
+ 
+ EXTRACTORS_SUPPORTED="dpkg-deb ar"
++EXTRACT_DEB_TAR_OPTIONS=
+ 
+ # Native dpkg-deb based extractors
+ extract_dpkg_deb_field () {
+@@ -829,7 +830,7 @@ extract_dpkg_deb_field () {
+ extract_dpkg_deb_data () {
+ 	local pkg="$1"
+ 
+-	dpkg-deb --fsys-tarfile "$pkg" | tar -xf -
++	dpkg-deb --fsys-tarfile "$pkg" | tar $EXTRACT_DEB_TAR_OPTIONS -xf -
+ }
+ 
+ # Raw .deb extractors
+@@ -867,7 +868,7 @@ extract_ar_deb_data () {
+ 	esac
+ 
+ 	if type $cat_cmd >/dev/null 2>&1; then
+-		ar -p "$pkg" "$tarball" | $cat_cmd | tar -xf -
++		ar -p "$pkg" "$tarball" | $cat_cmd | tar $EXTRACT_DEB_TAR_OPTIONS -xf -
+ 	else
+ 		error 1 UNPACKCMDUNVL "Extracting %s requires the %s command, which is not available" "$pkg" "$cat_cmd"
+ 	fi
+-- 
+2.19.1
+
