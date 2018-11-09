@@ -1,0 +1,25 @@
+From 9fcb70c87d7d8d138af394b5223b258cf9a19eb2 Mon Sep 17 00:00:00 2001
+From: Dimitri John Ledkov <xnox@ubuntu.com>
+Date: Fri, 9 Nov 2018 14:07:06 +0000
+Subject: [PATCH 4/4] It's called suite back then....
+
+---
+ scripts/gutsy | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/scripts/gutsy b/scripts/gutsy
+index 9d9c3d1..75b65d9 100644
+--- a/scripts/gutsy
++++ b/scripts/gutsy
+@@ -52,7 +52,7 @@ work_out_debs () {
+ }
+ 
+ first_stage_install () {
+-	case "$CODENAME" in
++	case "$SUITE" in
+ 		gutsy|hardy|intrepid|jaunty|karmic|lucid|maverick|natty|oneiric|precise|quantal|raring|saucy|trusty|utopic|vivid|wily|xenial|yakkety|zesty|artful|bionic|cosmic) ;;
+ 		*)
+ 			# disco+ is merged-usr by default
+-- 
+2.19.1
+
