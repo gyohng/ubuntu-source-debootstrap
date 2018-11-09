@@ -1,3 +1,10 @@
+debootstrap (1.0.78+nmu1ubuntu1.8) xenial; urgency=medium
+
+  * For (Ubuntu) releases disco+ default to MERGED_USR=yes, -k extract
+    option.  (LP: #1773496)
+
+ -- Dimitri John Ledkov <xnox@ubuntu.com>  Fri, 09 Nov 2018 14:05:13 +0000
+
 debootstrap (1.0.78+nmu1ubuntu1.7) xenial; urgency=medium
 
   * Add (Ubuntu) disco as a symlink to gutsy.  (LP: #1800945)
