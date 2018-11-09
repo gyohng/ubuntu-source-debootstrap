@@ -67,8 +67,11 @@ work_out_debs () {
 
 first_stage_install () {
 	case "$CODENAME" in
-		etch|etch-m68k|jessie|jessie-kfreebsd|lenny|squeeze|wheezy) ;;
+		gutsy|hardy|intrepid|jaunty|karmic|lucid|maverick|natty|oneiric|precise|quantal|raring|saucy|trusty|utopic|vivid|wily|xenial|yakkety|zesty|artful|bionic|cosmic) ;;
 		*)
+			# disco+ is merged-usr by default
+			MERGED_USR=yes
+			# see https://bugs.debian.org/838388
 			EXTRACT_DEB_TAR_OPTIONS="$EXTRACT_DEB_TAR_OPTIONS -k"
 			setup_merged_usr
 			;;
