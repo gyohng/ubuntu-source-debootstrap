@@ -1,3 +1,13 @@
+debootstrap (1.0.114ubuntu1) eoan; urgency=medium
+
+  * Merge from Debian Sid. Remaining changes:
+    - Demote arch-test to suggests.
+    - Drop ubuntu-archive-keyring suggests, such a package does not
+      exist in Ubuntu.
+  * Add (Ubuntu) eoan as a symlink to gutsy.
+
+ -- Simon Quigley <tsimonq2@ubuntu.com>  Sat, 20 Apr 2019 10:07:22 -0500
+
 debootstrap (1.0.114) unstable; urgency=medium
 
   * Revert changes from 1.0.113 (closes: #918722)
@@ -14,6 +24,16 @@ debootstrap (1.0.113) unstable; urgency=low
     - set Standards-Version: 4.3.0
 
  -- Hideki Yamane <henrich@debian.org>  Sat, 05 Jan 2019 20:13:44 +0900
+
+debootstrap (1.0.112ubuntu1) disco; urgency=medium
+
+  * Merge from Debian Sid (LP: #1810123). Remaining changes:
+    - Demote arch-test to suggests.
+    - Drop ubuntu-archive-keyring suggests, such a package does not
+      exist in Ubuntu.
+  * Fix typo in xnox's changelog entry.
+
+ -- Simon Quigley <tsimonq2@ubuntu.com>  Sun, 30 Dec 2018 17:05:08 -0600
 
 debootstrap (1.0.112) unstable; urgency=low
 
@@ -64,6 +84,25 @@ debootstrap (1.0.109) unstable; urgency=medium
   * Just set Standards-Version: 4.2.1 without change
 
  -- Hideki Yamane <henrich@debian.org>  Mon, 10 Sep 2018 02:42:58 +0900
+
+debootstrap (1.0.108ubuntu2) disco; urgency=medium
+
+  * Add a script for disco.
+
+ -- Matthias Klose <doko@ubuntu.com>  Tue, 30 Oct 2018 16:40:26 +0100
+
+debootstrap (1.0.108ubuntu1) cosmic; urgency=medium
+
+  [ Raphaël Hertzog ]
+  * Keep all script files in the udeb so that derivatives can use the
+    udeb built by Debian. Related to #893713.
+
+  [ Dimitri John Ledkov ]
+  * Demote arch-test to suggests.
+  * Drop ubuntu-archive-keyring suggests, such a package does not
+    exist in Ubuntu.
+
+ -- Dimitri John Ledkov <xnox@ubuntu.com>  Thu, 23 Aug 2018 18:01:19 +0100
 
 debootstrap (1.0.108) unstable; urgency=medium
 
