@@ -1,3 +1,9 @@
+debootstrap (1.0.78+nmu1ubuntu1.9) xenial; urgency=low
+
+  * Add (Ubuntu) eoan as a symlink to gutsy.  (LP: #1825994)
+
+ -- Andy Whitcroft <apw@ubuntu.com>  Tue, 23 Apr 2019 15:00:02 +0100
+
 debootstrap (1.0.78+nmu1ubuntu1.8) xenial; urgency=medium
 
   * For (Ubuntu) releases disco+ default to MERGED_USR=yes, -k extract
