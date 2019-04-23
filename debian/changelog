@@ -1,3 +1,9 @@
+debootstrap (1.0.95ubuntu0.4) bionic; urgency=low
+
+  * Add (Ubuntu) eoan as a symlink to gutsy.  (LP: #1825994)
+
+ -- Andy Whitcroft <apw@ubuntu.com>  Tue, 23 Apr 2019 14:56:33 +0100
+
 debootstrap (1.0.95ubuntu0.3) bionic; urgency=medium
 
   * For (Ubuntu) releases disco+ default to MERGED_USR=yes, -k extract
