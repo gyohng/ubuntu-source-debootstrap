@@ -1,3 +1,17 @@
+debootstrap (1.0.115) unstable; urgency=medium
+
+  [ Cyril Brulebois ]
+  * Remove Christian Perrier from Uploaders, with many thanks for all
+    his contributions over the years! (Closes: #927549)
+
+  [ Hideki Yamane ]
+  * debian/control
+    - Remove Junichi Uekawa <dancer@debian.org> from Uploaders with ack
+  * scripts
+    - Add (Ubuntu) eoan as a symlink to gutsy.
+
+ -- Hideki Yamane <henrich@debian.org>  Sat, 06 Jul 2019 20:22:30 +0900
+
 debootstrap (1.0.114) unstable; urgency=medium
 
   * Revert changes from 1.0.113 (closes: #918722)
