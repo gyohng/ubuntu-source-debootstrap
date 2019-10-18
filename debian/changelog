@@ -1,3 +1,9 @@
+debootstrap (1.0.112ubuntu1.2) disco; urgency=medium
+
+  * Add (Ubuntu) focal as a symlink to gutsy.  (LP: #1848716)
+
+ -- Łukasz 'sil2100' Zemczak <lukasz.zemczak@ubuntu.com>  Fri, 18 Oct 2019 14:15:12 +0100
+
 debootstrap (1.0.112ubuntu1.1) disco; urgency=low
 
   * Add (Ubuntu) eoan as a symlink to gutsy.  (LP: #1825994)
