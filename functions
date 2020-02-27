@@ -234,7 +234,7 @@ detect_container () {
 		CONTAINER="lxc"
 	elif grep -qs container=lxc-libvirt /proc/1/environ; then
 		CONTAINER="lxc-libvirt"
-	elif grep -qs ^systemd-nspawn$ /run/systemd/container || [ "$container" = "systemd-nspawn" ]; then
+	elif grep -qs ^systemd-nspawn$ /run/systemd/container || grep -qs systemd-nspawn /proc/1/environ || [ "$container" = "systemd-nspawn" ]; then
 		CONTAINER="systemd-nspawn"
 	elif grep -qs '[[:space:]]/docker/.*/sys/fs/cgroup' /proc/1/mountinfo; then
 		CONTAINER="docker"
@@ -262,8 +262,8 @@ variants () {
 
 ########################################################### option handling
 check_conflicting_option () {
-	if [ "$set_what_to_do" = --foreign ] && [ "${1%%=*}" = --unpack-tarball ] || \
-	   [ "${set_what_to_do%%=*}" = "--unpack-tarball" ] && [ "$1" == --foreign ]; then
+	if ( [ "$set_what_to_do" = --foreign ] && [ "${1%%=*}" = --unpack-tarball ] ) || \
+	   ( [ "${set_what_to_do%%=*}" = "--unpack-tarball" ] && [ "$1" = --foreign ] ); then
 		LOOSEN_CONFLICTING_RESTRICTION="true"
 	elif [ -n "$set_what_to_do" ]; then
 		error 1 ARG_CONFLICTING "$set_what_to_do is specified with $1, please use only one of those options."
