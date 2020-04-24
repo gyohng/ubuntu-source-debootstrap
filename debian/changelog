@@ -1,3 +1,13 @@
+debootstrap (1.0.123ubuntu1) groovy; urgency=medium
+
+  * Merge with Debian; remaining changes:
+    - Demote arch-test to suggests.
+    - Drop ubuntu-archive-keyring suggests, such a package does not
+      exist in Ubuntu.
+  * Add (Ubuntu) groovy as a symlink to gutsy.
+
+ -- Matthias Klose <doko@ubuntu.com>  Fri, 24 Apr 2020 19:13:33 +0200
+
 debootstrap (1.0.123) unstable; urgency=medium
 
   * Reinstate safeguard removed in 1.0.121, which is absolutely needed
@@ -43,6 +53,15 @@ debootstrap (1.0.119) unstable; urgency=medium
 
  -- Hideki Yamane <henrich@debian.org>  Thu, 27 Feb 2020 21:16:24 +0900
 
+debootstrap (1.0.118ubuntu1) focal; urgency=low
+
+  * Merge from Debian unstable.  Remaining changes:
+    - Demote arch-test to suggests.
+    - Drop ubuntu-archive-keyring suggests, such a package does not
+      exist in Ubuntu.
+
+ -- Steve Langasek <steve.langasek@ubuntu.com>  Sun, 23 Feb 2020 12:52:21 -0800
+
 debootstrap (1.0.118) unstable; urgency=medium
 
   * rename .gitlab-ci.yml to salsa-ci.yml
@@ -56,6 +75,17 @@ debootstrap (1.0.118) unstable; urgency=medium
     (Closes: #951367)
 
  -- Hideki Yamane <henrich@debian.org>  Fri, 21 Feb 2020 21:16:39 +0900
+
+debootstrap (1.0.117ubuntu1) focal; urgency=low
+
+  * Merge from Debian unstable.  Remaining changes:
+    - Demote arch-test to suggests.
+    - Drop ubuntu-archive-keyring suggests, such a package does not
+      exist in Ubuntu.
+  * Dropped changes, included in Debian:
+    - Add (Ubuntu) focal as a symlink to gutsy.
+
+ -- Steve Langasek <steve.langasek@ubuntu.com>  Thu, 13 Feb 2020 22:46:47 -0800
 
 debootstrap (1.0.117) unstable; urgency=medium
 
@@ -76,6 +106,21 @@ debootstrap (1.0.117) unstable; urgency=medium
 
  -- Hideki Yamane <henrich@debian.org>  Tue, 11 Feb 2020 21:15:26 +0900
 
+debootstrap (1.0.116ubuntu2) focal; urgency=medium
+
+  * Add (Ubuntu) focal as a symlink to gutsy.
+
+ -- Simon Quigley <tsimonq2@ubuntu.com>  Fri, 18 Oct 2019 13:59:25 -0500
+
+debootstrap (1.0.116ubuntu1) eoan; urgency=low
+
+  * Merge from Debian unstable.  Remaining changes:
+    - Demote arch-test to suggests.
+    - Drop ubuntu-archive-keyring suggests, such a package does not
+      exist in Ubuntu.
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Wed, 02 Oct 2019 09:12:01 +0200
+
 debootstrap (1.0.116) unstable; urgency=medium
 
   [ Hideki Yamane ]
@@ -87,6 +132,15 @@ debootstrap (1.0.116) unstable; urgency=medium
   * provide support for Devuan release names
 
  -- Hideki Yamane <henrich@debian.org>  Sun, 29 Sep 2019 10:56:48 +0900
+
+debootstrap (1.0.115ubuntu1) eoan; urgency=low
+
+  * Merge from Debian unstable.  Remaining changes:
+    - Demote arch-test to suggests.
+    - Drop ubuntu-archive-keyring suggests, such a package does not
+      exist in Ubuntu.
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Wed, 21 Aug 2019 09:33:39 +0200
 
 debootstrap (1.0.115) unstable; urgency=medium
 
@@ -101,6 +155,16 @@ debootstrap (1.0.115) unstable; urgency=medium
     - Add (Ubuntu) eoan as a symlink to gutsy.
 
  -- Hideki Yamane <henrich@debian.org>  Sat, 06 Jul 2019 20:22:30 +0900
+
+debootstrap (1.0.114ubuntu1) eoan; urgency=medium
+
+  * Merge from Debian Sid. Remaining changes:
+    - Demote arch-test to suggests.
+    - Drop ubuntu-archive-keyring suggests, such a package does not
+      exist in Ubuntu.
+  * Add (Ubuntu) eoan as a symlink to gutsy.
+
+ -- Simon Quigley <tsimonq2@ubuntu.com>  Sat, 20 Apr 2019 10:07:22 -0500
 
 debootstrap (1.0.114) unstable; urgency=medium
 
@@ -118,6 +182,16 @@ debootstrap (1.0.113) unstable; urgency=low
     - set Standards-Version: 4.3.0
 
  -- Hideki Yamane <henrich@debian.org>  Sat, 05 Jan 2019 20:13:44 +0900
+
+debootstrap (1.0.112ubuntu1) disco; urgency=medium
+
+  * Merge from Debian Sid (LP: #1810123). Remaining changes:
+    - Demote arch-test to suggests.
+    - Drop ubuntu-archive-keyring suggests, such a package does not
+      exist in Ubuntu.
+  * Fix typo in xnox's changelog entry.
+
+ -- Simon Quigley <tsimonq2@ubuntu.com>  Sun, 30 Dec 2018 17:05:08 -0600
 
 debootstrap (1.0.112) unstable; urgency=low
 
@@ -168,6 +242,25 @@ debootstrap (1.0.109) unstable; urgency=medium
   * Just set Standards-Version: 4.2.1 without change
 
  -- Hideki Yamane <henrich@debian.org>  Mon, 10 Sep 2018 02:42:58 +0900
+
+debootstrap (1.0.108ubuntu2) disco; urgency=medium
+
+  * Add a script for disco.
+
+ -- Matthias Klose <doko@ubuntu.com>  Tue, 30 Oct 2018 16:40:26 +0100
+
+debootstrap (1.0.108ubuntu1) cosmic; urgency=medium
+
+  [ Raphaël Hertzog ]
+  * Keep all script files in the udeb so that derivatives can use the
+    udeb built by Debian. Related to #893713.
+
+  [ Dimitri John Ledkov ]
+  * Demote arch-test to suggests.
+  * Drop ubuntu-archive-keyring suggests, such a package does not
+    exist in Ubuntu.
+
+ -- Dimitri John Ledkov <xnox@ubuntu.com>  Thu, 23 Aug 2018 18:01:19 +0100
 
 debootstrap (1.0.108) unstable; urgency=medium
 
@@ -3070,3 +3163,4 @@ debootstrap (0.1.1) unstable; urgency=low
     in a chroot, or as a standalone system. Blame Adam di Carlo. :)
 
  -- Anthony Towns <ajt@debian.org>  Tue, 30 Jan 2001 10:54:45 +1000
+
