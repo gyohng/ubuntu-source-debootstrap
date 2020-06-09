@@ -1,0 +1,4 @@
+  * Fix scripts/ubuntu/gutsy (symlinked to hardy, intrepid, jaunty) to cope
+    with Anthony's change in 1.0.8 to make --second-stage not bother
+    recalculating required and base. (Other scripts fixed in trunk, but I
+    haven't bothered backporting those changes.)
