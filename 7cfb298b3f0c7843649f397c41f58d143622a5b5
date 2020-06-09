@@ -1,0 +1,12 @@
+  [ Tollef Fog Heen ]
+  * Install base-passwd and base-files in two calls rather than one to
+    avoid problems with home-built media with different ordering in
+    Packages.  Thanks to Jo Shields for pointing this out and providing
+    the workaround.  Closes: #601670.  LP: #1001131.
+  [ Joey Hess ]
+  * When deboostrapping Debian, and the debian-archive-keyring is not
+    available, switch the default mirror to a https url. This way at
+    least the CA level of security is available even for users who
+    have no way to check gpg keys in the WoT. The https mirror is
+    currently https://mirrors.kernel.org/debian.
+  * Avoid writing https urls into sources.list, as apt does not support https.
