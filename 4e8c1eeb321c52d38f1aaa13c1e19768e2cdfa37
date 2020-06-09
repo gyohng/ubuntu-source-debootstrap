@@ -1,0 +1,7 @@
+  * Team upload
+  * Properly decrypt the InRelease file when downloading from an archive
+    where InRelease is used. This longstanding bug was masked by former
+    APT behaviour and was revealed only with recent APT versions
+    Closes: #703146
+    Thanks to Michael Vogt for the analysis and patch
+  * Add a dependency on gpg because of the above change.
