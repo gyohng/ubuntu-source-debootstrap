@@ -1,0 +1,4 @@
+  * On Linux, clear out /etc/mtab on exit if it's not a symlink. Should fix
+    problems Wouter Verhelst and Martin Michlmayr are seeing with
+    initramfs-tools MODULES=dep, although it probably isn't a perfect
+    solution.
