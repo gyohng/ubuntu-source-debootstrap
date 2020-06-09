@@ -1,0 +1,2 @@
+  * Fix "debootstrapping testing and stable results in exit 100",
+    use CODENAME for check properly (Closes: #953404)
