@@ -1,0 +1,5 @@
+  * Fail if its repository is expired (in InRelease file) since creating
+    base image from such repository is insecure. If you want to use such
+    repo with notice, please use "--no-check-valid-until" option
+  * debian/control
+    - set Standards-Version: 4.3.0
