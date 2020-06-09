@@ -1,0 +1,2 @@
+  * Fix "possibly the package $pkg is at fault" warnings to account for
+    changed error output in dpkg 1.17.2.
