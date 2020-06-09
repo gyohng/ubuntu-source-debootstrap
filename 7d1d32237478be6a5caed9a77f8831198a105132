@@ -1,0 +1,2 @@
+  [ Ansgar Burchardt ]
+  * Add support for xz-compressed Packages indices. (Closes: #837649)
