@@ -1,0 +1,7 @@
+  [ Miguel Figueiredo ]
+  * Apply patches from by Jonathan Klee and Guillaume Chauvel 
+    to add support to https (closes: #521196).
+  [ Colin Watson ]
+  * Add (Ubuntu) natty as a symlink to gutsy.
+  [ Joey Hess ]
+  * Add support for wheezy. Closes: #597461
