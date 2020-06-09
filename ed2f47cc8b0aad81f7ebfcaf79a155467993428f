@@ -1,0 +1,13 @@
+  * Resynchronise with Debian. Remaining changes:
+    - Add dapper, edgy, and feisty scripts.
+    - Default mirror to http://archive.ubuntu.com/ubuntu.
+    - Move debootstrap.log before unlinking it to work around NFS
+      brain-damage.
+    - Fix typo in debootstrap(8) man page.
+  * [functions] Fix "htp" typo in temporary /etc/apt/sources.list.
+  * [edgy, feisty] Remove --force-auto-select option as it is no longer
+    supported by dpkg.
+  * [debian/control] Set Maintainer to me.
+  * NMU with maintainer approval
+  * Remove --force-auto-select option for 'sid' script as it is no longer
+    supported by dpkg. Closes: #409527.
