@@ -1,0 +1,2 @@
+  * Add (Ubuntu) maverick as a symlink to gutsy.
+  * Add ${misc:Depends}.
