@@ -1,0 +1,5 @@
+  [ Raphaël Hertzog ]
+  * Keep all script files in the udeb so that derivatives can use the
+    udeb built by Debian. Related to #893713.
+  [ Hideki Yamane ]
+  * Just set Standards-Version: 4.2.1 without change
