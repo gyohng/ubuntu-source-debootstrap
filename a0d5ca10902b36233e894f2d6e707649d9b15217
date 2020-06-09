@@ -1,0 +1,5 @@
+  [ Luca Falavigna ]
+  * Add (Ubuntu) disco as a symlink to gutsy.
+  [ Hideki Yamane ]
+  * Add debian/source/lintian-overrides to ignore lintian warnings
+    since it is really necessary for debootstrap
