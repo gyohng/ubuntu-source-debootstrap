@@ -1,0 +1,5 @@
+  [ Otavio Salvador ]
+  * Apply patch from Luca Favatella <slackydeb@gmail.com> to improve
+    coding style.
+  [ Colin Watson ]
+  * Add (Ubuntu) karmic as a symlink to gutsy.
