@@ -1,0 +1,3 @@
+  * scripts/sid: 
+    + Fixed bug for not creating sid chroot because of missing apt
+      taken from mavericks debootstrap version (LP: #533369)
