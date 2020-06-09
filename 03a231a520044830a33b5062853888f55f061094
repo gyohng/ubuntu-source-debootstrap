@@ -1,0 +1,4 @@
+  [ Miguel Figueiredo ]
+  * Fix bug and typo on --private-key
+    Patch by Jonathan Klee. 
+  * Fix for ar usage, thanks to Guillem Jover. Closes: #598729
