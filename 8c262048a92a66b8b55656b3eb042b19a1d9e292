@@ -1,0 +1,2 @@
+  * scripts/gutsy, scripts/sid: add dummy Maintainer: and Description: to the
+    dpkg status file entry for dpkg as to avoid dpkg -l warnings; LP: #674146.
