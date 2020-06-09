@@ -1,0 +1,4 @@
+  * Install ca-certificates as well as apt-transport-https for HTTPS
+    installations.  This makes it possible to copy certificates that were
+    built into the installer to /usr/local/share/ca-certificates/ and thus
+    have them continue to be trusted after installation.
