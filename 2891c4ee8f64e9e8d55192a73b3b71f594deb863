@@ -1,0 +1,5 @@
+  [ Julien Cristau ]
+  * Default to split /usr again, as merged-/usr breaks dpkg-shlibdeps
+    (closes: #844221).
+  [ Riku Voipio ]
+  * remove scratchbox2 support (closes: #796189)
