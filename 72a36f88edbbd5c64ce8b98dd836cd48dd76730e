@@ -1,0 +1,6 @@
+  * Merge from Debian unstable.  Remaining changes:
+    - Demote arch-test to suggests.
+    - Drop ubuntu-archive-keyring suggests, such a package does not
+      exist in Ubuntu.
+  * Dropped changes, included in Debian:
+    - Add (Ubuntu) focal as a symlink to gutsy.
