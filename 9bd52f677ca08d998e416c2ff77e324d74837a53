@@ -1,0 +1,4 @@
+  * Backport from trunk:
+    - Add /dev/console to devices.tar.gz (after all, MAKEDEV's 'consoleonly'
+      was added for boot-floppies in the first place; see
+      https://lists.ubuntu.com/archives/ubuntu-devel/2009-January/027230.html).
