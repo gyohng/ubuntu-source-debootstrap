@@ -1,0 +1,111 @@
+  * [hoary] Add memtest86+ on amd64.
+  * [hoary] Add libsasl2-modules. Add lib64gcc1, libc6-sparc64, and strace
+    on sparc.
+  * Merge from Debian, in a slightly unconventional way since 0.2.45-0.2 is
+    a lower version number than 0.2.45ubuntu24:
+    debootstrap (0.2.45-0.2) unstable; urgency=low
+      * Non-maintainer upload.
+      * [sarge, sid] Replace libparted1.6-0 with libparted1.6-12 for ia64,
+        to keep up with the ABI changes for that package. (Closes: #295571)
+      * [sarge, sid] include pciutils on hppa as well, per request of the
+        hppa folks. (Closes: #283752)
+     -- Steve Langasek <vorlon@debian.org>  Fri, 25 Feb 2005 22:23:30 -0800
+    debootstrap (0.2.45-0.1) unstable; urgency=low
+      * Non-maintainer upload.
+      * [sarge, sid] Drop libgnutls10 and libgcrypt7, since they are no
+        longer needed by exim4. (Closes: #278158).
+     -- Steve Langasek <vorlon@debian.org>  Thu, 20 Jan 2005 21:20:22 -0800
+  * Use gpgv --ignore-time-conflict to avoid validation errors due to clock
+    problems.
+  * [hoary] Add lsb-release (closes: Ubuntu #2501).
+  * [hoary.buildd] Add pkgstriptranslations.
+  * Suppress untrue "Validating" messages.
+  * Add --keyring option, allowing verification of Release.gpg against a
+    given keyring.
+  * [hoary] Remove dbus-1 and libexpat1. Remove libunwind7-dev from ia64; it
+    depends on libc6.1-dev which isn't appropriate for required.
+  * [hoary] ia64 needs libunwind7, libunwind7-dev
+  * ln -sf mawk instead of ln -s mawk
+  * [hoary] libevms-2.4 -> libevms-2.5.
+  * [hoary] Add ethtool.
+  * [hoary.buildd] Add python-minimal and python2.4-minimal.
+  * [hoary] Remove libpcap0.7; add ubuntu-keyring.
+  * [hoary] Move python-minimal and python2.4-minimal to required.
+  * [hoary] Add python-minimal.
+  * [hoary] Add python2.4-minimal.
+  * [hoary] python2.3 -> python2.4.
+  * [hoary] Add sparc support, without strace for now.
+  * [hoary] Add ia64 support: libc6.1 rather than libc6, no libelfg0, no
+    ltrace.
+  * LaMont Jones:
+    - [hoary.buildd] Add passwd to required, as bash depends on it.
+    - [hoary.buildd] Add ia64 support.
+  * [hoary] libparted1.6-0 -> libparted1.6-12.
+  * [hoary] Add grepmap.
+  * [hoary] Remove libatm1.
+  * [hoary] Remove libreadline5.
+  * [hoary] Remove libreadline-common.
+  * [hoary] Take module-init-tools back out of required, as this didn't work
+    with the way it uses diversions.
+  * [hoary] Remove modutils. Move module-init-tools to required.
+  * [hoary] Add libelfg0; libevms-2.3 -> libevms-2.4; libgcrypt7 ->
+    libgcrypt11; libgnutls10 -> libgnutls11; add libreadline-common; add
+    libreadline5.
+  * Merge from Debian.
+  * [hoary] New script to install Hoary Hedgehog; a copy of warty for now.
+  * [hoary.buildd] New, copy of warty.buildd.
+  * [Makefile] Install hoary and hoary.buildd.
+  * Acknowledge NMUs. (Closes: #270135)
+  * [woody.buildd] Corrected ia64 special cases. Patch by Brett Johnson
+    <brett@hp.com>. (Closes: #271894)
+  * NMU again, this time using the makedev in unstable instead of the
+    experimental so devices.tar.gz isn't empty on ia64...  oops... /o\
+  * NMU to resolve d-i inability to install sid on ia64
+  * add pciutils to the base package list for ia64, to avoid having to regress
+    efibootmgr in unstable, closes: #270315, #268490
+  * [sarge] Removed "gcc-3.0-base" and "libstdc++3" for HPPA as they have been
+    removed from sarge as well on that arch. (Closes: #268917)
+  * [sarge] Added back libgnutls10 in order not to break d-i testing.
+    (Closes: #268578, #268663).
+  * Acknowledge NMUs. (Closes: #262137, #262165, #262178, #262375)
+  * [sarge] Switch to libgnutls11 so exim4 can switch. (Closes: #268325) 
+  * [sid] Removed "gcc-3.0-base" and "libstdc++3" for HPPA as they have been
+    removed from sid. (Closes: #268049)
+  * [Makefile] Make the regular video devices on all archs. (Closes: #265081)
+  * [Makefile,debootstrap] Switched away from deprecated chown syntax;
+    switched away from XSIisms '-a' and '-o'. (Closes: #256098)
+  * [debootstrap.8] Use '\-' rather than '-' in options. (Closes: #263955)
+    Confirmed that the "exlude" typo has already been fixed. (Closes: #254108)
+    Applied patch by Javier Fernández-Sanguino Peña <jfs@computer.org>
+    for "file" URL documentation and a more complete example. (Closes: #226662)
+  * Non-maintainer upload
+  * [sarge, sid] Add missing libgcrypt11 to base, needed by libgnutls11
+    in sid and needed in sarge for opencdk8 to be rebuilt against it
+    (closes: #262375, #262178).
+  * Non-maintainer upload with consent of JHM.
+  * Pull libfribidi0 back out of base, it's opportunistically installed
+    by d-i now for the locales that need it (closes: #262137).
+  * Re-add bootloaders on ia64, sparc, mips, hppa, and m68k to base,
+    because debian-installer isn't ready for this change (closes: #262165).
+  * High urgency upload as per tbm's request.
+  * [sarge, sid] No longer install setserial, as it causes problems on some
+    systems (e.g. #212646) and there is a consensus it is no longer needed in
+    a base environment.
+  * [sarge, sid] Removed aboot, aboot-base, elilo, efibootmgr, silo, dvhtool,
+    delo, palo, vmelilo. As per the consensus reached in the thread starting 
+    with http://lists.debian.org/debian-boot/2004/04/msg00634.html, the
+    installation of boot loaders is now debian-installer's responsibility.
+    (Closes: #247906)
+  * [sarge, sid] Added libfribidi0 to base to make debconf localisation into
+    right to left languages possible. (Closes: #253229)
+  * [sarge.buildd] Drop libdb4.0 for libdb4.2 as needed by perl.
+  * [sid] Added libgnutls11 as libgnutls10 is being phased out.
+  * [Makefile] Include /dev/ida on ia64. (Closes: #258055)
+  * [woody.buildd] Ensure the on_exit umounting of /dev/pts doesn't mess up
+    an otherwise OK exit status. (Closes: #260699)
+  * Acknowledge NMUs. (Closes: #258350, #260253)
+  * Non-maintainer upload.
+  * [sarge, sid] Drop quik from powerpc, as debian-installer handles this
+    now (closes: #260253).
+  * NMU
+  * add passwd to sid.buildd,sarge.buildd as bash depends on them
