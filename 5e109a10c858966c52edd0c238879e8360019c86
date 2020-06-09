@@ -1,0 +1,1 @@
+  * Remove boneheaded use of sudo left over from testing (closes: #547949).
