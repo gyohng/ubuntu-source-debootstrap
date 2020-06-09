@@ -1,0 +1,2 @@
+  * Use md5sums for woody and potato, which only had those checksums
+    in the Packages files. Closes: #627365
