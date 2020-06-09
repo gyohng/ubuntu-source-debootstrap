@@ -1,0 +1,4 @@
+  * Merge from Debian unstable.  Remaining changes:
+    - Fix debootstrap --variant=fakechroot failure because initscripts is no
+      longer part of the base system.
+    - sync scripts/sid with scripts/gutsy
