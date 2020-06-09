@@ -1,0 +1,6 @@
+  * scripts/ubuntu/gutsy: Determine buildd variant dynamically using
+    Build-Essential: yes.
+  * scripts/ubuntu/gutsy.fakechroot: Remove devmapper postinst hack, no
+    longer needed.
+  * scripts/ubuntu/*.fakechroot: Merge into the corresponding main scripts
+    as variants.
