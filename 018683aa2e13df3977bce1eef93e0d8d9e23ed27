@@ -1,0 +1,2 @@
+  * Downgrade the absence of an InRelease file from a warning to an info
+    message (LP: #1017398).
