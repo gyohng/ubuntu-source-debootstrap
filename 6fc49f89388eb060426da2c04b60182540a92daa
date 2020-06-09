@@ -1,0 +1,9 @@
+  * Merge from Debian unstable.  Remaining changes:
+    - Fix debootstrap --variant=fakechroot failure because initscripts is no
+      longer part of the base system.
+    - Add (Ubuntu) artful as a symlink to gutsy.
+    - sync scripts/sid with scripts/gutsy
+  * Drop changes merged in Debian
+    - Reinstate InRelease file support to better deal with proxies where Release
+      files may be cached and thus out of sync. InRelease is atomic and therefore
+      not subject to failing validation because of proxy servers. (LP: #1485511)
