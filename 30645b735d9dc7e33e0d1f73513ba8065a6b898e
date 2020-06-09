@@ -1,0 +1,4 @@
+  * Downgrade the absence of an InRelease file from a warning to an info
+    message.  For now, debootstrap can cope fine without, and it's possible
+    there are Debian mirrors that don't have InRelease; Ubuntu doesn't quite
+    have InRelease support yet either (LP: #1017398).
