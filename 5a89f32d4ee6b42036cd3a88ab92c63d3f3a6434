@@ -1,0 +1,4 @@
+  * Merge from Debian unstable.  Remaining changes:
+    - Demote arch-test to suggests.
+    - Drop ubuntu-archive-keyring suggests, such a package does not
+      exist in Ubuntu.
