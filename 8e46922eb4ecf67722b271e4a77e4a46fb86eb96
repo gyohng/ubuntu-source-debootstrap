@@ -1,0 +1,23 @@
+  [ Frans Pop ]
+  * Change Priority for the udeb to extra in line with overrides file.
+  [ Colin Watson ]
+  * Partially revert r50134; there are people who depend on being able to
+    use the "upstream" Makefile on non-Debian systems. Create necessary
+    directories in the Makefile rather than relying on dh_installdirs to do
+    it (LP: #172645).
+  * Use ftp.us.debian.org rather than ftp.debian.org
+    (http://lists.debian.org/debian-devel-announce/2007/12/msg00002.html).
+  [ Anthony Towns ]
+  * Add minbase variant for the sid script that only install apt (and
+    its dependencies) instead of all of base. (Closes: Bug#351912,
+    Bug#452654)
+  * Make --second-stage not bother recalculating required and base as
+    it's not needed.
+  * Make --arch and other arguments accept both "--arch i386" and
+    "--arch=i386" forms of specifying a parameter to avoid the
+    inconsistency.
+  [ Stephen R. Marenka ]
+  * Allow installation of etch-m68k. (Closes: Bug#458965)
+  [ Colin Watson ]
+  * Add minbase variant for Ubuntu gutsy/hardy; see Anthony's change above.
+  * Minor manual page formatting improvements.
