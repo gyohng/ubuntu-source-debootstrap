@@ -1,0 +1,2 @@
+  [ Marco d'Itri ]
+  * Stop creating useless device nodes (Closes: #571136).
