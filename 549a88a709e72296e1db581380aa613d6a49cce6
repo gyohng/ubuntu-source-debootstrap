@@ -1,0 +1,2 @@
+  * Stop at the end of the retrieval phase if any packages failed to
+    download (LP: #1023069).
