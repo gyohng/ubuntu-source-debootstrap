@@ -1,0 +1,3 @@
+  [ Hector Oron ]
+  * Report package version information on package retrieve and validation.
+    Closes: #697675
