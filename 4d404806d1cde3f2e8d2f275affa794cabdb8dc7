@@ -1,0 +1,9 @@
+  * Add {edgy,feisty}.fakechroot scripts and install them in Makefile.
+    Difference to the original edgy/feisty scripts:
+    - Check fakechroot environment.
+    - Do not install all important packages (just apt).
+    - Use _fakechroot variants of setup_{devices,proc}() functions.
+    - Call install_fakechroot_tools().
+    - Fix the broken version comparison in target's initscripts ('lt' should
+      actually be 'lt-nl') postinst to avoid calling mount/unmount and thus
+      work with fakeroot.
