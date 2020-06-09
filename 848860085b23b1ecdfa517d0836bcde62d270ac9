@@ -1,0 +1,6 @@
+  [ Luca Falavigna ]
+  * Add (Ubuntu) cosmic as a symlink to gutsy.
+  * Bump Standards-Version to 4.1.4.
+  [ Hideki Yamane ]
+  * Fix download failure when specifying multiple components (Closes: #898738)
+    - Also add multiple components to test case
