@@ -1,0 +1,8 @@
+  [ Mark Hymers ]
+  * Don't use the Build-Essential: yes field in Debian, use the
+    build-essential package. Closes: #619700.
+  [ Colin Watson ]
+  * If ubuntu-keyring is installed, check Release signatures against it when
+    bootstrapping Ubuntu gutsy and later.
+  * Recommend ubuntu-keyring rather than debian-archive-keyring on
+    Ubuntu-derived systems.
