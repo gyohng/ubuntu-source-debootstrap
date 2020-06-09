@@ -1,0 +1,2 @@
+  * Team upload.
+  * Use `which` to find out sh only if /bin/sh does not exist.
