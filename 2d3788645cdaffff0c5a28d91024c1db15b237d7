@@ -1,0 +1,6 @@
+  [ Adam Conrad ]
+  * Add (Ubuntu) utopic as a symlink to gutsy.
+  [ Guillem Jover ]
+  * Sync deb support with latest dpkg-deb (closes: #739136):
+    - Add uncompressed data.tar deb member support.
+    - Add uncompressed and xz control.tar deb member support.
