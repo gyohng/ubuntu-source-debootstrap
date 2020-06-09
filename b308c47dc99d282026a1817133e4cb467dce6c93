@@ -1,0 +1,2 @@
+  * Fix /etc/machine-id mount issue (Closes: #899155)
+  * Fix regression with file:/// mirror (Closes: #901717)
