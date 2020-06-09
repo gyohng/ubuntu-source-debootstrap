@@ -1,0 +1,2 @@
+  * For (Ubuntu) releases disco+ default to MERGED_USR=yes, -k extract
+    option.  (LP: #1773496)
