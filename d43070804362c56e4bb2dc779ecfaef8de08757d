@@ -1,0 +1,8 @@
+  [ Simon McVittie ]
+  * Instead of creating a /dev/ptmx → pts/ptmx symlink unconditionally,
+    try mknod with “c 5 2” parameters first, and fall back to a symlink
+    only if it fails. This should help with various tools like pbuilder,
+    sbuild, and schroot (Closes: #817236).
+  * Add autopkgtest support to test various scenarios.
+  [ Cyril Brulebois ]
+  * Uniformize COMPONENTS/USE_COMPONENTS handling.
