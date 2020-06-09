@@ -1,0 +1,8 @@
+  * Stop cleaning KEEP_DEBOOTSTRAP_DIR twice, as spotted by Chris Lamb
+    (Closes: #804415).
+  * Add Tanglu support (Closes: #771687), thanks to Matthias Klumpp. At
+    the moment, the following extra suites are recognized:
+     - aequorea
+     - bartholomea
+     - chromodoris
+     - dasyatis
