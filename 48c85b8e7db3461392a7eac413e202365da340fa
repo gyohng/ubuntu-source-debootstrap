@@ -1,0 +1,6 @@
+  [ Hideki Yamane ]
+  * Fix: specify --foreign and --unpack-tarball at the same time
+    Thanks to Cel Skeggs <cela@mit.edu> for the patch (Closes: #946783)
+  * Add check rule for systemd-nspawn
+  [ Jeremiah C. Foster ]
+  * Adding PureOS 'amber' to scripts dir (Closes: #946476)
