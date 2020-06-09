@@ -1,0 +1,3 @@
+  [ Cyril Brulebois ]
+  * Fix reporting of package version in retrieval and validation steps
+    to cope with epochs.
