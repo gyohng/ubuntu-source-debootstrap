@@ -1,0 +1,6 @@
+  * debootstrap does not make a destinction between priviledged and
+    unpriviledged lxd containers. When setting up devices, try to use the
+    old simple device setup, and if that fails, then fallback to the new
+    bind-setup. Blind attempt to unbreak cloud image livefs building, as
+    PPA is failing to build this package for me, thus cannot self-trigger
+    a livefs build to test this before uploading.
