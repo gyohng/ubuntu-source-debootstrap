@@ -1,0 +1,3 @@
+  * Revert to last known good version to avoid bugs like
+    https://bugs.debian.org/903481. Careful testing will be needed before
+    we merge again.
