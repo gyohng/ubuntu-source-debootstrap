@@ -1,0 +1,2 @@
+  * Add (Ubuntu) trusty as a symlink to gutsy. (LP: #1242747)
+  * Fudge version to trump the version in precise-backports.
