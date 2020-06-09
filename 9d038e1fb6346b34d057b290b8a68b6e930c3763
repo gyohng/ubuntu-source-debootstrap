@@ -1,0 +1,3 @@
+  * Adjust sed call to render it more portable (missing ';'), making it
+    work with FreeBSD sed. Thanks to Nikolai Lifanov for the report and
+    the patch (Closes: #791802).
