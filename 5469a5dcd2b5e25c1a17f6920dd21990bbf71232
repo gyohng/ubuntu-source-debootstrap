@@ -1,0 +1,2 @@
+  * Add apt to base packages for the buildd variant as it is no longer
+    marked Build-Essential (thanks Josef Spillner). (LP: #533369)
