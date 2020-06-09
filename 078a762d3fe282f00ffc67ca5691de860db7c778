@@ -1,0 +1,11 @@
+  * Resynchronise with Debian. Remaining changes:
+    - Add dapper, edgy, and feisty scripts.
+    - Default mirror to http://archive.ubuntu.com/ubuntu.
+    - Move debootstrap.log before unlinking it to work around NFS
+      brain-damage.
+    - Fix typo in debootstrap(8) man page.
+  * NMU with maintainer approval
+  * functions/get_debs: build list of available packages from all specified
+    sources; this allows debootstrap to also use e.g. custom versions of base
+    packages from a source of local packages included on an installation CD.
+    Closes: #398762.
