@@ -1,0 +1,10 @@
+  [ Joey Hess ]
+  * Improve error message when a decompressor is not available, 
+    to indicate which package has been built with bzip today.
+    Closes: #644719
+  [ Otavio Salvador ]
+  * Fix --print-debs support when using --foreign param. Closes:
+    #551837.
+  [ Colin Watson ]
+  * pkgdetails_perl: Use the last of a sequence of stanzas for the same
+    package name, rather than the first (closes: #649319).
