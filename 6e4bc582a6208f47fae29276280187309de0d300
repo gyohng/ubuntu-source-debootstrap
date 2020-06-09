@@ -1,0 +1,2 @@
+  [ Joey Hess ]
+  * Move set -e out of shebang line. Closes: #762713
