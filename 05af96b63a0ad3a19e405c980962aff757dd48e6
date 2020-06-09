@@ -1,0 +1,6 @@
+  [ Dmitrijs Ledkovs ]
+  * Set debian source format to '3.0 (native)'.
+  * Bump debhelper compat level to 9.
+  * Set Vcs-* to canonical format.
+  [ Christian Perrier ]
+  * Update Standards to 3.9.4 (checked)
