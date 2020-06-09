@@ -1,0 +1,2 @@
+  * revert addition of dummy Maintainer: and Description:, the LP bug #674146
+    is being worked around by dropping dpkg optimization on armel instead.
