@@ -1,0 +1,6 @@
+  [ Hideki Yamane ]
+  * use salsa-pipeline for CI, instead of custom rule
+  * disalbe unnecessary blhc and test-build-any CI test
+  [ Philip Hands ]
+  * disable the failing autopkgtest job
+  * provide support for Devuan release names
