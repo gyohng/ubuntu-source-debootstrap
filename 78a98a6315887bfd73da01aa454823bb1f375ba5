@@ -1,0 +1,4 @@
+  * Add support for stretch (Closes: #783361).
+  [ Colin Watson ]
+  * Resolve mount point symlinks relative to the target chroot before
+    unmounting them (closes: #702861, #703037, #704744, #753442).
