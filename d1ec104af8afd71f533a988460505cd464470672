@@ -1,0 +1,3 @@
+  * Team upload
+  [ Simon McVittie ]
+  * Disable merged /usr by default when making a buildd chroot (closes: #914208)
