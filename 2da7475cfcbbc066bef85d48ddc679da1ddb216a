@@ -1,0 +1,4 @@
+  [ Samuel Thibault ]
+  * hurd: move setting up dev and servers firmlink to setup_proc stage. Also
+    firmlink proc there.  Thanks Gabriele Giacone for all the investigation!
+    (Closes: #768102)
