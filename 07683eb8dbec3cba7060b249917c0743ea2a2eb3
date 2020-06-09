@@ -1,0 +1,7 @@
+  [ Joey Hess ]
+  * Mention minbase variant in --help. Closes: #632418
+  * Use md5sums for sarge, which did not consistently have sha1sums
+    everywhere. Closes: #633158
+  [ Colin Watson ]
+  * Improve text of error message when decompression command is not
+    available.
