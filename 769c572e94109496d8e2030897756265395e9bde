@@ -1,0 +1,2 @@
+  * Generate a deburis file with (package, version, uri) tuples, similar
+    to the existing debpaths.
