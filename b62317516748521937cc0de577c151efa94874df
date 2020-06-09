@@ -1,0 +1,8 @@
+  [ Cyril Brulebois ]
+  * Remove Christian Perrier from Uploaders, with many thanks for all
+    his contributions over the years! (Closes: #927549)
+  [ Hideki Yamane ]
+  * debian/control
+    - Remove Junichi Uekawa <dancer@debian.org> from Uploaders with ack
+  * scripts
+    - Add (Ubuntu) eoan as a symlink to gutsy.
