@@ -1,0 +1,32 @@
+  [ Otavio Salvador ]
+  * Apply patch from Clint Adams <schizo@debian.org> to add support for
+    gz/bz2/xz data.tar (closes: #458663).
+  [ Guillem Jover ]
+  * Refactor deb extractors into two new functions.
+  * Use dpkg-deb if available instead of ar (closes: #557296).
+  * Add an --extractor option to override the automatic extractor selection.
+  [ Otavio Salvador ]
+  * Document new --extractor option in manpage.
+  * Apply patch from Vagrant Cascadian <vagrant+bugs@freegeek.org> not
+    fail if resolv.conf is a broken symlink (closes: #390647).
+  [ Frans Pop ]
+  * Use tab indentation in scripts/debian/sid to reduce its size (relevant
+    for Debian Installer).
+  * Add apt to base packages for the buildd variant as it is no longer marked
+    Build-Essential.
+  [ Otavio Salvador ]
+  * Apply patch from Andres Salomon <dilinger@collabora.co.uk> to honor
+    --components when using mirror_style 'main' (closes: #561283).
+  * Apply patch from Andres Salomon <dilinger@collabora.co.uk> to fix
+    iteration through components in download_main (closes: #561298).
+  [ Joey Hess ]
+  * Allow the suite to be stable, testing, or unstable when debootstrapping
+    Debian. Closes: #288109
+  * Make scripts directory in source tree look like installed directory,
+    and add a section to README explaining an easy way to run
+    debootstrap w/o installing it. Closes: #345762
+  * Convert rules file to use dh with overrides.
+  * Remove binary-basedebs target from debian/rules.
+    This target has been broken in multiple ways since 2007. While I
+    accidentially partially fixed it with the above changes, this is evidence
+    it's dead code that can be safely removed.
