@@ -1,0 +1,5 @@
+  * pkgdetails_perl: Only interpret percentages following whitespace, to
+    cope with GNU wget outputting the local file name (which may contain "%"
+    due to URL-encoding) after it finishes the download (LP: #1172101).
+  * Install apt-transport-https and ca-certificates if installing from an
+    HTTPS mirror (LP: #1135163).
