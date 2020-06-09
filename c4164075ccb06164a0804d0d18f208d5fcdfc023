@@ -1,0 +1,2 @@
+  * Cherry-pick from trunk:
+    - Resolve dependencies from all requested components (LP: #740167).
