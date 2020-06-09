@@ -1,0 +1,3 @@
+  * Fix Packages was corrupt warning on preseed install. Backport fix for
+    Debian bug #618920 to solve LP: #1023069. Patch slightly reworked to adapt
+    to older codebase.
