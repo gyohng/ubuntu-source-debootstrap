@@ -1,0 +1,2 @@
+  * Check codename for apt-transport-https (Closes: #920255, #879755)
+  * Add security mirror setting (Closes: #939852, #543819)
