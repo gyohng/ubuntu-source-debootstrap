@@ -1,0 +1,5 @@
+  [ Joey Hess ]
+  * Support bootstrapping oldstable. (Lenny could already be bootstrapped
+    using that suite name.)
+  [ Colin Watson ]
+  * Add (Ubuntu) oneiric as a symlink to gutsy.
