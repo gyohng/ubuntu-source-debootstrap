@@ -1,0 +1,10 @@
+  [ Joey Hess ]
+  * Fix "arc" typo. Closes: #686680
+  [ Colin Watson ]
+  * Add (Ubuntu) raring as a symlink to gutsy.
+  [ Christian Perrier ]
+  * Add myself to Uploaders and drop Anthony Towns who is no
+    longer active in debootstrap maintenance for a few years. Thanks
+    for your work, Anthony.
+  * Bump Standards to 3.9.3 (checked)
+  * Replace XC-Package-Type by Package-Type in debian/control
