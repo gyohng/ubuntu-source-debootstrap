@@ -1,0 +1,2 @@
+  * Fix debootstrap --variant=fakechroot failure because initscripts is no
+    longer part of the base system.
