@@ -1,0 +1,3 @@
+  * {feisty,gutsy}.fakechroot: Remove libdevmapper1 postinst before
+    configuring packages. It tries to create /dev/mapper which fails with
+    fakechroot (since /dev/ is a symlink to the real /dev).
