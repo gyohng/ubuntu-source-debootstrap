@@ -1,0 +1,6 @@
+  * Add more information regarding the version and architecture in case
+    a download fails. Closes: #633625.
+  * add /usr/sbin and /sbin to PATH for fakechroot variant. Closes:
+    #588773
+  * Move setup_devices to second stage of bootstrap. Closes: #498731,
+    #531316
