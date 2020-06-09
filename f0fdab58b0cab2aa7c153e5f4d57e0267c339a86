@@ -1,0 +1,7 @@
+  [ Frans Pop ]
+  * Error out on unrecognized options to avoid invalid options to be
+    recognized as arguments.
+  [ Colin Watson ]
+  * Use 'chown 0:0' in all scripts rather than deprecated 'chown 0.0'
+    (thanks, Evan Klitzke).
+  * Add (Ubuntu) intrepid as a symlink to gutsy.
