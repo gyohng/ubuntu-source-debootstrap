@@ -1,0 +1,3 @@
+  * Fix a typo in the manpage (s/deboostrap/debootstrap/) that caused me
+    to waste 20 mins deboostrapping on a slow link because I thought
+    cutting and pasting from docs was a safe and reasonable thing to do.
