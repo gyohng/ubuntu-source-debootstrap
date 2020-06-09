@@ -1,0 +1,4 @@
+  [ Joey Hess ]
+  * Better support use on Android by not hardcoding /bin/sh
+    in a test file that's created, and instead putting in the
+    actual path to sh. Closes: #694310 Thanks, Shawn Landden
