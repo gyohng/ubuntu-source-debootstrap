@@ -1,0 +1,2 @@
+  * Remove double quotes to fix for loop on GNU/kFreeBSD, thanks to
+    Oleg Ginzburg (Closes: #693718).
