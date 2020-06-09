@@ -1,0 +1,4 @@
+  * Rework split_inline_sig by using shell built-ins instead of trying to
+    mix sed and tr together, which might work on regular systems but not
+    from inside the Debian Installer (Closes: #842591). Thanks to Ansgar
+    Burchardt for the proof of concept!
