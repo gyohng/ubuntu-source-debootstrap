@@ -1,0 +1,2 @@
+  * Only use dpkg from the chroot, as there is no guarantee dpkg is 
+    available outside of the chroot (d-i installation for example).
