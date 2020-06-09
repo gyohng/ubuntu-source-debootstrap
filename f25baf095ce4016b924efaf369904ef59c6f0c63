@@ -1,0 +1,3 @@
+  * Reinstate safeguard removed in 1.0.121, which is absolutely needed
+    to avoid unmounting target entirely, as seen when running in d-i
+    with default parameters (Closes: #953849). Vielen Dank, Johannes!
