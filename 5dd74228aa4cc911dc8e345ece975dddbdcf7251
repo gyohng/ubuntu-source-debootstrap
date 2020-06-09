@@ -1,0 +1,10 @@
+  [ Colin Watson ]
+  * Cope with pre-dependencies of included packages that aren't in Priority:
+    required (closes: #487908).
+  * Upgrade to debhelper v7. (Override rules get pretty hairy for this
+    package, so I haven't switched to dh(1).)
+  * Use ports.ubuntu.com as default mirror on sparc for Ubuntu hardy and
+    beyond (LP: #431145).
+  * Add (Ubuntu) lucid as a symlink to gutsy.
+  [ Frans Pop ]
+  * Makefile: remove unused ARCH variable.
