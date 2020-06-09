@@ -1,0 +1,2 @@
+  * Ignore errors when unmounting filesystems, to avoid stopping at the
+    first one with problems.
