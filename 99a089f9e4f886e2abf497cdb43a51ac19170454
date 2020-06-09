@@ -1,0 +1,4 @@
+  * Remove gcc-4.0-base from buildd base, since it's already required.
+  * Remove libdb4.2 from buildd base; perl now uses libdb4.3 which is
+    required.
+  * Iterate over all components in get_debs (closes: Malone #30804).
