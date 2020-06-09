@@ -1,0 +1,14 @@
+  * Resynchronise with Debian. Remaining changes:
+    - Add dapper, edgy, edgy.fakechroot, feisty, and feisty.fakechroot
+      scripts.
+    - Default mirror to http://archive.ubuntu.com/ubuntu.
+    - Move debootstrap.log before unlinking it to work around NFS
+      brain-damage.
+    - Fix typo in debootstrap(8) man page.
+    - Fix "htp" typo in temporary /etc/apt/sources.list.
+    - Add devices created by fd to devices-std.tar.gz.
+  * [gutsy] New script to install Gutsy Gibbon, copied from feisty.
+  * [gutsy.fakechroot] New fakechroot variant of gutsy.
+  * [Makefile] Install gutsy and gutsy.fakechroot.
+  * NMU
+  * Add support for lenny.
