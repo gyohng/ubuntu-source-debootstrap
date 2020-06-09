@@ -1,0 +1,4 @@
+  * Merge from Debian unstable (LP: #1591675).  Remaining changes:
+    - Reinstate InRelease file support to better deal with proxies where Release
+      files may be cached and thus out of sync. InRelease is atomic and therefore
+      not subject to failing validation because of proxy servers. (LP: #1485511)
