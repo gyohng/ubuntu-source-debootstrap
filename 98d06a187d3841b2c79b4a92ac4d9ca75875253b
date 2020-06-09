@@ -1,0 +1,20 @@
+  * Ensure that the target directory exists in check_sane_mount.
+  * Don't ignore 'make clean' errors. (The Makefile is always present.)
+  [ Colin Watson ]
+  * Don't rely on GNU sed's s///I extension (closes: #350583).
+  [ Joey Hess ]
+  * Skip the noexec/nodev test when running --print-debs or other operations
+    that do not involve building systems.
+  [ Neil Williams ]
+  * Add --second-stage-target option that allows embedded to test for
+    installations in a chroot on the device (closes: #445157).
+  [ Colin Watson ]
+  * Add (Ubuntu) hardy as a symlink to gutsy.
+  * Unmount /lib/init/rw on exit (closes: #391604).
+  * Cope if uncompressed Packages is missing from Release (closes: #402380).
+  * Don't rely on XSI test(1) extensions.
+  * Add support for ssh:/// URLs (thanks, Steffen Joeris; closes: #434893).
+  * Fix Ubuntu hoary and breezy scripts to unmount /dev etc. on exit
+    (closes: #327708).
+  * Emit an error if we cannot create working devices or executables on the
+    target (based on work by Bastian Kleineidam; closes: #233798).
