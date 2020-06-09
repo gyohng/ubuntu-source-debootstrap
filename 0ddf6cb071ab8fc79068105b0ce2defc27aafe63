@@ -1,0 +1,5 @@
+  [ Cyril Brulebois ]
+  * Specify gzip compression in debian/source/options to allow for better
+    portability on other platforms (Closes: #770214). Thanks, Joey Hess!
+  * Specify gzip compression for debootstrap, and xz for debootstrap-udeb,
+    to mitigate the need for xz on non-Debian platforms (see: #770217).
