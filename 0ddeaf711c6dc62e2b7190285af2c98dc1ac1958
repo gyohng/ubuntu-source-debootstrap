@@ -1,0 +1,2 @@
+    - A bit silly version number, since debootstrap has a long history of
+    being NMU-ed, we try to be prepared for it.
