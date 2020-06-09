@@ -1,0 +1,6 @@
+  * Fix "Do not download packages with --unpack-tarball option"
+    (Closes: #551838)
+    - Also make some options exclusive each
+  * Let debootstrap shows error if there's a file already before extraction,
+    not die silently (Closes: #728344)
+  * Add Trusty and Xenial for merged-usr blacklist (Closes: #905864, #905873)
