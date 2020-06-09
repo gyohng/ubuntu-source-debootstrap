@@ -1,0 +1,6 @@
+  [ Scott Kitterman ]
+  * Add (Ubuntu) saucy as a symlink to gutsy (closes: #706989).
+  [ Colin Watson ]
+  * Clarify location of pkgdetails.c in error message (closes: #708771).
+  * Resolve mount point symlinks relative to the target chroot before
+    unmounting them (closes: #702861, #703037, #704744).
