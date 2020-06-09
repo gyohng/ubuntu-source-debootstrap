@@ -1,0 +1,2 @@
+  * Add (Debian) stretch, buster and bullseye as a symlink to sid.
+    LP: #1698686
