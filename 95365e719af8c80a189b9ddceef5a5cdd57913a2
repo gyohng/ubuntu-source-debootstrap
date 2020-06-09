@@ -1,0 +1,20 @@
+  [ Julien Cristau ]
+  * Add support for downloading and validating InRelease files, by splitting
+    up detached signature from signed data.
+  * Switch default mirror to deb.debian.org.
+  [ Colin Watson ]
+  * Add (Ubuntu) zesty as a symlink to gutsy.
+  [ Ansgar Burchardt ]
+  * Add jessie-kfreebsd to merged-/usr blacklist.
+  * No longer Build-Depend on makedev. The code using it was already
+    removed in debootstrap 1.0.82.
+  * Do not use `tar -k` for older releases which might have file
+    conflicts between the packages to be installed. (Closes: #838388)
+  * Error out when seeing short options. (Closes: #548880)
+  * Add oldoldstable -> sid script symlink. (Closes: #792734)
+  * Add buster -> sid and bullseye -> sid script symlinks.
+  * Only unpack and configure the base system when there are actually
+    packages to install. (Closes: #825034)
+  * debootstrap.8: Use stretch instead of wheezy in examples.
+  [ Marco d'Itri ]
+  * Enable merged-/usr by default. (Closes: #839046)
