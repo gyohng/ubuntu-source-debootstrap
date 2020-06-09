@@ -1,0 +1,5 @@
+  * Merge from Debian Sid. Remaining changes:
+    - Demote arch-test to suggests.
+    - Drop ubuntu-archive-keyring suggests, such a package does not
+      exist in Ubuntu.
+  * Add (Ubuntu) eoan as a symlink to gutsy.
