@@ -1,0 +1,2 @@
+  * [gutsy, gutsy.fakechroot] Link /etc/localtime to Etc/UTC rather than
+    UTC, to work around Debian bug #420895.
