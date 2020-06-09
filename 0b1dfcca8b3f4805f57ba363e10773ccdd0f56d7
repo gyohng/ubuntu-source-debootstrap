@@ -1,0 +1,8 @@
+  [ Miguel Figueiredo ]
+  * Fix bug and typo on --private-key
+    Patch by Jonathan Klee. 
+  [ Jeremie Koenig ]
+  * Hurd support:
+    - Use the newer setup-translators script and firmlink
+      $TARGET/{dev,servers} in setup_devices_hurd;
+    - Don't attempt to build devices.tar.gz, which is not needed.
