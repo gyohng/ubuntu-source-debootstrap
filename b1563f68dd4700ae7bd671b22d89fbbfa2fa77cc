@@ -1,0 +1,2 @@
+  * Use tr instead of (missing in d-i) xargs (Closes: #785693). Thanks,
+    Julian Schauder!
