@@ -1,0 +1,8 @@
+  [ Joey Hess ]
+  * Avoid "broken pipe" errors in bootstrap.log from the the smallyes function.
+    The errors themselves are inherent to how the function is used, so just
+    suppress them. Closes: #480560.
+  [ Frans Pop ]
+  * Do not cache Release and Release.gpg files. Closes: #488424.
+  * Abort if a Packages file failed to verify.
+  * Update standards version to 3.8.0; no other changes needed.
