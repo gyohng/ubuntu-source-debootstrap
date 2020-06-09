@@ -1,0 +1,3 @@
+  * Add devices created by fd to devices-std.tar.gz (make dev/std*
+    available in a chroot with bind mounting /proc (and /dev/pts), but
+    without bind mounting /dev).
