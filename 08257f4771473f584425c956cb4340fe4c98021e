@@ -1,0 +1,2 @@
+  [ Alex Bennée ]
+  * Excise all devices.tar.gz code. Closes: #830869
