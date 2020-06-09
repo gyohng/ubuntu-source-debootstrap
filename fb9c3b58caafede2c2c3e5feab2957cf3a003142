@@ -1,0 +1,3 @@
+  [ Jon Boden ]
+  * scripts/gutsy: Support kfreebsd & hurd arches on Ubuntu targets
+    (closes: #818748)
