@@ -1,0 +1,9 @@
+  * Non-maintainer Upload.
+  [ Hideki Yamane ]
+  * Avoid pre-exist directory causes failure (Closes: #864734)
+  * Split common code from scripts/sid to scripts/debian-common and share it
+    between distributions (Closes: #798562)
+  [ Lubomir Rintel ]
+  * Don't let host PATH leak into the target commands. It works on chroots
+    that have different PATH like Arch Linux and Fedora (Closes: #718632,
+    #770658, #890418)
