@@ -1,0 +1,2 @@
+  * Install /var/lib/dpkg/info/$(dpkg --print-architecture) -> . symlink, to
+    cope with multiarch dpkg.
