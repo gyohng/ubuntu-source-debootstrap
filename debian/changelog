@@ -1,3 +1,12 @@
+debootstrap (1.0.118ubuntu1.2) focal; urgency=medium
+
+  * scripts/gutsy, scripts/debian-common: Check codename for
+    apt-transport-https as it's in universe as of bionic and
+    is no longer needed as functionality is built into apt
+    (LP: #1772556)
+
+ -- Matthew Ruffell <matthew.ruffell@canonical.com>  Wed, 22 Jul 2020 12:38:26 +1200
+
 debootstrap (1.0.118ubuntu1.1) focal; urgency=medium
 
   * Add (Ubuntu) groovy as a symlink to gutsy.  (LP: #1874867)
