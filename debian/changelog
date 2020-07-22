@@ -1,3 +1,12 @@
+debootstrap (1.0.95ubuntu0.7) bionic; urgency=medium
+
+  * scripts/gutsy, scripts/debian-common: Check codename for
+    apt-transport-https as it's in universe as of bionic and
+    is no longer needed as functionality is built into apt
+    (LP: #1772556)
+
+ -- Matthew Ruffell <matthew.ruffell@canonical.com>  Wed, 22 Jul 2020 12:25:46 +1200
+
 debootstrap (1.0.95ubuntu0.6) bionic; urgency=medium
 
   * Add (Ubuntu) groovy as a symlink to gutsy.  (LP: #1874867)
