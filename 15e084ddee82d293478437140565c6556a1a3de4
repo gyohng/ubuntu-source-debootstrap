@@ -1,0 +1,4 @@
+  * scripts/gutsy, scripts/debian-common: Check codename for
+    apt-transport-https as it's in universe as of bionic and
+    is no longer needed as functionality is built into apt
+    (LP: #1772556)
