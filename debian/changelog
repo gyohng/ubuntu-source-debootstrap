@@ -1,3 +1,12 @@
+debootstrap (1.0.123ubuntu3) hirsute; urgency=medium
+
+  * Add usrmerge to non-buildd variants, to trigger making usrmerge
+    essential for upgrades. Thus systems installed predisco are upgraded
+    to merged-usr. Buildd variant will becomed merged-usr with the next
+    release. LP: #1906671
+
+ -- Dimitri John Ledkov <xnox@ubuntu.com>  Sun, 14 Feb 2021 19:04:05 +0000
+
 debootstrap (1.0.123ubuntu2) hirsute; urgency=medium
 
   * Add (Ubuntu) hirsute as a symlink to gutsy.
