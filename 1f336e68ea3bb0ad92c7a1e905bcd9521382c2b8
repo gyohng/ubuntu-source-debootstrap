@@ -1,0 +1,4 @@
+  * Add usrmerge to non-buildd variants, to trigger making usrmerge
+    essential for upgrades. Thus systems installed predisco are upgraded
+    to merged-usr. Buildd variant will becomed merged-usr with the next
+    release. LP: #1906671
