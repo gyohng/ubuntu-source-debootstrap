@@ -1,3 +1,9 @@
+debootstrap (1.0.123ubuntu4) hirsute; urgency=medium
+
+  * No-change rebuild to drop the udeb package.
+
+ -- Matthias Klose <doko@ubuntu.com>  Mon, 22 Feb 2021 10:30:44 +0100
+
 debootstrap (1.0.123ubuntu3) hirsute; urgency=medium
 
   * Add usrmerge to non-buildd variants, to trigger making usrmerge
