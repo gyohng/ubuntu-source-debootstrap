@@ -1,3 +1,11 @@
+debootstrap (1.0.123ubuntu5) hirsute; urgency=medium
+
+  * Do not install usrmerge in fresh debootstraps, but do print it for
+    germinate. This reduces minimal container images by 47.3MB, which is a
+    regression compared to groovy.
+
+ -- Dimitri John Ledkov <xnox@ubuntu.com>  Tue, 30 Mar 2021 14:22:59 +0100
+
 debootstrap (1.0.123ubuntu4) hirsute; urgency=medium
 
   * No-change rebuild to drop the udeb package.
