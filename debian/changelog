@@ -1,3 +1,33 @@
+debootstrap (1.0.124) experimental; urgency=medium
+
+  [ Colin Watson ]
+  * Add (Ubuntu) groovy as a symlink to gutsy.
+
+  [ Samuel Thibault ]
+  * functions: Turn for loops variables into locals, suggested by jhcha54008.
+
+  [ YunQiang Su ]
+  * stage1: re-mkdir /proc if it is a symlink instead of umount. (Closes: #968927)
+
+  [ Luca Falavigna ]
+  * Add (Ubuntu) hirsute as a symlink to gutsy.
+
+  [ Tobias Koch ]
+  * Add --inrelease-path option to allow specifying by-hash InRelease
+    location.
+
+  [ Dimitri John Ledkov ]
+  * functions: add zstd control&data support to the ar extractor LP: #1923845
+  * Add (Ubuntu) impish as a symlink to gutsy.
+  * gutsy: sync changes from Ubuntu, to ensure that impish+ are always
+    merged-usr.
+  * gutsy: use --extractor=ar if dpkg-deb has no zstd support (i.e. on
+    Debian & non-Ubuntu derivatives).
+  * rules,control: adjust Recommends/Suggests to be appropriate on each
+    distro.
+
+ -- Dimitri John Ledkov <xnox@ubuntu.com>  Mon, 26 Apr 2021 15:02:44 +0100
+
 debootstrap (1.0.123) unstable; urgency=medium
 
   * Reinstate safeguard removed in 1.0.121, which is absolutely needed
