@@ -1,3 +1,9 @@
+debootstrap (1.0.118ubuntu1.5) focal; urgency=medium
+
+  * Add (Ubuntu) jammy as a symlink to gutsy (LP: #1947362).
+
+ -- Łukasz 'sil2100' Zemczak <lukasz.zemczak@ubuntu.com>  Fri, 15 Oct 2021 14:26:09 +0200
+
 debootstrap (1.0.118ubuntu1.4) focal; urgency=medium
 
   * Add (Ubuntu) impish as a symlink to gutsy (LP: #1925753). 
