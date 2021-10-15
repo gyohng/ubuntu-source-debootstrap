@@ -1,3 +1,9 @@
+debootstrap (1.0.95ubuntu0.10) bionic; urgency=medium
+ 
+  * Add (Ubuntu) jammy as a symlink to gutsy (LP: #1947362).
+
+ -- Łukasz 'sil2100' Zemczak <lukasz.zemczak@ubuntu.com>  Fri, 15 Oct 2021 14:31:24 +0200
+
 debootstrap (1.0.95ubuntu0.9) bionic; urgency=medium
 
   * Add (Ubuntu) impish as a symlink to gutsy (LP: #1925753). 
