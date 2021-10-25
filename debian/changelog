@@ -1,3 +1,10 @@
+debootstrap (1.0.118ubuntu1.6) focal; urgency=medium
+
+  [ YunQiang Su ]
+  * stage1: re-mkdir /proc instead of umount if it is a symlink (LP: #1948713)
+
+ -- Daniel Watkins <oddbloke@ubuntu.com>  Mon, 25 Oct 2021 14:47:59 -0400
+
 debootstrap (1.0.118ubuntu1.5) focal; urgency=medium
 
   * Add (Ubuntu) jammy as a symlink to gutsy (LP: #1947362).
