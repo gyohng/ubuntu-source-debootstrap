@@ -1,0 +1,14 @@
+  [ Samuel Thibault ]
+  * functions (download_main): Let the loops try the different components and
+    suites when the checksum doesn't match. This is needed when several of
+    them contain the same package name.
+  [ Arnaud Rebillout ]
+  * Fix auto proxy discovery (Closes: #985811)
+  * Fix detection of docker container for cgroup v2 (Closes: #985481)
+  [ Johannes 'josch' Schauer ]
+  * functions: define link_dir before using it.
+  [ Hideki Yamane ]
+  * Add (Debian) trixie as a symlink to sid.
+  [ Dimitri John Ledkov ]
+  * Add (Ubuntu) jammy as a symlink to gutsy.
+  * Upload to unstable.
