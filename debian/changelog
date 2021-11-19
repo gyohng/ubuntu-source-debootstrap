@@ -1,3 +1,10 @@
+debootstrap (1.0.123ubuntu6.2) hirsute; urgency=medium
+
+  [ YunQiang Su ]
+  * stage1: re-mkdir /proc instead of umount if it is a symlink (LP: #1948713)
+
+ -- Brian Murray <brian@ubuntu.com>  Fri, 19 Nov 2021 10:54:07 -0800
+
 debootstrap (1.0.123ubuntu6.1) hirsute; urgency=medium
 
   * Add (Ubuntu) jammy as a symlink to gutsy (LP: #1947362).
