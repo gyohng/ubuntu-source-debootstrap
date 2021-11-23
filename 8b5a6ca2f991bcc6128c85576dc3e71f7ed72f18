@@ -1,0 +1,2 @@
+  [ YunQiang Su ]
+  * stage1: re-mkdir /proc instead of umount if it is a symlink (LP: #1948713)
