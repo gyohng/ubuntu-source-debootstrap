@@ -1,3 +1,9 @@
+debootstrap (1.0.126+nmu1ubuntu1) kinetic; urgency=medium
+
+  * Add (Ubuntu) kinetic as a symlink to gutsy.
+
+ -- Graham Inggs <ginggs@ubuntu.com>  Tue, 26 Apr 2022 15:56:02 +0000
+
 debootstrap (1.0.126+nmu1) unstable; urgency=medium
 
   * Non-maintainer upload.
