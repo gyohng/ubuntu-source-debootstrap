@@ -1,0 +1,15 @@
+  [ Heysion Yuan ]
+  * add usrmerge support loongarch64.
+  [ Paul Menzel ]
+  * Avoid duplicate components in `sources.list`.
+  [ Edward Tomasz Napierala ]
+  * Mount /dev/fd if the host is FreeBSD.
+  [ Debian Janitor ]
+  * Bump debhelper from old 12 to 13.
+  * Update renamed lintian tag names in lintian overrides.
+  [ Luca Falavigna ]
+  * Add (Ubuntu) kinetic as a symlink to gutsy.
+  * Update standards version to 4.6.0.1, no changes needed.
+  [ Luca Boccassi ]
+  * setup_merged_usr: create skip flag when merged-usr is disabled on bookworm+
+  * Add usr-is-merged to the required set on testing/unstable
