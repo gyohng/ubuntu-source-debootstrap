@@ -1,3 +1,12 @@
+debootstrap (1.0.114+deb10u1) buster; urgency=medium
+
+  * Non-maintainer upload.
+  * setup_merged_usr: create skip flag when merged-usr is disabled on
+    bookworm+
+  * Add usr-is-merged to the required set on testing/unstable
+
+ -- Luca Boccassi <bluca@debian.org>  Thu, 28 Jul 2022 12:18:59 +0100
+
 debootstrap (1.0.114) unstable; urgency=medium
 
   * Revert changes from 1.0.113 (closes: #918722)
