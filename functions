@@ -1341,7 +1341,23 @@ setup_merged_usr() {
 		MERGED_USR="no"
 	fi
 
-	if [ "$MERGED_USR" = "no" ]; then return 0; fi
+	if [ "$MERGED_USR" = "no" ]; then
+	    # With the usrmerge becoming pseudo-essential we need to use this flag
+	    # to ensure that even if it gets installed the buildd is not converted
+	    # when debootstrap needs to create an unmerged-usr installation.
+	    case "$CODENAME" in
+		etch*|lenny|squeeze|wheezy|jessie*|stretch|buster|bullseye)
+		    ;;
+		*)
+		    mkdir -p "$TARGET/etc"
+		    echo "this system will not be supported in the future" > "$TARGET/etc/unsupported-skip-usrmerge-conversion"
+		    if ! doing_variant buildd; then
+			warning SANITYCHECK "Upgrading non-merged-/usr environments post-bookworm is unsupported. Only do this for CI/QA infrastructure that will be re-bootstrapped rather than upgraded."
+		    fi
+		    ;;
+	    esac
+	    return 0;
+	fi
 
 	local link_dir
 	case $ARCH in
