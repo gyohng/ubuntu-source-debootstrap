@@ -10,7 +10,7 @@ export PATH
 
 ###########################################################################
 
-if [ -z "$DEBOOTSTRAP_DIR" ]; then
+if [ -z "${DEBOOTSTRAP_DIR-}" ]; then
 	if [ -x /debootstrap/debootstrap ]; then
 		DEBOOTSTRAP_DIR=/debootstrap
 	else
@@ -353,7 +353,7 @@ if [ $# != 0 ] ; then
 		;;
 	    --cache-dir|--cache-dir=?*)
 		# Okay, let's check user's option
-		if [ "$1" = "--cache-dir" ] && [ -n "$2" ] ; then
+		if [ "$1" = "--cache-dir" ] && [ -n "${2-}" ] ; then
 			CACHE_DIR="$2"
 			shift 2
 		elif [ "$1" != "${1#--cache-dir=}" ]; then
@@ -457,7 +457,7 @@ if ! doing_variant fakechroot && command -v apt-config >/dev/null; then
     if [ -z "$AUTOPROXY" ]; then
         eval "$(apt-config shell AUTOPROXY Acquire::http::ProxyAutoDetect)"
     fi
-    if [ -z "$http_proxy" ] && [ -x "$AUTOPROXY" ]; then
+    if [ -z "${http_proxy-}" ] && [ -x "$AUTOPROXY" ]; then
         http_proxy="$($AUTOPROXY)"
         if [ -n "$http_proxy" ]; then
             info AUTOPROXY "Using auto-detected proxy: $http_proxy"
@@ -494,12 +494,12 @@ else
 	if ! in_path wget; then
 		error 1 NEEDWGET "You must install wget to download packages."
 	fi
-	if [ -z "$1" ] || [ -z "$2" ]; then
+	if [ -z "${1-}" ] || [ -z "${2-}" ]; then
 		usage_err 1 NEEDSUITETARGET "You must specify a suite and a target."
 	fi
 	SUITE="$1"
 	TARGET="$2"
-	USER_MIRROR="$3"
+	USER_MIRROR="${3-}"
 	TARGET="${TARGET%/}"
 	if [ "${TARGET#/}" = "${TARGET}" ]; then
 		if [ "${TARGET%/*}" = "$TARGET" ] ; then
@@ -514,7 +514,7 @@ else
 		SCRIPT="${SCRIPT}.${VARIANT}"
 		SUPPORTED_VARIANTS="$VARIANT"
 	fi
-	if [ "$4" != "" ]; then
+	if [ -n "${4-}" ]; then
 		if [ -e "$DEBOOTSTRAP_DIR/scripts/$4" ]; then
 			SCRIPT="$DEBOOTSTRAP_DIR/scripts/$4"
 		else
@@ -589,7 +589,7 @@ if [ "$HOST_OS" = Linux ] && ! doing_variant fakechroot && [ "$CONTAINER" = "lxc
        CHROOT_CMD="unshare --net $CHROOT_CMD"
 fi
 
-if [ -z "$SHA_SIZE" ]; then
+if [ -z "${SHA_SIZE-}" ]; then
 	SHA_SIZE=256
 fi
 if ! in_path "sha${SHA_SIZE}sum" && ! in_path "sha${SHA_SIZE}"; then
@@ -727,7 +727,7 @@ if am_doing_phase finddebs; then
 		base=$(resolve_deps "$baseX")
 		base=$(without "$base" "$required")
 
-		if [ "$LOG_EXTRA_DEPS" = true ]; then
+		if [ "${LOG_EXTRA_DEPS-}" = true ]; then
 			baseN=$(without "$baseX" "$requiredX")
 			baseU=$(without "$baseX" "$baseN")
 
