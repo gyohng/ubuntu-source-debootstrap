@@ -197,7 +197,7 @@ mk_download_dirs () {
 download_style () {
 	case "$1" in
 	    apt)
-		if [ "$2" = "var-state" ]; then
+		if [ "${2-}" = "var-state" ]; then
 			APTSTATE="var/state/apt"
 		else
 			APTSTATE="var/lib/apt"
@@ -231,11 +231,11 @@ keyring () {
 }
 
 detect_container () {
-	if [ "$container" = lxc ]; then
+	if [ "${container-}" = lxc ]; then
 		CONTAINER="lxc"
 	elif grep -qs container=lxc-libvirt /proc/1/environ; then
 		CONTAINER="lxc-libvirt"
-	elif grep -qs ^systemd-nspawn$ /run/systemd/container || grep -qs systemd-nspawn /proc/1/environ || [ "$container" = "systemd-nspawn" ]; then
+	elif grep -qs ^systemd-nspawn$ /run/systemd/container || grep -qs systemd-nspawn /proc/1/environ || [ "${container-}" = "systemd-nspawn" ]; then
 		CONTAINER="systemd-nspawn"
 	elif grep -qs '[[:space:]]/docker/.*/sys/fs/cgroup' /proc/1/mountinfo || [ -e "/.dockerenv" ]; then
 		CONTAINER="docker"
@@ -331,7 +331,7 @@ get () {
 	# args: from dest [checksum size] [alt {checksum size type}]
 	# args: from dest 'byhash' [checksum size] [alt {checksum size type}]
 	local displayname
-	local versionname
+	local versionname=""
 	local from_base
 	local dest_base
 	local nocache=""
@@ -352,7 +352,7 @@ get () {
 	fi
 
 	if [ -e "$dest_base" ]; then
-		if [ -z "$1" ]; then
+		if [ -z "${1-}" ]; then
 			return 0
 		elif [ -n "$nocache" ]; then
 			rm -f "$dest_base"
@@ -376,9 +376,9 @@ get () {
 	fi
 	for a in $order; do
 		local checksum siz typ from dest iters
-		checksum="$(eval echo \${$a})"
-		siz="$(eval echo \${$(( $a+1 ))})"
-		typ="$(eval echo \${$(( $a+2 ))})"
+		checksum="$(eval echo \${$a-})"
+		siz="$(eval echo \${$(( $a+1 ))-})"
+		typ="$(eval echo \${$(( $a+2 ))-})"
 		iters="0"
 
 		case "$typ" in
@@ -538,20 +538,20 @@ extract_release_components () {
 	local reldest="$1"; shift
 	TMPCOMPONENTS="$(sed -n 's/Components: *//p' "$reldest")"
 	for c in $TMPCOMPONENTS ; do
-		case " $COMPONENTS " in
+		case " ${COMPONENTS-} " in
 			*" $c "*) continue ;;
 		esac;
 
 		eval "
 		case \"\$c\" in
 		    $USE_COMPONENTS)
-			COMPONENTS=\"\$COMPONENTS \$c\"
+			COMPONENTS=\"\${COMPONENTS-} \$c\"
 			;;
 		esac
 		"
 	done
 
-	if [ -z "$COMPONENTS" ]; then
+	if [ -z "${COMPONENTS-}" ]; then
 		mv "$reldest" "$reldest.malformed"
 		error 1 INVALIDREL "Invalid Release file, no valid components"
 	fi
@@ -1042,7 +1042,7 @@ valid_extractor () {
 choose_extractor () {
 	local extractor
 
-	if [ -n "$EXTRACTOR_OVERRIDE" ]; then
+	if [ -n "${EXTRACTOR_OVERRIDE-}" ]; then
 		extractor="$EXTRACTOR_OVERRIDE"
 	elif in_path dpkg-deb; then
 		extractor="dpkg-deb"
