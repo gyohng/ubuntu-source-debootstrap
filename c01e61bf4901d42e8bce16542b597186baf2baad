@@ -1,0 +1,4 @@
+  * Non-maintainer upload.
+  * setup_merged_usr: create skip flag when merged-usr is disabled on
+    bookworm+
+  * Add usr-is-merged to the required set on testing/unstable
