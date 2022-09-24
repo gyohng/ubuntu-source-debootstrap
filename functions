@@ -1391,7 +1391,6 @@ setup_merged_usr() {
 
 	local link_dir=""
 	case $ARCH in
-	    hurd-*)	return 0 ;;
 	    amd64)	link_dir="lib32 lib64 libx32" ;;
 	    i386)	link_dir="lib64 libx32" ;;
 	    mips|mipsel)
