@@ -1,0 +1,6 @@
+  * Non-maintainer upload.
+  [ Ansgar ]
+  * debootstrap: optionally exclude specific dependencies
+  * debian-common: exclude usrmerge when installing usr-is-merged
+  [ Samuel Thibault ]
+  * Enable usrmerge on hurd-i386 too.
