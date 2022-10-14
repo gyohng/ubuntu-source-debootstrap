@@ -724,10 +724,9 @@ if am_doing_phase finddebs; then
 
 		info RESOLVEREQ "Resolving dependencies of required packages..."
 		required=$(resolve_deps "$requiredX")
-		required=$(without "$required" "$EXCLUDE_DEPENDENCY")
 		info RESOLVEBASE "Resolving dependencies of base packages..."
 		base=$(resolve_deps "$baseX")
-		base=$(without "$base" "$required $EXCLUDE_DEPENDENCY")
+		base=$(without "$base" "$required")
 
 		if [ "$LOG_EXTRA_DEPS" = true ]; then
 			baseN=$(without "$baseX" "$requiredX")
