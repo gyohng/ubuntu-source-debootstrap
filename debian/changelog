@@ -1,3 +1,24 @@
+debootstrap (1.0.128) unstable; urgency=low
+
+  [ Samuel Thibault ]
+  * Make gbp tag produce the right tag format
+
+  [ Carsten Schoenert ]
+  * Add (PureOS) byzantium as a symlink to amber
+  * Add (PureOS) crimson as a symlink to amber
+
+  [ Daniel Watkins ]
+  * Support Packages files which are not ordered alphabetically by Package field
+    (LP: #1990856)
+
+  [ Dimitri John Ledkov ]
+  * d/tests/unsorted-packages-files: cleanup temp files and daemon
+
+  [ Tianon Gravi ]
+  * Apply "EXCLUDE_DEPENDENCY" during "resolve_deps"
+
+ -- Dimitri John Ledkov <dimitri.ledkov@canonical.com>  Fri, 14 Oct 2022 12:31:04 +0100
+
 debootstrap (1.0.127+nmu1) unstable; urgency=medium
 
   * Non-maintainer upload.
