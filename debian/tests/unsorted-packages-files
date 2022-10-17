@@ -13,6 +13,7 @@ export FLASK_ARCH=amd64
 export FLASK_DIST=bookworm
 export FLASK_DISTRO=debian
 export FLASK_MIRROR=http://deb.debian.org
+export PATH=$PATH:/usr/sbin
 
 # Launch our MitM "mirror" server, ensure that request logging is sent to stdout
 PYTHONDONTWRITEBYTECODE=true FLASK_APP=debian/tests/mitm.py flask run 2>&1 &
