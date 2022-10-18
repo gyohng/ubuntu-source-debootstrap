@@ -9,8 +9,8 @@
 # find the prepended stanza and fail (with a 404 of the nonexistent package
 # file).
 
-export FLASK_ARCH=amd64
-export FLASK_DIST=bookworm
+export FLASK_ARCH="$(dpkg --print-architecture)"
+export FLASK_DIST=testing
 export FLASK_DISTRO=debian
 export FLASK_MIRROR=http://deb.debian.org
 export PATH=$PATH:/usr/sbin

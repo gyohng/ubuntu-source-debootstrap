@@ -1,3 +1,16 @@
+debootstrap (1.0.128+nmu2) unstable; urgency=low
+
+  * Non-maintainer upload.
+
+  [ Matthias Klumpp ]
+  * Update PureOS bootstrap script
+
+  [ Luca Boccassi ]
+  * autopkgtest: fix running on !amd64
+  * autopkgtest: run on 'testing' instead of 'bookworm'
+
+ -- Luca Boccassi <bluca@debian.org>  Tue, 18 Oct 2022 23:49:31 +0100
+
 debootstrap (1.0.128+nmu1) unstable; urgency=low
 
   * Non-maintainer upload.
