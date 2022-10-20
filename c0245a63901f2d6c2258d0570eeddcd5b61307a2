@@ -1,0 +1,6 @@
+  * Non-maintainer upload.
+  [ Matthias Klumpp ]
+  * Update PureOS bootstrap script
+  [ Luca Boccassi ]
+  * autopkgtest: fix running on !amd64
+  * autopkgtest: run on 'testing' instead of 'bookworm'
