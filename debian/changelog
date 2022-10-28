@@ -1,3 +1,9 @@
+debootstrap (1.0.127ubuntu2) lunar; urgency=medium
+
+  * Symlink lunar -> gutsy. Welcome to the Lunar Lobster!
+
+ -- Simon Quigley <tsimonq2@ubuntu.com>  Fri, 28 Oct 2022 13:27:45 -0500
+
 debootstrap (1.0.127ubuntu1) kinetic; urgency=medium
 
   * Fix EXTRACTOR_OVERRIDE: parameter not set (LP: #1971951)
