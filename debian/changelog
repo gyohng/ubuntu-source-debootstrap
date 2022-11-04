@@ -1,3 +1,9 @@
+debootstrap (1.0.95ubuntu0.12) bionic; urgency=medium
+
+  * Add (Ubuntu) lunar as a symlink to gutsy (LP: #1995612).
+
+ -- Nick Rosbrook <nick.rosbrook@canonical.com>  Fri, 04 Nov 2022 02:55:41 -0400
+
 debootstrap (1.0.95ubuntu0.11) bionic; urgency=medium
 
   * Add (Ubuntu) kinetic as a symlink to gutsy (LP: #1970454).
