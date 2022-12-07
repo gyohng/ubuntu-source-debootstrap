@@ -1,3 +1,12 @@
+debootstrap (1.0.128+nmu2ubuntu1) lunar; urgency=low
+
+  * Merge from Debian unstable. Remaining changes:
+    - Symlink lunar -> gutsy. Welcome to the Lunar Lobster!
+    - Fix EXTRACTOR_OVERRIDE: parameter not set (LP: #1971951)
+    - Fix failures with "set -u"
+
+ -- Łukasz 'sil2100' Zemczak <lukasz.zemczak@ubuntu.com>  Wed, 07 Dec 2022 10:09:03 +0100
+
 debootstrap (1.0.128+nmu2) unstable; urgency=low
 
   * Non-maintainer upload.
@@ -51,6 +60,19 @@ debootstrap (1.0.127+nmu1) unstable; urgency=medium
   * Enable usrmerge on hurd-i386 too.
 
  -- Luca Boccassi <bluca@debian.org>  Sat, 24 Sep 2022 14:07:46 +0100
+
+debootstrap (1.0.127ubuntu2) lunar; urgency=medium
+
+  * Symlink lunar -> gutsy. Welcome to the Lunar Lobster!
+
+ -- Simon Quigley <tsimonq2@ubuntu.com>  Fri, 28 Oct 2022 13:27:45 -0500
+
+debootstrap (1.0.127ubuntu1) kinetic; urgency=medium
+
+  * Fix EXTRACTOR_OVERRIDE: parameter not set (LP: #1971951)
+  * Fix failures with "set -u"
+
+ -- Benjamin Drung <bdrung@ubuntu.com>  Fri, 05 Aug 2022 15:19:50 +0200
 
 debootstrap (1.0.127) unstable; urgency=medium
 
@@ -3215,3 +3237,4 @@ debootstrap (0.1.1) unstable; urgency=low
     in a chroot, or as a standalone system. Blame Adam di Carlo. :)
 
  -- Anthony Towns <ajt@debian.org>  Tue, 30 Jan 2001 10:54:45 +1000
+
