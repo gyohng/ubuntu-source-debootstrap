@@ -1,0 +1,4 @@
+  * Merge from Debian unstable. Remaining changes:
+    - Symlink lunar -> gutsy. Welcome to the Lunar Lobster!
+    - Fix EXTRACTOR_OVERRIDE: parameter not set (LP: #1971951)
+    - Fix failures with "set -u"
