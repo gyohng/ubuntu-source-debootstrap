@@ -1,3 +1,9 @@
+debootstrap (1.0.128+nmu2ubuntu2) mantic; urgency=medium
+
+  * Symlink mantic -> gutsy. Welcome to Mantic Manimal!
+
+ -- Simon Quigley <tsimonq2@ubuntu.com>  Wed, 26 Apr 2023 15:59:42 -0500
+
 debootstrap (1.0.128+nmu2ubuntu1) lunar; urgency=low
 
   * Merge from Debian unstable. Remaining changes:
