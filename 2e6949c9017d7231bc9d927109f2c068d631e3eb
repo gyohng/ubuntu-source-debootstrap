@@ -1,0 +1,6 @@
+  * Update debootstrap to automatically use the gutsy script by default
+    if the target is an Ubuntu release known to distro-info, eliminating
+    the need to upload debootstrap for each new Ubuntu release.
+  * Add dependency on distro-info, which is part of ubuntu-minimal, for the
+    above
+  * Remove all the old symlinks that are no longer needed.
