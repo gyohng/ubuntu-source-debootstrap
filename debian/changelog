@@ -1,3 +1,14 @@
+debootstrap (1.0.128+nmu2ubuntu3) mantic; urgency=medium
+
+  * Update debootstrap to automatically use the gutsy script by default
+    if the target is an Ubuntu release known to distro-info, eliminating
+    the need to upload debootstrap for each new Ubuntu release.
+  * Add dependency on distro-info, which is part of ubuntu-minimal, for the
+    above
+  * Remove all the old symlinks that are no longer needed.
+
+ -- Steve Langasek <steve.langasek@ubuntu.com>  Thu, 04 May 2023 16:45:45 +0200
+
 debootstrap (1.0.128+nmu2ubuntu2) mantic; urgency=medium
 
   * Symlink mantic -> gutsy. Welcome to Mantic Manimal!
