@@ -510,6 +510,10 @@ else
 	fi
 
 	SCRIPT="$DEBOOTSTRAP_DIR/scripts/$1"
+	if ! [ -e "$SCRIPT" ] && distro-info --series "$1" >/dev/null 2>&1
+	then
+		SCRIPT="$DEBOOTSTRAP_DIR/scripts/gutsy"
+	fi
 	if [ -n "$VARIANT" ] && [ -e "${SCRIPT}.${VARIANT}" ]; then
 		SCRIPT="${SCRIPT}.${VARIANT}"
 		SUPPORTED_VARIANTS="$VARIANT"
