@@ -12,7 +12,7 @@ Vcs-Git: https://anonscm.debian.org/git/d-i/debootstrap.git
 
 Package: debootstrap
 Architecture: all
-Depends: ${misc:Depends}, wget
+Depends: ${misc:Depends}, wget, distro-info
 Recommends: gnupg, ${keyring}
 Suggests: ubuntu-archive-keyring
 Description: Bootstrap a basic Debian system
