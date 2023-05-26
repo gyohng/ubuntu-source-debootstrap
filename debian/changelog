@@ -1,3 +1,15 @@
+debootstrap (1.0.126+nmu1ubuntu0.3) jammy; urgency=medium
+
+  * Update debootstrap to automatically use the gutsy script by default
+    if the target is an Ubuntu release known to distro-info, eliminating
+    the need to upload debootstrap for each new Ubuntu release.
+  * Add dependency on distro-info, which is part of ubuntu-minimal, for the
+    above
+  * Remove all the old symlinks that are no longer needed.
+  * LP: #2020530.
+
+ -- Steve Langasek <steve.langasek@ubuntu.com>  Fri, 26 May 2023 22:22:49 +0000
+
 debootstrap (1.0.126+nmu1ubuntu0.2) jammy; urgency=medium
 
   * Add (Ubuntu) lunar as a symlink to gutsy (LP: #1995612).
