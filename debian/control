@@ -15,6 +15,7 @@ Architecture: all
 Depends: ${misc:Depends}, wget, distro-info
 Recommends: gnupg, ${debootstrap:Recommends}
 Suggests: squid-deb-proxy-client, ${debootstrap:Suggests}
+Breaks: ubuntu-dev-tools (<< 0.190~)
 Description: Bootstrap a basic Debian system
  debootstrap is used to create a Debian base system from scratch,
  without requiring the availability of dpkg or apt. It does this by
