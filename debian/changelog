@@ -1,3 +1,10 @@
+debootstrap (1.0.118ubuntu1.10) focal; urgency=medium
+
+  * Add Breaks: on ubuntu-dev-tools (<< 0.190~) to ensure compatibility with
+    mk-sbuild.
+
+ -- Steve Langasek <steve.langasek@ubuntu.com>  Tue, 30 May 2023 21:28:30 -0700
+
 debootstrap (1.0.118ubuntu1.9) focal; urgency=medium
 
   * Update debootstrap to automatically use the gutsy script by default
