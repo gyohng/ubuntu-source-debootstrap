@@ -1,3 +1,10 @@
+debootstrap (1.0.128+nmu2ubuntu4) mantic; urgency=medium
+
+  * Add Breaks: on ubuntu-dev-tools (<< 0.190~) to ensure compatibility
+    with mk-sbuild.
+
+ -- Steve Langasek <steve.langasek@ubuntu.com>  Tue, 30 May 2023 21:38:57 -0700
+
 debootstrap (1.0.128+nmu2ubuntu3) mantic; urgency=medium
 
   * Update debootstrap to automatically use the gutsy script by default
