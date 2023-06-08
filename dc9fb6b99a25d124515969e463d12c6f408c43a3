@@ -1,0 +1,2 @@
+  * Add Breaks: on ubuntu-dev-tools (<< 0.190~) to ensure compatibility
+    with mk-sbuild.
