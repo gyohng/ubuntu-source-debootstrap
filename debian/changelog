@@ -1,3 +1,13 @@
+debootstrap (1.0.118ubuntu1.11) focal; urgency=medium
+
+  * Restore the old symlinks removed in the previous SRU.  While not
+    needed by debootstrap itself, other tools may call debootstrap with
+    the optional 'script' argument (which was always unnecessary when
+    its value was the same as the 'suite' argument), and this change
+    broke compatibility with them.  LP: #2024483.
+
+ -- Steve Langasek <steve.langasek@ubuntu.com>  Sat, 24 Jun 2023 00:14:37 -0700
+
 debootstrap (1.0.118ubuntu1.10) focal; urgency=medium
 
   * Add Breaks: on ubuntu-dev-tools (<< 0.190~) to ensure compatibility with
