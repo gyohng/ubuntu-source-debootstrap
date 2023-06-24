@@ -1,3 +1,13 @@
+debootstrap (1.0.127ubuntu1.3) kinetic; urgency=medium
+
+  * Restore the old symlinks removed in the previous SRU.  While not 
+    needed by debootstrap itself, other tools may call debootstrap with 
+    the optional 'script' argument (which was always unnecessary when 
+    its value was the same as the 'suite' argument), and this change 
+    broke compatibility with them.  LP: #2024483.
+
+ -- Steve Langasek <steve.langasek@ubuntu.com>  Fri, 23 Jun 2023 23:56:20 -0700
+
 debootstrap (1.0.127ubuntu1.2) kinetic; urgency=medium
 
   * Update debootstrap to automatically use the gutsy script by default
