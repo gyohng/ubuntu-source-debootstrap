@@ -1,0 +1,2 @@
+  * Remove hirsute symlink, overlooked previously because it was a link to
+    groovy instead of to gutsy.
