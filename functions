@@ -1397,26 +1397,31 @@ if in_path perl; then
 		# uniq field mirror Packages values...
 		perl -le '
 $unique = shift @ARGV; $field = lc(shift @ARGV); $mirror = shift @ARGV;
-%fields = map { $_, 0 } @ARGV;
+%expected = map { $_, 0 } @ARGV;
+%outputs;
 $prevpkg = "";
 $chksumfield = lc($ENV{DEBOOTSTRAP_CHECKSUM_FIELD}).":";
+
+sub emit_or_store_pkg {
+	if ($unique && defined $output_val) {
+		# Store the output for deduplicated emission later
+		$outputs{$output_val} = $output;
+	} else {
+		print $output if defined $output;
+	}
+}
+
 while (<STDIN>) {
 	if (/^([^:]*:)\s*(.*)$/) {
 		$f = lc($1); $v = $2;
 		if ($f eq "package:") {
-			$last = 0;
 			$pkg = $v;
 			if ($pkg ne $prevpkg) {
-				print $output if defined $output;
-				if ($unique && defined $output_val) {
-					delete $fields{$output_val};
-					$last = 1 unless keys %fields;
-				}
+				emit_or_store_pkg;
 				$prevpkg = $pkg;
 			}
 			undef $output;
 			undef $output_val;
-			last if $last;
 		}
 		$ver = $v if ($f eq "version:");
 		$arc = $v if ($f eq "architecture:");
@@ -1425,7 +1430,7 @@ while (<STDIN>) {
 		$siz = $v if ($f eq "size:");
 		$val = $v if ($f eq $field);
 	} elsif (/^$/) {
-		if (defined $val && defined $fields{$val}) {
+		if (defined $val && defined $expected{$val}) {
 			$output = sprintf "%s %s %s %s %s %s %s",
 			 $pkg, $ver, $arc, $mirror, $fil, $chk, $siz;
 			$output_val = $val;
@@ -1433,10 +1438,15 @@ while (<STDIN>) {
 		undef $val;
 	}
 }
-print $output if defined $output;
-delete $fields{$output_val} if $unique && defined $output_val;
-for $v (keys %fields) {
-	printf ("%s -\n", $v) if ($unique);
+emit_or_store_pkg;
+
+if ($unique) {
+	# Emit all of our deduplicated values
+	map { print } sort values %outputs;
+	# And emit any expected packages that were not found
+	foreach my $v (keys %expected) {
+		printf ("%s -\n", $v) if !defined $outputs{$v};
+	}
 }
 ' "$@"
 	}
