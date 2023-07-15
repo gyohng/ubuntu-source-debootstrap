@@ -1,0 +1,15 @@
+  * Non-maintainer upload.
+  [ Akbarkhon Variskhanov ]
+  * functions: Quote $USE_COMPONENTS. Thanks to Robert de Bath for
+    reporting the bug and providing the fix (Closes: #963804)
+  [ Johannes Schauer Marin Rodrigues ]
+  * functions: improve misleading error message when tar fails
+  * check if http_proxy is unset instead of checking if it's empty
+    (Closes: #1031105)
+  * If mount -t proc proc /proc failed, fall back to bind-mounting /proc
+  [ Simon McVittie ]
+  * Mention --merged-usr in --help output (Closes: #1031828)
+  * functions: Default to merged-/usr, even for newer suites' buildds
+  * d/source/lintian-overrides: Update overrides syntax
+  [ Luca Boccassi ]
+  * Bump Standards-Version to 4.6.2, no changes
