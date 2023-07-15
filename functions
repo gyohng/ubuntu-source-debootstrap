@@ -978,7 +978,7 @@ extract_dpkg_deb_field () {
 extract_dpkg_deb_data () {
 	local pkg="$1"
 
-	dpkg-deb --fsys-tarfile "$pkg" | tar $EXTRACT_DEB_TAR_OPTIONS -xf - || error 1 FILEEXIST "Tried to extract package, but file already exists. Exit..."
+	dpkg-deb --fsys-tarfile "$pkg" | tar $EXTRACT_DEB_TAR_OPTIONS -xf - || error 1 FILEEXIST "Tried to extract package, but tar failed. Exit..."
 }
 
 # Raw .deb extractors
@@ -1209,7 +1209,7 @@ setup_proc () {
 		# some container environment are used at second-stage, it already treats /proc and so on
 		if [ -z "$(ls -A "$TARGET/proc")" ]; then
 			# second-stage in docker, we cannot detect it is inside docker... just ignore warning
-			in_target mount -t proc proc /proc || true
+			in_target mount -t proc proc /proc || mount -o rbind /proc "$TARGET/proc" || true
 			umount_on_exit /proc
 		fi
 		if [ -n "$(ls -A "$TARGET/sys")" ] && \
@@ -1368,7 +1368,11 @@ setup_dselect_method () {
 # multilib library packages.
 setup_merged_usr() {
 	if doing_variant buildd && [ -z "$MERGED_USR" ]; then
-		MERGED_USR="no"
+	    case "$CODENAME" in
+		etch*|lenny|squeeze|wheezy|jessie*|stretch|buster|bullseye|bookworm)
+		    MERGED_USR="no"
+		    ;;
+	    esac
 	fi
 
 	if [ "$MERGED_USR" = "no" ]; then
@@ -1591,7 +1595,7 @@ resolve_deps () {
 	while [ "$PKGS" != "" ]; do
 		local NEWPKGS=""
 		for s in $SUITE $EXTRA_SUITES; do
-			for c in ${COMPONENTS:-$(echo ${USE_COMPONENTS} | tr '|' ' ')}; do
+			for c in ${COMPONENTS:-$(echo "${USE_COMPONENTS}" | tr '|' ' ')}; do
 				local path="dists/$s/$c/binary-$ARCH/Packages"
 				local pkgdest="$TARGET/$($DLDEST pkg "$s" "$c" "$ARCH" "$m1" "$path")"
 				NEWPKGS="$NEWPKGS $("$PKGDETAILS" GETDEPS "$pkgdest" $PKGS)"
@@ -1603,7 +1607,7 @@ resolve_deps () {
 		PKGS=$(echo "$PKGS $NEWPKGS" | tr ' ' '\n' | sort | uniq)
 		local REALPKGS=""
 		for s in $SUITE $EXTRA_SUITES; do
-			for c in ${COMPONENTS:-$(echo ${USE_COMPONENTS} | tr '|' ' ')}; do
+			for c in ${COMPONENTS:-$(echo "${USE_COMPONENTS}" | tr '|' ' ')}; do
 				local path="dists/$s/$c/binary-$ARCH/Packages"
 				local pkgdest="$TARGET/$($DLDEST pkg "$s" "$c" "$ARCH" "$m1" "$path")"
 				REALPKGS="$REALPKGS $("$PKGDETAILS" PKGS REAL "$pkgdest" $PKGS | sed -n 's/ .*REAL.*$//p')"
@@ -1622,7 +1626,7 @@ setup_available () {
 	m1="${MIRRORS%% *}"
 
 	for s in $SUITE $EXTRA_SUITES; do
-		for c in ${COMPONENTS:-$(echo ${USE_COMPONENTS} | tr '|' ' ')}; do
+		for c in ${COMPONENTS:-$(echo "${USE_COMPONENTS}" | tr '|' ' ')}; do
 			path="dists/$s/$c/binary-$ARCH/Packages"
 			pkgdest="$TARGET/$($DLDEST pkg "$s" "$c" "$ARCH" "$m1" "$path")"
 			# XXX: What if a package is in more than one component?
