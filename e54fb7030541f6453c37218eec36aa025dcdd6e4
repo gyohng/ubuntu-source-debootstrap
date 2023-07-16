@@ -1,0 +1,5 @@
+  * Non-maintainer upload.
+  * Revert defaulting buildds to usrmerge, as this makes packages move
+    files in aliased dirs contrary to CTTE#1035831.  Closes: #1041207
+    NB1: such a change was very very inappropriate for a NMU.
+    NB2: looking for packages needing a rebuild due to this will be "fun".
