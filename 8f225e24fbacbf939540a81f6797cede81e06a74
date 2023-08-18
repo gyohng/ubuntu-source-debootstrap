@@ -1,0 +1,12 @@
+  * Team upload.
+  [ Fatih Altun ]
+  * Add Pardus support
+  [ Denis 'GNUtoo' Carikli ]
+  * Add Trisquel to scripts dir
+  [ Helmut Grohne ]
+  * implement merged-/usr by post-merging
+  [ Luca Boccassi ]
+  * Add myself to Uploaders
+  [ Michael Chen ]
+  * README: add --preserve-env option to sudo command
+  * hurd: Fix debootstrap --second-stage on native runs.
