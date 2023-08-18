@@ -1,3 +1,30 @@
+debootstrap (1.0.130) unstable; urgency=medium
+
+  * Team upload.
+
+  [ Fatih Altun ]
+  * Add Pardus support
+
+  [ Denis 'GNUtoo' Carikli ]
+  * Add Trisquel to scripts dir
+
+  [ Helmut Grohne ]
+  * implement merged-/usr by post-merging
+
+  [ Luca Boccassi ]
+  * Add myself to Uploaders
+
+  [ Michael Chen ]
+  * README: add --preserve-env option to sudo command
+
+ -- Luca Boccassi <bluca@debian.org>  Fri, 18 Aug 2023 16:02:59 +0100
+
+debootstrap (1.0.129) UNRELEASED; urgency=medium
+
+  * hurd: Fix debootstrap --second-stage on native runs.
+
+ -- Samuel Thibault <sthibault@debian.org>  Sat, 20 May 2023 22:56:36 +0200
+
 debootstrap (1.0.128+nmu5) unstable; urgency=medium
 
   * Non-maintainer upload.
