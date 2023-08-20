@@ -1,0 +1,3 @@
+  * Team upload.
+  [ Simon McVittie ]
+  * functions: Reinstate setup_merged_usr() as it existed prior to !96
