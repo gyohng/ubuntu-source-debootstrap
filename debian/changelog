@@ -1,3 +1,12 @@
+debootstrap (1.0.131) unstable; urgency=medium
+
+  * Team upload.
+
+  [ Simon McVittie ]
+  * functions: Reinstate setup_merged_usr() as it existed prior to !96
+
+ -- Helmut Grohne <helmut@subdivi.de>  Sun, 20 Aug 2023 14:11:43 +0200
+
 debootstrap (1.0.130) unstable; urgency=medium
 
   * Team upload.
