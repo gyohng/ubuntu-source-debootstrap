@@ -1466,6 +1466,64 @@ merge_usr() {
 	done
 }
 
+# Previous implementation of merged /usr: not used within debootstrap,
+# but used by mmdebstrap's hooks/merged-usr/setup00.sh, mainly to get
+# the correct per-architecture $link_dir list of non-default multilib
+# directories.
+setup_merged_usr() {
+	if doing_variant buildd && [ -z "$MERGED_USR" ]; then
+	    case "$CODENAME" in
+		etch*|lenny|squeeze|wheezy|jessie*|stretch|buster|bullseye|bookworm)
+		    MERGED_USR="no"
+		    ;;
+	    esac
+	fi
+
+	if [ "$MERGED_USR" = "no" ]; then
+	    # With the usrmerge becoming pseudo-essential we need to use this flag
+	    # to ensure that even if it gets installed the buildd is not converted
+	    # when debootstrap needs to create an unmerged-usr installation.
+	    case "$CODENAME" in
+		etch*|lenny|squeeze|wheezy|jessie*|stretch|buster|bullseye)
+		    ;;
+		*)
+		    mkdir -p "$TARGET/etc"
+		    echo "this system will not be supported in the future" > "$TARGET/etc/unsupported-skip-usrmerge-conversion"
+		    if ! doing_variant buildd; then
+			warning SANITYCHECK "Upgrading non-merged-/usr environments post-bookworm is unsupported. Only do this for CI/QA infrastructure that will be re-bootstrapped rather than upgraded."
+		    fi
+		    ;;
+	    esac
+	    return 0;
+	fi
+
+	local link_dir=""
+	case $ARCH in
+	    amd64)	link_dir="lib32 lib64 libx32" ;;
+	    i386)	link_dir="lib64 libx32" ;;
+	    mips|mipsel)
+			link_dir="lib32 lib64" ;;
+	    mips64*|mipsn32*)
+			link_dir="lib32 lib64 libo32" ;;
+	    loongarch64*)
+			link_dir="lib32 lib64" ;;
+	    powerpc)	link_dir="lib64" ;;
+	    ppc64)	link_dir="lib32 lib64" ;;
+	    ppc64el)	link_dir="lib64" ;;
+	    s390x)	link_dir="lib32" ;;
+	    sparc)	link_dir="lib64" ;;
+	    sparc64)	link_dir="lib32 lib64" ;;
+	    x32)	link_dir="lib32 lib64 libx32" ;;
+	esac
+	link_dir="bin sbin lib $link_dir"
+
+	local dir
+	for dir in $link_dir; do
+		ln -s usr/"$dir" "$TARGET/$dir"
+		mkdir -p "$TARGET/usr/$dir"
+	done
+}
+
 ################################################################ pkgdetails
 
 # NOTE
