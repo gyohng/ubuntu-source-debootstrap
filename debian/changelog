@@ -1,3 +1,11 @@
+debootstrap (1.0.126+nmu1ubuntu0.6) jammy; urgency=medium
+
+  * Support Packages files which are not ordered alphabetically by Package
+    field, by backporting upstream commit
+    86ca8bcc736ceba53ad4a7d9b10b4c2ab65d739d (LP: #1990856)
+
+ -- Daniel Watkins <daniel@daniel-watkins.co.uk>  Wed, 12 Jul 2023 12:16:29 -0400
+
 debootstrap (1.0.126+nmu1ubuntu0.5) jammy; urgency=medium
 
   * Restore the old symlinks removed in the previous SRU.  While not
