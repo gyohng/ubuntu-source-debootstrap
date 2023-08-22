@@ -1,3 +1,11 @@
+debootstrap (1.0.118ubuntu1.12) focal; urgency=medium
+
+  * Support Packages files which are not ordered alphabetically by Package
+    field, by backporting upstream commit
+    86ca8bcc736ceba53ad4a7d9b10b4c2ab65d739d (LP: #1990856)
+
+ -- Daniel Watkins <oddbloke@ubuntu.com>  Wed, 12 Jul 2023 11:30:08 -0400
+
 debootstrap (1.0.118ubuntu1.11) focal; urgency=medium
 
   * Restore the old symlinks removed in the previous SRU.  While not
