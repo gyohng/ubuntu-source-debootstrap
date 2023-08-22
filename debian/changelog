@@ -1,3 +1,17 @@
+debootstrap (1.0.131ubuntu1) mantic; urgency=low
+
+  * Merge from Debian unstable. Remaining changes:
+    - Add Breaks: on ubuntu-dev-tools (<< 0.190~) to ensure compatibility
+      with mk-sbuild.
+    - Update debootstrap to automatically use the gutsy script by default
+      if the target is an Ubuntu release known to distro-info, eliminating
+      the need to upload debootstrap for each new Ubuntu release.
+    - Add dependency on distro-info, which is part of ubuntu-minimal, for the
+      above
+    - Remove all the old symlinks that are no longer needed.
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Tue, 22 Aug 2023 08:07:54 +0200
+
 debootstrap (1.0.131) unstable; urgency=medium
 
   * Team upload.
@@ -6,6 +20,20 @@ debootstrap (1.0.131) unstable; urgency=medium
   * functions: Reinstate setup_merged_usr() as it existed prior to !96
 
  -- Helmut Grohne <helmut@subdivi.de>  Sun, 20 Aug 2023 14:11:43 +0200
+
+debootstrap (1.0.130ubuntu1) mantic; urgency=low
+
+  * Merge from Debian unstable. Remaining changes:
+    - Add Breaks: on ubuntu-dev-tools (<< 0.190~) to ensure compatibility
+      with mk-sbuild.
+    - Update debootstrap to automatically use the gutsy script by default
+      if the target is an Ubuntu release known to distro-info, eliminating
+      the need to upload debootstrap for each new Ubuntu release.
+    - Add dependency on distro-info, which is part of ubuntu-minimal, for the
+      above
+    - Remove all the old symlinks that are no longer needed.
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Sun, 20 Aug 2023 08:42:39 +0200
 
 debootstrap (1.0.130) unstable; urgency=medium
 
@@ -33,6 +61,20 @@ debootstrap (1.0.129) UNRELEASED; urgency=medium
   * hurd: Fix debootstrap --second-stage on native runs.
 
  -- Samuel Thibault <sthibault@debian.org>  Sat, 20 May 2023 22:56:36 +0200
+
+debootstrap (1.0.128+nmu5ubuntu1) mantic; urgency=low
+
+  * Merge from Debian unstable. Remaining changes:
+    - Add Breaks: on ubuntu-dev-tools (<< 0.190~) to ensure compatibility
+      with mk-sbuild.
+    - Update debootstrap to automatically use the gutsy script by default
+      if the target is an Ubuntu release known to distro-info, eliminating
+      the need to upload debootstrap for each new Ubuntu release.
+    - Add dependency on distro-info, which is part of ubuntu-minimal, for the
+      above
+    - Remove all the old symlinks that are no longer needed.
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Mon, 17 Jul 2023 10:54:43 +0200
 
 debootstrap (1.0.128+nmu5) unstable; urgency=medium
 
@@ -64,6 +106,46 @@ debootstrap (1.0.128+nmu3) unstable; urgency=medium
   * Bump Standards-Version to 4.6.2, no changes
 
  -- Luca Boccassi <bluca@debian.org>  Sat, 15 Jul 2023 12:56:11 +0100
+
+debootstrap (1.0.128+nmu2ubuntu5) mantic; urgency=medium
+
+  * Remove hirsute symlink, overlooked previously because it was a link to
+    groovy instead of to gutsy.
+
+ -- Steve Langasek <steve.langasek@ubuntu.com>  Sat, 24 Jun 2023 11:51:22 -0700
+
+debootstrap (1.0.128+nmu2ubuntu4) mantic; urgency=medium
+
+  * Add Breaks: on ubuntu-dev-tools (<< 0.190~) to ensure compatibility
+    with mk-sbuild.
+
+ -- Steve Langasek <steve.langasek@ubuntu.com>  Tue, 30 May 2023 21:38:57 -0700
+
+debootstrap (1.0.128+nmu2ubuntu3) mantic; urgency=medium
+
+  * Update debootstrap to automatically use the gutsy script by default
+    if the target is an Ubuntu release known to distro-info, eliminating
+    the need to upload debootstrap for each new Ubuntu release.
+  * Add dependency on distro-info, which is part of ubuntu-minimal, for the
+    above
+  * Remove all the old symlinks that are no longer needed.
+
+ -- Steve Langasek <steve.langasek@ubuntu.com>  Thu, 04 May 2023 16:45:45 +0200
+
+debootstrap (1.0.128+nmu2ubuntu2) mantic; urgency=medium
+
+  * Symlink mantic -> gutsy. Welcome to Mantic Manimal!
+
+ -- Simon Quigley <tsimonq2@ubuntu.com>  Wed, 26 Apr 2023 15:59:42 -0500
+
+debootstrap (1.0.128+nmu2ubuntu1) lunar; urgency=low
+
+  * Merge from Debian unstable. Remaining changes:
+    - Symlink lunar -> gutsy. Welcome to the Lunar Lobster!
+    - Fix EXTRACTOR_OVERRIDE: parameter not set (LP: #1971951)
+    - Fix failures with "set -u"
+
+ -- Łukasz 'sil2100' Zemczak <lukasz.zemczak@ubuntu.com>  Wed, 07 Dec 2022 10:09:03 +0100
 
 debootstrap (1.0.128+nmu2) unstable; urgency=low
 
@@ -118,6 +200,19 @@ debootstrap (1.0.127+nmu1) unstable; urgency=medium
   * Enable usrmerge on hurd-i386 too.
 
  -- Luca Boccassi <bluca@debian.org>  Sat, 24 Sep 2022 14:07:46 +0100
+
+debootstrap (1.0.127ubuntu2) lunar; urgency=medium
+
+  * Symlink lunar -> gutsy. Welcome to the Lunar Lobster!
+
+ -- Simon Quigley <tsimonq2@ubuntu.com>  Fri, 28 Oct 2022 13:27:45 -0500
+
+debootstrap (1.0.127ubuntu1) kinetic; urgency=medium
+
+  * Fix EXTRACTOR_OVERRIDE: parameter not set (LP: #1971951)
+  * Fix failures with "set -u"
+
+ -- Benjamin Drung <bdrung@ubuntu.com>  Fri, 05 Aug 2022 15:19:50 +0200
 
 debootstrap (1.0.127) unstable; urgency=medium
 
