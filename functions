@@ -233,6 +233,8 @@ keyring () {
 detect_container () {
 	if [ "$container" = lxc ]; then
 		CONTAINER="lxc"
+	elif [ "$container" = mmdebstrap-unshare ]; then
+		CONTAINER="mmdebstrap-unshare"
 	elif grep -qs container=lxc-libvirt /proc/1/environ; then
 		CONTAINER="lxc-libvirt"
 	elif grep -qs ^systemd-nspawn$ /run/systemd/container || grep -qs systemd-nspawn /proc/1/environ || [ "$container" = "systemd-nspawn" ]; then
@@ -1157,7 +1159,15 @@ umount_exit_function () {
 	for dir in $UMOUNT_DIRS; do
 		realdir="$(in_target_nofail readlink -f "$dir")"
 		[ "$realdir" ] || continue
-		( cd / ; umount "$TARGET/${realdir#/}" ) || true
+		# if /proc was recursively bind-mounted, because we are running
+		# inside an unshared user namespace inside docker for example,
+		# then it cannot be recursively unmounted (even when mounted
+		# with rslave) so we do it lazily instead
+		if [ "$dir" = "/proc" ]; then
+			( cd / ; umount --lazy "$TARGET/${realdir#/}" ) || true
+		else
+			( cd / ; umount "$TARGET/${realdir#/}" ) || true
+		fi
 	done
 }
 
@@ -1251,12 +1261,14 @@ setup_devices () {
 		touch "$TARGET/dev/console"
 		;;
 	    *)
-		if [ "$CONTAINER" = "lxc" ] || [ "$CONTAINER" = "lxc-libvirt" ]; then
+		case "$CONTAINER" in
+		    (lxc | lxc-libvirt | mmdebstrap-unshare)
 			if ! setup_devices_simple; then
 				setup_devices_bind
 			fi
 			return 0
-		fi
+			;;
+		esac
 
 		setup_devices_simple
 		;;
@@ -1766,7 +1778,7 @@ check_sane_mount () {
 	    *)
 		if ! doing_variant fakechroot; then
 		case "$CONTAINER" in
-		  lxc|lxc-libvirt)
+		  lxc|lxc-libvirt|mmdebstrap-unshare)
 		    ;;
 		  *)
 		    mknod "$1/test-dev-null" c 1 3 || return 1
