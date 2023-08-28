@@ -1,3 +1,27 @@
+debootstrap (1.0.132) unstable; urgency=medium
+
+  * Team upload.
+
+  [ Johannes Schauer Marin Rodrigues ]
+  * debian/tests/control: run debootstrap with unshared namespaces
+
+  [ Simon McVittie ]
+  * d/tests/debian-testing:
+    - More accurately emulate the behaviour of pbuilder 0.231
+    - Revert fake/schroot-1.6.10-3 to an accurate emulation of the
+      behaviour of schroot 1.6.10-3 (Closes: #983311)
+    - Document schroot 1.6.10-3 with the default profile as expected to
+      fail to use /dev/pts in a lxc >= 3 or Docker container; this is a
+      schroot bug (#983423) and not a debootstrap bug
+    - Resync fake/schroot-proposed with the patch proposed on #983423
+    - Improve debug logging
+    - Expand doc-comments
+    - With these changes, the autopkgtest is confirmed to pass in
+      autopkgtest-virt-qemu (Closes: #983197)
+    - Skip systemd-nspawn phase when $container is set
+
+ -- Luca Boccassi <bluca@debian.org>  Mon, 28 Aug 2023 14:16:37 +0100
+
 debootstrap (1.0.131) unstable; urgency=medium
 
   * Team upload.
@@ -18,7 +42,7 @@ debootstrap (1.0.130) unstable; urgency=medium
   * Add Trisquel to scripts dir
 
   [ Helmut Grohne ]
-  * implement merged-/usr by post-merging
+  * implement merged-/usr by post-merging. Closes: #1049898
 
   [ Luca Boccassi ]
   * Add myself to Uploaders
