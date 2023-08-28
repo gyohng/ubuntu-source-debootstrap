@@ -1,0 +1,17 @@
+  * Team upload.
+  [ Johannes Schauer Marin Rodrigues ]
+  * debian/tests/control: run debootstrap with unshared namespaces
+  [ Simon McVittie ]
+  * d/tests/debian-testing:
+    - More accurately emulate the behaviour of pbuilder 0.231
+    - Revert fake/schroot-1.6.10-3 to an accurate emulation of the
+      behaviour of schroot 1.6.10-3 (Closes: #983311)
+    - Document schroot 1.6.10-3 with the default profile as expected to
+      fail to use /dev/pts in a lxc >= 3 or Docker container; this is a
+      schroot bug (#983423) and not a debootstrap bug
+    - Resync fake/schroot-proposed with the patch proposed on #983423
+    - Improve debug logging
+    - Expand doc-comments
+    - With these changes, the autopkgtest is confirmed to pass in
+      autopkgtest-virt-qemu (Closes: #983197)
+    - Skip systemd-nspawn phase when $container is set
