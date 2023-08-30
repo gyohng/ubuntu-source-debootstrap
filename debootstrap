@@ -41,6 +41,7 @@ EXTRACTOR_OVERRIDE=""
 UNPACK_TARBALL=""
 ADDITIONAL=""
 EXCLUDE=""
+EXCLUDE_DEPENDENCY=""
 VERBOSE=""
 CERTIFICATE=""
 CHECKCERTIF=""
@@ -107,7 +108,10 @@ usage()
       --variant=X            use variant X of the bootstrap scripts
                              (currently supported variants: buildd, fakechroot,
                               minbase)
+      --merged-usr           make /{bin,sbin,lib}/ symlinks to /usr/
+                             (default for newer Debian suites)
       --no-merged-usr        do not make /{bin,sbin,lib}/ symlinks to /usr/
+                             (default for older Debian suites)
       --keyring=K            check Release files against keyring K
       --no-check-gpg         avoid checking Release file signatures
       --force-check-gpg      force checking Release file signatures

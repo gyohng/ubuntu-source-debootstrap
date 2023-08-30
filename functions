@@ -1328,17 +1328,72 @@ setup_dselect_method () {
 	esac
 }
 
-# Find out where the runtime dynamic linker and the shared libraries
-# can be installed on each architecture: native, multilib and multiarch.
-# This data can be verified by checking the files in the debian/sysdeps/
-# directory of the glibc package.
-#
-# This function must be updated to support any new architecture which
-# either installs the RTLD in a directory different from /lib or builds
-# multilib library packages.
-setup_merged_usr() {
+can_usrmerge_symlink() {
+	# Absolute symlinks can be relocated without problems.
+	test "${2#/}" = "$2" || return 0
+	while :; do
+		if test "${2#/}" != "$2"; then
+			# Handle double-slashes.
+			set -- "$1" "${2#/}"
+		elif test "${2#./}" != "$2"; then
+			# Handle ./ inside a link target.
+			set -- "$1" "${2#./}"
+		elif test "$2" = ..; then
+			# A parent directory symlink is ok if it does not
+			# cross the top level directory.
+			test "${1%/*/*}" != "$1" -a -n "${1%/*/*}"
+			return $?
+		elif test "${2#../}" != "$2"; then
+			# Symbolic link crossing / cannot be moved safely.
+			# This is prohibited by Debian Policy 10.5.
+			test "${1%/*/*}" = "$1" -o -z "${1%/*/*}" && return 1
+			set -- "${1%/*}" "${2#../}"
+		else
+			# Consider the symlink ok if its target does not
+			# contain a parent directory. When we fail here,
+			# the link target is non-minimal and doesn't happen
+			# in the archive.
+			test "${2#*/../}" = "$2"
+			return $?
+		fi
+	done
+}
+
+merge_usr_entry() {
+	local entry canon
+	canon="$TARGET/usr/${1#"$TARGET/"}"
+	test -h "$canon" &&
+		error 1 USRMERGEFAIL "cannot move %s as its destination exists as a symlink" "${1#"$TARGET"}"
+	if ! test -e "$canon"; then
+		mv "$1" "$canon"
+		return 0
+	fi
+	test -d "$1" ||
+		error 1 USRMERGEFAIL "cannot move non-directory %s as its destination exists" "${1#"$TARGET"}"
+	test -d "$canon" ||
+		error 1 USRMERGEFAIL "cannot move directory %s as its destination is not a directory" "${1#"$TARGET"}"
+	for entry in "$1/"* "$1/."*; do
+		# Some shells return . and .. on dot globs.
+		test "${entry%/.}" != "${entry%/..}" && continue
+		if test -h "$entry" && ! can_usrmerge_symlink "${entry#"$TARGET"}" "$(readlink "$entry")"; then
+			error 1 USRMERGEFAIL "cannot move relative symlink crossing top-level directory" "${entry#"$TARGET"}"
+		fi
+		# Ignore glob match failures
+		if test "${entry%'/*'}" != "${entry%'/.*'}" && ! test -e "$entry"; then
+			continue
+		fi
+		merge_usr_entry "$entry"
+	done
+	rmdir "$1"
+}
+
+merge_usr() {
 	if doing_variant buildd && [ -z "$MERGED_USR" ]; then
-		MERGED_USR="no"
+	    case "$CODENAME" in
+		etch*|lenny|squeeze|wheezy|jessie*|stretch|buster|bullseye|bookworm)
+		    MERGED_USR="no"
+		    ;;
+	    esac
 	fi
 
 	if [ "$MERGED_USR" = "no" ]; then
@@ -1359,15 +1414,60 @@ setup_merged_usr() {
 	    return 0;
 	fi
 
-	local link_dir
+	local dir
+	# This is list includes all possible multilib directories. It must be
+	# updated when new multilib directories are being added. Hopefully,
+	# all new architectures use multiarch instead, so we never get to
+	# update this.
+	for dir in bin lib lib32 lib64 libo32 libx32 sbin; do
+		test -h "$TARGET/$dir" && continue
+		test -e "$TARGET/$dir" || continue
+		merge_usr_entry "$TARGET/$dir"
+		ln -s "usr/$dir" "$TARGET/$dir"
+	done
+}
+
+# Previous implementation of merged /usr: not used within debootstrap,
+# but used by mmdebstrap's hooks/merged-usr/setup00.sh, mainly to get
+# the correct per-architecture $link_dir list of non-default multilib
+# directories.
+setup_merged_usr() {
+	if doing_variant buildd && [ -z "$MERGED_USR" ]; then
+	    case "$CODENAME" in
+		etch*|lenny|squeeze|wheezy|jessie*|stretch|buster|bullseye|bookworm)
+		    MERGED_USR="no"
+		    ;;
+	    esac
+	fi
+
+	if [ "$MERGED_USR" = "no" ]; then
+	    # With the usrmerge becoming pseudo-essential we need to use this flag
+	    # to ensure that even if it gets installed the buildd is not converted
+	    # when debootstrap needs to create an unmerged-usr installation.
+	    case "$CODENAME" in
+		etch*|lenny|squeeze|wheezy|jessie*|stretch|buster|bullseye)
+		    ;;
+		*)
+		    mkdir -p "$TARGET/etc"
+		    echo "this system will not be supported in the future" > "$TARGET/etc/unsupported-skip-usrmerge-conversion"
+		    if ! doing_variant buildd; then
+			warning SANITYCHECK "Upgrading non-merged-/usr environments post-bookworm is unsupported. Only do this for CI/QA infrastructure that will be re-bootstrapped rather than upgraded."
+		    fi
+		    ;;
+	    esac
+	    return 0;
+	fi
+
+	local link_dir=""
 	case $ARCH in
-	    hurd-*)	return 0 ;;
 	    amd64)	link_dir="lib32 lib64 libx32" ;;
 	    i386)	link_dir="lib64 libx32" ;;
 	    mips|mipsel)
 			link_dir="lib32 lib64" ;;
 	    mips64*|mipsn32*)
 			link_dir="lib32 lib64 libo32" ;;
+	    loongarch64*)
+			link_dir="lib32 lib64" ;;
 	    powerpc)	link_dir="lib64" ;;
 	    ppc64)	link_dir="lib32 lib64" ;;
 	    ppc64el)	link_dir="lib64" ;;
@@ -1555,6 +1655,9 @@ resolve_deps () {
 				NEWPKGS="$NEWPKGS $("$PKGDETAILS" GETDEPS "$pkgdest" $PKGS)"
 			done
 		done
+		if [ -n "${EXCLUDE_DEPENDENCY:-}" ]; then
+			NEWPKGS="$(without "$NEWPKGS" "$EXCLUDE_DEPENDENCY")"
+		fi
 		PKGS=$(echo "$PKGS $NEWPKGS" | tr ' ' '\n' | sort | uniq)
 		local REALPKGS=""
 		for s in $SUITE $EXTRA_SUITES; do
