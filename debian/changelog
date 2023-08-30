@@ -1,3 +1,33 @@
+debootstrap (1.0.128+nmu2+deb12u1) bookworm; urgency=medium
+
+  * Non-maintainer upload targeting Debian 12.2, with maintainer approval
+    from Luca Boccassi.
+  * Backport merged-/usr support changes from trixie:
+    - Implement merged-/usr by post-merging.
+      This changes the bootstrap order so that it will be possible for a
+      future version of base-files in trixie/sid to take responsibility for
+      creating the /bin, /sbin, /lib* symlinks, and is a prerequisite for
+      lifting the moratorium imposed by #1035831.
+      (Closes: #1049898; implementation by Helmut Grohne)
+    - functions: Reinstate setup_merged_usr() as it existed before
+      fixing #1049898, for backwards-compatibility with older versions of
+      mmdebstrap.
+    - functions: Default to merged-/usr for suites newer than bookworm,
+      even for the buildd profile. This allows packages targeting trixie
+      to assume that merged-/usr is the only layout possible, and is a
+      prerequisite for lifting the moratorium imposed by #1035831.
+    - Mention --merged-usr in --help output. (Closes: #1031828)
+  * Backport autopkgtest regression fixes from trixie:
+    - Revert fake/schroot-1.6.10-3 to an accurate emulation of the
+      behaviour of schroot 1.6.10-3 (Closes: #983311)
+    - Document schroot 1.6.10-3 with the default profile as expected to
+      fail to use /dev/pts in a lxc >= 3 or Docker container; this is a
+      schroot bug (#983423) and not a debootstrap bug
+    - With these changes, the autopkgtest is confirmed to pass in
+      autopkgtest-virt-qemu (Closes: #983197)
+
+ -- Simon McVittie <smcv@debian.org>  Wed, 30 Aug 2023 15:21:17 +0100
+
 debootstrap (1.0.128+nmu2) unstable; urgency=low
 
   * Non-maintainer upload.
