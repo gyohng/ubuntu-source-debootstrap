@@ -132,12 +132,31 @@ sub check_chroot {
                 cat /etc/debian_version)]),
         $reference);
 
-    check_fake_schroot(%params, reference => $reference);
+    # The schroot behaviour proposed to fix #856877 and #983423 works,
+    # even inside (privileged) lxc.
     check_fake_schroot(%params, reference => $reference, version => 'proposed');
     check_fake_schroot(%params, reference => $reference, version => 'proposed',
         extra_argv => ['--sbuild']);
 
-    # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=817236
+    # As of 1.6.10-3, or equivalently 1.6.10-11, the default profile
+    # certainly doesn't work in lxc >= 3 or in Docker:
+    # https://bugs.debian.org/983423
+    # It probably won't work in other container managers either, for
+    # similar reasons.
+    if (defined $params{container}) {
+        TODO: {
+            local $TODO = "schroot default profile doesn't work in lxc >= 3 or Docker";
+            check_fake_schroot(%params, reference => $reference,
+                version => '1.6.10-3');
+        }
+    }
+    else {
+        check_fake_schroot(%params, reference => $reference,
+            version => '1.6.10-3');
+    }
+
+    # schroot 1.6.10-3's sbuild profile does work in lxc, but only on newer
+    # kernels: https://bugs.debian.org/856877
     if (Dpkg::Version->new($params{kernel}) < Dpkg::Version->new('4.7') &&
             defined $params{container} && $params{container} eq 'lxc') {
         TODO: {
@@ -160,10 +179,12 @@ sub check_chroot {
             extra_argv => ['--sbuild']);
     }
 
+    # pbuilder >= 0.228.6 works fine
     check_fake_pbuilder(%params, reference => $reference,
         version => 'proposed');
 
-    # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=817236
+    # Older pbuilder doesn't work if we are in a container where we can't
+    # create the /dev/ptmx device node: https://bugs.debian.org/841935
     if (! $params{can_mknod_ptmx}) {
         TODO: {
             local $TODO = "schroot --sbuild doesn't work when /dev/ptmx is ".
