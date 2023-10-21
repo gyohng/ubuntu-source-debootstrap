@@ -1219,7 +1219,7 @@ setup_proc () {
 		# some container environment are used at second-stage, it already treats /proc and so on
 		if [ -z "$(ls -A "$TARGET/proc")" ]; then
 			# second-stage in docker, we cannot detect it is inside docker... just ignore warning
-			in_target mount -t proc proc /proc || mount -o rbind /proc "$TARGET/proc" || true
+			mount -t proc proc "$TARGET/proc" || mount -o rbind /proc "$TARGET/proc" || true
 			umount_on_exit /proc
 		fi
 		if [ -n "$(ls -A "$TARGET/sys")" ] && \
@@ -1229,7 +1229,7 @@ setup_proc () {
 				umount "$TARGET/sys" 2>/dev/null || true
 		else
 			# second-stage in docker, we cannot detect it is inside docker... just ignore warning
-			in_target mount -t sysfs sysfs /sys || true
+			mount -t sysfs sysfs "$TARGET/sys" || true
 			umount_on_exit /sys
 		fi
 		on_exit clear_mtab
@@ -1669,7 +1669,7 @@ while (<STDIN>) {
 			local m="$3"
 			local p="$4"
 			shift; shift; shift; shift
-			LC_ALL=C grep "$gropt" '^$|^Package:|^Priority:' "$p" | pkgdetails_field 0 "$f" "$m" "$@"
+			LC_ALL=C grep "$gropt" '^$|^Package:|^Priority:|^Essential:' "$p" | pkgdetails_field 0 "$f" "$m" "$@"
 		elif [ "$1" = "STANZAS" ]; then
 			local pkgdest="$2"; shift; shift
 			perl -e '

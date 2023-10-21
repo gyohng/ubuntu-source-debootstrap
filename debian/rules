@@ -20,12 +20,7 @@ endif
 %:
 	dh $@
 
-# need to be root to make devices, so build is done in install target
-override_dh_auto_build:
-
 override_dh_auto_install:
-	dh_auto_build
-	
 	$(MAKE) install DESTDIR=$(CURDIR)/debian/debootstrap
 	$(MAKE) install DESTDIR=$(CURDIR)/debian/debootstrap-udeb
 
