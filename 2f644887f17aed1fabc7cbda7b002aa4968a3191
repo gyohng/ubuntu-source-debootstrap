@@ -1,0 +1,10 @@
+  [ Luca Boccassi ]
+  * Mark debootstrap as MA: foreign
+  * Drop obsolete d/rules overrides and stop changing user/group in
+    Makefile
+  * d/copyright: switch format to DEP5
+  [ Johannes Schauer Marin Rodrigues ]
+  * functions: use mount from the outside to support chroots without mount
+    installed
+  * Let the buildd variant only install essential, build-essential and apt
+    (Closes: #837060)
