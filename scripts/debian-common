@@ -10,7 +10,9 @@ case $ARCH in
 esac
 
 work_out_debs () {
-	required="$(get_debs Priority: required)"
+	if ! doing_variant buildd; then
+		required="$(get_debs Priority: required)"
+	fi
 
 	if doing_variant - || doing_variant fakechroot; then
 		#required="$required $(get_debs Priority: important)"
@@ -18,6 +20,10 @@ work_out_debs () {
 		base="$(get_debs Priority: important)"
 	elif doing_variant buildd; then
 		base="apt build-essential"
+		# do not install Priority:required for the buildd variant
+		# explicitly add mawk because we cannot resolve base-files's
+		# virtual pre-depends on awk
+		required="mawk $(get_debs Essential: yes)"
 	elif doing_variant minbase; then
 		base="apt"
 	fi

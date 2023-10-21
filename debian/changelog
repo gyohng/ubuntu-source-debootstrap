@@ -1,6 +1,20 @@
-debootstrap (1.0.132) unstable; urgency=medium
+debootstrap (1.0.133) unstable; urgency=medium
 
-  * Team upload.
+  [ Luca Boccassi ]
+  * Mark debootstrap as MA: foreign
+  * Drop obsolete d/rules overrides and stop changing user/group in
+    Makefile
+  * d/copyright: switch format to DEP5
+
+  [ Johannes Schauer Marin Rodrigues ]
+  * functions: use mount from the outside to support chroots without mount
+    installed
+  * Let the buildd variant only install essential, build-essential and apt
+    (Closes: #837060)
+
+ -- Luca Boccassi <bluca@debian.org>  Sat, 21 Oct 2023 12:38:26 +0100
+
+debootstrap (1.0.132) unstable; urgency=medium
 
   [ Johannes Schauer Marin Rodrigues ]
   * debian/tests/control: run debootstrap with unshared namespaces
@@ -35,6 +49,9 @@ debootstrap (1.0.130) unstable; urgency=medium
 
   * Team upload.
 
+  [ Samuel Thibault ]
+  * hurd: Fix debootstrap --second-stage on native runs.
+
   [ Fatih Altun ]
   * Add Pardus support
 
@@ -51,12 +68,6 @@ debootstrap (1.0.130) unstable; urgency=medium
   * README: add --preserve-env option to sudo command
 
  -- Luca Boccassi <bluca@debian.org>  Fri, 18 Aug 2023 16:02:59 +0100
-
-debootstrap (1.0.129) UNRELEASED; urgency=medium
-
-  * hurd: Fix debootstrap --second-stage on native runs.
-
- -- Samuel Thibault <sthibault@debian.org>  Sat, 20 May 2023 22:56:36 +0200
 
 debootstrap (1.0.128+nmu5) unstable; urgency=medium
 
