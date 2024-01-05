@@ -1,3 +1,30 @@
+debootstrap (1.0.134) unstable; urgency=medium
+
+  [ Johannes Schauer Marin Rodrigues ]
+  * scripts/debian-common: install Priority:required with buildd variant
+    for bookworm and earlier
+  * scripts/debian-common: fixup for last commit
+  * error out if chroot cannot be found in $PATH
+  * check_sane_mount: if mknod does not work, test if bind-mounting
+    /dev/null works
+  * setup_devices: fall back to setup_devices_bind if setup_devices_simple
+    failed irrespective of the container
+  * debian/tests/debian-testing: support for DEBOOTSTRAP_SCRIPT
+    environment variable
+  * Move "unshared" test from autopkgtest to salsaci pipeline
+  * debian/salsa-ci.yml: add checks for the buildd variant
+
+  [ Matthias Klumpp ]
+  * Implement support for repos with modern-style arch:all support
+  * Add test for split-arch:all support
+
+  [ Luca Boccassi ]
+  * Add Ubuntu scripts/ symlinks for Lunar, Mantic and Noble
+  * Add Debian scripts/ symlink for Forky
+  * Bump copyright year ranges in d/copyright
+
+ -- Luca Boccassi <bluca@debian.org>  Fri, 05 Jan 2024 10:17:39 +0100
+
 debootstrap (1.0.133) unstable; urgency=medium
 
   [ Luca Boccassi ]

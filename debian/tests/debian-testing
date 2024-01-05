@@ -333,7 +333,7 @@ my $distro_info = DebianDistroInfo->new;
 my $testing = $distro_info->testing;
 
 # Should specify multiple components for checking (see Bug#898738)
-if (!verbose_run(['debootstrap',
+if (!verbose_run([length($ENV{DEBOOTSTRAP_SCRIPT}) ? $ENV{DEBOOTSTRAP_SCRIPT} : 'debootstrap',
             '--include=debootstrap,debian-archive-keyring,gnupg,hello,systemd',
             '--variant=minbase',
             '--components=main,contrib,non-free',
