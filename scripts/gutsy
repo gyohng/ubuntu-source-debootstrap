@@ -130,12 +130,20 @@ first_stage_install () {
 			# see https://bugs.debian.org/838388
 			EXTRACT_DEB_TAR_OPTIONS="$EXTRACT_DEB_TAR_OPTIONS -k"
 			;;
-		*)
+		impish|jammy|kinetic|lunar|mantic)
 			# all future series post hirsute use merged-usr in buildd chroots too
 			[ -z "$MERGED_USR" ] && MERGED_USR="yes"
 			# see https://bugs.debian.org/838388
 			EXTRACT_DEB_TAR_OPTIONS="$EXTRACT_DEB_TAR_OPTIONS -k"
 			;;
+		*)
+			# noble and onward do not need or support merging anymore,
+			# as they have symlinks in base-files.
+			MERGED_USR="no"
+			# see https://bugs.debian.org/838388
+			EXTRACT_DEB_TAR_OPTIONS="$EXTRACT_DEB_TAR_OPTIONS -k"
+			;;
+
 	esac
 
 	setup_merged_usr

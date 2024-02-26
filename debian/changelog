@@ -1,3 +1,10 @@
+debootstrap (1.0.126+nmu1ubuntu0.7) jammy; urgency=medium
+
+  * Disable usrmerge code on noble+ as they ship symlinks in base-files,
+    and the code is incompatible (and no longer needed) (LP: #2054925)
+
+ -- Julian Andres Klode <juliank@ubuntu.com>  Mon, 26 Feb 2024 10:41:03 +0100
+
 debootstrap (1.0.126+nmu1ubuntu0.6) jammy; urgency=medium
 
   * Support Packages files which are not ordered alphabetically by Package
