@@ -50,7 +50,6 @@ CACHE_DIR=""
 INRELEASE_PATH=""
 
 DEF_MIRROR="http://deb.debian.org/debian"
-DEF_HTTPS_MIRROR="https://deb.debian.org/debian"
 
 # set $CONTAINER
 detect_container
@@ -463,7 +462,7 @@ if ! doing_variant fakechroot && command -v apt-config >/dev/null; then
     fi
     if [ -z "${http_proxy+x}" ] && [ -x "$AUTOPROXY" ]; then
         http_proxy="$($AUTOPROXY)"
-        if [ -n "$http_proxy" ]; then
+        if [ -n "$http_proxy" ] && [ "$http_proxy" != "DIRECT" ]; then
             info AUTOPROXY "Using auto-detected proxy: $http_proxy"
             export http_proxy
         fi
@@ -514,6 +513,13 @@ else
 	fi
 
 	SCRIPT="$DEBOOTSTRAP_DIR/scripts/$1"
+	if ! [ -e "$SCRIPT" ] && [ $(which distro-info 2>/dev/null) ]; then
+		if debian-distro-info --series "$1" >/dev/null 2>&1; then
+			SCRIPT="$DEBOOTSTRAP_DIR/scripts/sid"
+		elif ubuntu-distro-info --series "$1" >/dev/null 2>&1; then
+			SCRIPT="$DEBOOTSTRAP_DIR/scripts/gutsy"
+		fi
+	fi
 	if [ -n "$VARIANT" ] && [ -e "${SCRIPT}.${VARIANT}" ]; then
 		SCRIPT="${SCRIPT}.${VARIANT}"
 		SUPPORTED_VARIANTS="$VARIANT"
@@ -613,7 +619,7 @@ if am_doing_phase first_stage second_stage; then
 	fi
 	# Ensure that we can create working devices and executables on the target.
 	if ! check_sane_mount "$TARGET"; then
-		error 1 NOEXEC "Cannot install into target '$TARGET' mounted with noexec or nodev"
+		error 1 NOEXEC "Cannot install into target '$TARGET' mounted with noexec"
 	fi
 fi
 
