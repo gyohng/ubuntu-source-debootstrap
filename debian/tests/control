@@ -1,4 +1,5 @@
-Tests: debian-testing
+Features: test-name=debian-testing-minbase
+Test-Command: ./debian/tests/debian-testing minbase
 Depends:
  debootstrap,
  libdistro-info-perl,
@@ -8,6 +9,35 @@ Depends:
  systemd [linux-any],
  systemd-container [linux-any],
  ca-certificates,
+ distro-info,
+Restrictions: allow-stderr, needs-root
+
+Features: test-name=debian-testing-buildd
+Test-Command: ./debian/tests/debian-testing buildd
+Depends:
+ debootstrap,
+ libdistro-info-perl,
+ libdpkg-perl,
+ libipc-run-perl,
+ perl,
+ systemd [linux-any],
+ systemd-container [linux-any],
+ ca-certificates,
+ distro-info,
+Restrictions: allow-stderr, needs-root
+
+Features: test-name=debian-testing-default
+Test-Command: ./debian/tests/debian-testing -
+Depends:
+ debootstrap,
+ libdistro-info-perl,
+ libdpkg-perl,
+ libipc-run-perl,
+ perl,
+ systemd [linux-any],
+ systemd-container [linux-any],
+ ca-certificates,
+ distro-info,
 Restrictions: allow-stderr, needs-root
 
 Tests: unsorted-packages-files
