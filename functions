@@ -218,8 +218,10 @@ keyring () {
 			KEYRING="$1"
 		elif [ -z "$DISABLE_KEYRING" ]; then
 			if [ -z "$USER_MIRROR" ] && [ -z "$FORCE_KEYRING" ]; then
-				info KEYRING "Keyring file not available at %s; switching to https mirror %s" "$1" "https://${DEF_MIRROR#http://}"
-				USER_MIRROR="https://${DEF_MIRROR#http://}"
+				if [ "http" = "${DEF_MIRROR%%://*}" ]; then
+					USER_MIRROR="https://${DEF_MIRROR#http://}"
+					info KEYRING "Keyring file not available at %s; switching to https mirror %s" "$1" "$USER_MIRROR"
+				fi
 			else
 				warning KEYRING "Cannot check Release signature; keyring file not available %s" "$1"
 				if [ -n "$FORCE_KEYRING" ]; then

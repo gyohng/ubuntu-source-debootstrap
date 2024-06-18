@@ -1,3 +1,13 @@
+debootstrap (1.0.136) unstable; urgency=medium
+
+  [ Philip Hands ]
+  * reinstate Debian codename symlinks (closes: #1073785)
+  * drop unneeded addition of "test extras"
+  * switch to using branch2repo for salsa-ci
+  * avoid setting DEF_MIRROR to https://https://...
+
+ -- Luca Boccassi <bluca@debian.org>  Tue, 18 Jun 2024 21:36:25 +0100
+
 debootstrap (1.0.135) unstable; urgency=medium
 
   [ Ken Sharp ]
