@@ -1,0 +1,5 @@
+  [ Philip Hands ]
+  * reinstate Debian codename symlinks (closes: #1073785)
+  * drop unneeded addition of "test extras"
+  * switch to using branch2repo for salsa-ci
+  * avoid setting DEF_MIRROR to https://https://...
