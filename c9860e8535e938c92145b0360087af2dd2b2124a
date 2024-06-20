@@ -1,0 +1,2 @@
+  * Merge from Debian unstable. Remaining changes:
+    - Fix EXTRACTOR_OVERRIDE: parameter not set 
